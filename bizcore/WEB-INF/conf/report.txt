@@ -1,0 +1,216 @@
+
+
+
+=================Execute Report (Model Time 190108T1817) @Tue Jan 08 23:41:00 CST 2019, 22 objects and 156 fields===========================
+
+
+
+ processing: platform
+
+
+ processing: site
+
+
+ processing: site.platform.platform
+
+Info: Add virtual field [sites(es)] to <platform>
+	site.platform
+
+
+ processing: catalog
+
+
+ processing: catalog.site.site
+
+Info: Add virtual field [catalogs(es)] to <site>
+	catalog.site
+
+
+ processing: level_one_category
+
+
+ processing: level_one_category.catalog.catalog
+
+Info: Add virtual field [level_one_categorys(es)] to <catalog>
+	level_one_category.catalog
+
+
+ processing: level_two_category
+
+
+ processing: level_two_category.level_one_category.parent_category
+
+Info: Add virtual field [level_two_categorys(es)] to <level_one_category>
+	level_two_category.parent_category
+
+
+ processing: level_n_category
+
+
+ processing: level_n_category.level_two_category.parent_category
+
+Info: Add virtual field [level_n_categorys(es)] to <level_two_category>
+	level_n_category.parent_category
+
+
+ processing: brand
+
+
+ processing: product
+
+
+ processing: product.level_n_category.parent_category
+
+Info: Add virtual field [products(es)] to <level_n_category>
+	product.parent_category
+
+
+ processing: product.brand.brand
+
+Info: Add virtual field [products(es)] to <brand>
+	product.brand
+
+
+ processing: product.catalog.catalog
+
+Info: Add virtual field [products(es)] to <catalog>
+	product.catalog
+
+
+ processing: sku
+
+
+ processing: sku.product.product
+
+Info: Add virtual field [skus(es)] to <product>
+	sku.product
+
+
+**************************************************
+
+platform{
+	fields(5){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('Chain eComerce Platform'), verb: false, required: true;
+		string	introduction('new generation of eCommerce platform based on opensource and modern tech'), verb: false, required: true;
+		string	current_version('V1.0'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		siteList	platform(基本信息)--platform;
+	}
+} depth=0; isRoot = true
+
+site{
+	fields(6){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('The first customer site'), verb: false, required: true;
+		string	introduction('The primary site for show the concept'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: siteList;
+		date_time_update	last_update_time('updateTime()'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		catalogList	site(基本信息)--site;
+	}
+} depth=1; isRoot = false
+
+catalog{
+	fields(5){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	display_name('Cloth'), verb: false, required: true;
+		string	seller_id('SC000001'), verb: false, required: true;
+		site	site('$(object)'), verb: false, required: true, referenceBy: catalogList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(2){
+		levelOneCategoryList	catalog(基本信息)--catalog;
+		productList	catalog(基本信息)--catalog;
+	}
+} depth=2; isRoot = false
+
+level_one_category{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		catalog	catalog('$(object)'), verb: false, required: true, referenceBy: levelOneCategoryList;
+		string	display_name('Level One Cat'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		levelTwoCategoryList	parent_category(基本信息)--parent_category;
+	}
+} depth=3; isRoot = false
+
+level_two_category{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		level_one_category	parent_category('$(object)'), verb: false, required: true, referenceBy: levelTwoCategoryList;
+		string	display_name('Level Two Cat'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		levelNCategoryList	parent_category(基本信息)--parent_category;
+	}
+} depth=4; isRoot = false
+
+level_n_category{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		level_two_category	parent_category('$(object)'), verb: false, required: true, referenceBy: levelNCategoryList;
+		string	display_name('Level N Cat'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		productList	parent_category(基本信息)--parent_category;
+	}
+} depth=5; isRoot = false
+
+brand{
+	fields(5){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	brand_name('Telsa Auto'), verb: false, required: true;
+		string_image	logo('logo.jpg'), verb: false, required: true;
+		string	remark('The brand a great that has Roadester, Model S and Model X, Model 3 is in development'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		productList	brand(基本信息)--brand;
+	}
+} depth=0; isRoot = true
+
+product{
+	fields(9){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	display_name('Jeans'), verb: false, required: true;
+		level_n_category	parent_category('$(object)'), verb: false, required: true, referenceBy: productList;
+		brand	brand('$(object)'), verb: false, required: true, referenceBy: productList;
+		string	origin('China|US|Japan|French'), verb: false, required: true;
+		catalog	catalog('$(object)'), verb: false, required: true, referenceBy: productList;
+		string	remark('The brand a great that has Roadester, Model S and Model X, Model 3 is in development'), verb: false, required: true;
+		date_time_update	last_update_time('updateTime()'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		skuList	product(基本信息)--product;
+	}
+} depth=6; isRoot = false
+
+sku{
+	fields(8){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	display_name('Jeans - Large'), verb: false, required: true;
+		string	size('Large|Small|Medium'), verb: false, required: true;
+		product	product('$(object)'), verb: false, required: true, referenceBy: skuList;
+		bool	active('true'), verb: false, required: true;
+		money	base_price('$103.21'), verb: false, required: true;
+		date_time_update	last_update_time('updateTime()'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=7; isRoot = false
+
+
+
+
+=================================End Report=================================
