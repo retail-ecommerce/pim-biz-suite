@@ -71,14 +71,14 @@ const transferToAnotherCatalog = (id, parameters) => {
 
 
 const addSku = (targetObjectId, parameters) => {
-  const url = `${PREFIX}productManager/addSku/productId/displayName/size/active/basePrice/tokensExpr/`
+  const url = `${PREFIX}productManager/addSku/productId/name/size/active/basePrice/tokensExpr/`
   const productId = targetObjectId
   const requestParameters = { ...parameters, productId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateSku = (targetObjectId, parameters) => {
-  const url = `${PREFIX}productManager/updateSkuProperties/productId/id/displayName/size/active/basePrice/tokensExpr/`
+  const url = `${PREFIX}productManager/updateSkuProperties/productId/id/name/size/active/basePrice/tokensExpr/`
   const productId = targetObjectId
   const requestParameters = { ...parameters, productId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

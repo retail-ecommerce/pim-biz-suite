@@ -23,14 +23,14 @@ const load = (targetObjectId, parameters) => {
 
 
 const addProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}brandManager/addProduct/brandId/displayName/parentCategoryId/origin/catalogId/remark/tokensExpr/`
+  const url = `${PREFIX}brandManager/addProduct/brandId/name/parentCategoryId/origin/catalogId/remark/tokensExpr/`
   const brandId = targetObjectId
   const requestParameters = { ...parameters, brandId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}brandManager/updateProductProperties/brandId/id/displayName/origin/remark/tokensExpr/`
+  const url = `${PREFIX}brandManager/updateProductProperties/brandId/id/name/origin/remark/tokensExpr/`
   const brandId = targetObjectId
   const requestParameters = { ...parameters, brandId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
