@@ -167,14 +167,14 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
  	
 
 
-	public LevelTwoCategory createLevelTwoCategory(PimUserContext userContext,String parentCategoryId, String displayName) throws Exception
+	public LevelTwoCategory createLevelTwoCategory(PimUserContext userContext,String parentCategoryId, String name) throws Exception
 	{
 		
 		
 
 		
 
-		userContext.getChecker().checkDisplayNameOfLevelTwoCategory(displayName);
+		userContext.getChecker().checkNameOfLevelTwoCategory(name);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(LevelTwoCategoryManagerException.class);
 
@@ -186,7 +186,7 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 		levelTwoCategory.setParentCategory(parentCategory);
 		
 		
-		levelTwoCategory.setDisplayName(displayName);
+		levelTwoCategory.setName(name);
 
 		levelTwoCategory = saveLevelTwoCategory(userContext, levelTwoCategory, emptyOptions());
 		
@@ -213,8 +213,8 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 		
 
 		
-		if(LevelTwoCategory.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfLevelTwoCategory(parseString(newValueExpr));
+		if(LevelTwoCategory.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfLevelTwoCategory(parseString(newValueExpr));
 		}
 	
 		userContext.getChecker().throwExceptionIfHasErrors(LevelTwoCategoryManagerException.class);
@@ -427,7 +427,7 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 	
 	
 
-	protected void checkParamsForAddingLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String displayName,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String name,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -436,18 +436,18 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 		userContext.getChecker().checkIdOfLevelTwoCategory(levelTwoCategoryId);
 
 		
-		userContext.getChecker().checkDisplayNameOfLevelNCategory(displayName);
+		userContext.getChecker().checkNameOfLevelNCategory(name);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(LevelTwoCategoryManagerException.class);
 
 	
 	}
-	public  LevelTwoCategory addLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String displayName, String [] tokensExpr) throws Exception
+	public  LevelTwoCategory addLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String name, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingLevelNCategory(userContext,levelTwoCategoryId,displayName,tokensExpr);
+		checkParamsForAddingLevelNCategory(userContext,levelTwoCategoryId,name,tokensExpr);
 		
-		LevelNCategory levelNCategory = createLevelNCategory(userContext,displayName);
+		LevelNCategory levelNCategory = createLevelNCategory(userContext,name);
 		
 		LevelTwoCategory levelTwoCategory = loadLevelTwoCategory(userContext, levelTwoCategoryId, allTokens());
 		synchronized(levelTwoCategory){ 
@@ -460,19 +460,19 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 			return present(userContext,levelTwoCategory, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingLevelNCategoryProperties(PimUserContext userContext, String levelTwoCategoryId,String id,String displayName,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingLevelNCategoryProperties(PimUserContext userContext, String levelTwoCategoryId,String id,String name,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfLevelTwoCategory(levelTwoCategoryId);
 		userContext.getChecker().checkIdOfLevelNCategory(id);
 		
-		userContext.getChecker().checkDisplayNameOfLevelNCategory( displayName);
+		userContext.getChecker().checkNameOfLevelNCategory( name);
 
 		userContext.getChecker().throwExceptionIfHasErrors(LevelTwoCategoryManagerException.class);
 		
 	}
-	public  LevelTwoCategory updateLevelNCategoryProperties(PimUserContext userContext, String levelTwoCategoryId, String id,String displayName, String [] tokensExpr) throws Exception
+	public  LevelTwoCategory updateLevelNCategoryProperties(PimUserContext userContext, String levelTwoCategoryId, String id,String name, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingLevelNCategoryProperties(userContext,levelTwoCategoryId,id,displayName,tokensExpr);
+		checkParamsForUpdatingLevelNCategoryProperties(userContext,levelTwoCategoryId,id,name,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -487,7 +487,7 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 		
 		LevelNCategory item = levelTwoCategoryToUpdate.getLevelNCategoryList().first();
 		
-		item.updateDisplayName( displayName );
+		item.updateName( name );
 
 		
 		//checkParamsForAddingLevelNCategory(userContext,levelTwoCategoryId,name, code, used,tokensExpr);
@@ -498,12 +498,12 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 	}
 	
 	
-	protected LevelNCategory createLevelNCategory(PimUserContext userContext, String displayName) throws Exception{
+	protected LevelNCategory createLevelNCategory(PimUserContext userContext, String name) throws Exception{
 
 		LevelNCategory levelNCategory = new LevelNCategory();
 		
 		
-		levelNCategory.setDisplayName(displayName);
+		levelNCategory.setName(name);
 	
 		
 		return levelNCategory;
@@ -615,8 +615,8 @@ public class LevelTwoCategoryManagerImpl extends CustomPimCheckerManager impleme
 		userContext.getChecker().checkVersionOfLevelNCategory(levelNCategoryVersion);
 		
 
-		if(LevelNCategory.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfLevelNCategory(parseString(newValueExpr));
+		if(LevelNCategory.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfLevelNCategory(parseString(newValueExpr));
 		}
 		
 	

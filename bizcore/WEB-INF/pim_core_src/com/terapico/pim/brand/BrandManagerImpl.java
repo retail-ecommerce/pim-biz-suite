@@ -406,7 +406,7 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 	
 	
 
-	protected void checkParamsForAddingProduct(PimUserContext userContext, String brandId, String displayName, String parentCategoryId, String origin, String catalogId, String remark,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -415,7 +415,7 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		userContext.getChecker().checkIdOfBrand(brandId);
 
 		
-		userContext.getChecker().checkDisplayNameOfProduct(displayName);
+		userContext.getChecker().checkNameOfProduct(name);
 		
 		userContext.getChecker().checkParentCategoryIdOfProduct(parentCategoryId);
 		
@@ -429,12 +429,12 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 
 	
 	}
-	public  Brand addProduct(PimUserContext userContext, String brandId, String displayName, String parentCategoryId, String origin, String catalogId, String remark, String [] tokensExpr) throws Exception
+	public  Brand addProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingProduct(userContext,brandId,displayName, parentCategoryId, origin, catalogId, remark,tokensExpr);
+		checkParamsForAddingProduct(userContext,brandId,name, parentCategoryId, origin, catalogId, remark,tokensExpr);
 		
-		Product product = createProduct(userContext,displayName, parentCategoryId, origin, catalogId, remark);
+		Product product = createProduct(userContext,name, parentCategoryId, origin, catalogId, remark);
 		
 		Brand brand = loadBrand(userContext, brandId, allTokens());
 		synchronized(brand){ 
@@ -447,21 +447,21 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 			return present(userContext,brand, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingProductProperties(PimUserContext userContext, String brandId,String id,String displayName,String origin,String remark,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingProductProperties(PimUserContext userContext, String brandId,String id,String name,String origin,String remark,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfBrand(brandId);
 		userContext.getChecker().checkIdOfProduct(id);
 		
-		userContext.getChecker().checkDisplayNameOfProduct( displayName);
+		userContext.getChecker().checkNameOfProduct( name);
 		userContext.getChecker().checkOriginOfProduct( origin);
 		userContext.getChecker().checkRemarkOfProduct( remark);
 
 		userContext.getChecker().throwExceptionIfHasErrors(BrandManagerException.class);
 		
 	}
-	public  Brand updateProductProperties(PimUserContext userContext, String brandId, String id,String displayName,String origin,String remark, String [] tokensExpr) throws Exception
+	public  Brand updateProductProperties(PimUserContext userContext, String brandId, String id,String name,String origin,String remark, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingProductProperties(userContext,brandId,id,displayName,origin,remark,tokensExpr);
+		checkParamsForUpdatingProductProperties(userContext,brandId,id,name,origin,remark,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -476,7 +476,7 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		
 		Product item = brandToUpdate.getProductList().first();
 		
-		item.updateDisplayName( displayName );
+		item.updateName( name );
 		item.updateOrigin( origin );
 		item.updateRemark( remark );
 
@@ -489,12 +489,12 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 	}
 	
 	
-	protected Product createProduct(PimUserContext userContext, String displayName, String parentCategoryId, String origin, String catalogId, String remark) throws Exception{
+	protected Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String origin, String catalogId, String remark) throws Exception{
 
 		Product product = new Product();
 		
 		
-		product.setDisplayName(displayName);		
+		product.setName(name);		
 		LevelNCategory  parentCategory = new LevelNCategory();
 		parentCategory.setId(parentCategoryId);		
 		product.setParentCategory(parentCategory);		
@@ -615,8 +615,8 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		userContext.getChecker().checkVersionOfProduct(productVersion);
 		
 
-		if(Product.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfProduct(parseString(newValueExpr));
+		if(Product.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfProduct(parseString(newValueExpr));
 		}
 		
 		if(Product.ORIGIN_PROPERTY.equals(property)){

@@ -173,14 +173,14 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
  	
 
 
-	public Product createProduct(PimUserContext userContext,String displayName, String parentCategoryId, String brandId, String origin, String catalogId, String remark) throws Exception
+	public Product createProduct(PimUserContext userContext,String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark) throws Exception
 	{
 		
 		
 
 		
 
-		userContext.getChecker().checkDisplayNameOfProduct(displayName);
+		userContext.getChecker().checkNameOfProduct(name);
 		userContext.getChecker().checkOriginOfProduct(origin);
 		userContext.getChecker().checkRemarkOfProduct(remark);
 	
@@ -189,7 +189,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 
 		Product product=createNewProduct();	
 
-		product.setDisplayName(displayName);
+		product.setName(name);
 			
 		LevelNCategory parentCategory = loadLevelNCategory(userContext, parentCategoryId,emptyOptions());
 		product.setParentCategory(parentCategory);
@@ -232,8 +232,8 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		userContext.getChecker().checkVersionOfProduct( productVersion);
 		
 
-		if(Product.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfProduct(parseString(newValueExpr));
+		if(Product.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfProduct(parseString(newValueExpr));
 		}		
 
 				
@@ -487,7 +487,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		result.setFilterKey(filterKey==null?"":filterKey.trim());
 		result.setPageNo(pageNo);
 		result.setValueFieldName("id");
-		result.setDisplayFieldName("displayName");
+		result.setDisplayFieldName("name");
 		
 		pageNo = Math.max(1, pageNo);
 		int pageSize = 20;
@@ -576,7 +576,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 	
 	
 
-	protected void checkParamsForAddingSku(PimUserContext userContext, String productId, String displayName, String size, boolean active, BigDecimal basePrice,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingSku(PimUserContext userContext, String productId, String name, String size, boolean active, BigDecimal basePrice,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -585,7 +585,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		userContext.getChecker().checkIdOfProduct(productId);
 
 		
-		userContext.getChecker().checkDisplayNameOfSku(displayName);
+		userContext.getChecker().checkNameOfSku(name);
 		
 		userContext.getChecker().checkSizeOfSku(size);
 		
@@ -597,12 +597,12 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 
 	
 	}
-	public  Product addSku(PimUserContext userContext, String productId, String displayName, String size, boolean active, BigDecimal basePrice, String [] tokensExpr) throws Exception
+	public  Product addSku(PimUserContext userContext, String productId, String name, String size, boolean active, BigDecimal basePrice, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingSku(userContext,productId,displayName, size, active, basePrice,tokensExpr);
+		checkParamsForAddingSku(userContext,productId,name, size, active, basePrice,tokensExpr);
 		
-		Sku sku = createSku(userContext,displayName, size, active, basePrice);
+		Sku sku = createSku(userContext,name, size, active, basePrice);
 		
 		Product product = loadProduct(userContext, productId, allTokens());
 		synchronized(product){ 
@@ -615,12 +615,12 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 			return present(userContext,product, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingSkuProperties(PimUserContext userContext, String productId,String id,String displayName,String size,boolean active,BigDecimal basePrice,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingSkuProperties(PimUserContext userContext, String productId,String id,String name,String size,boolean active,BigDecimal basePrice,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfProduct(productId);
 		userContext.getChecker().checkIdOfSku(id);
 		
-		userContext.getChecker().checkDisplayNameOfSku( displayName);
+		userContext.getChecker().checkNameOfSku( name);
 		userContext.getChecker().checkSizeOfSku( size);
 		userContext.getChecker().checkActiveOfSku( active);
 		userContext.getChecker().checkBasePriceOfSku( basePrice);
@@ -628,9 +628,9 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		userContext.getChecker().throwExceptionIfHasErrors(ProductManagerException.class);
 		
 	}
-	public  Product updateSkuProperties(PimUserContext userContext, String productId, String id,String displayName,String size,boolean active,BigDecimal basePrice, String [] tokensExpr) throws Exception
+	public  Product updateSkuProperties(PimUserContext userContext, String productId, String id,String name,String size,boolean active,BigDecimal basePrice, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingSkuProperties(userContext,productId,id,displayName,size,active,basePrice,tokensExpr);
+		checkParamsForUpdatingSkuProperties(userContext,productId,id,name,size,active,basePrice,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -645,7 +645,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		
 		Sku item = productToUpdate.getSkuList().first();
 		
-		item.updateDisplayName( displayName );
+		item.updateName( name );
 		item.updateSize( size );
 		item.updateActive( active );
 		item.updateBasePrice( basePrice );
@@ -659,12 +659,12 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 	}
 	
 	
-	protected Sku createSku(PimUserContext userContext, String displayName, String size, boolean active, BigDecimal basePrice) throws Exception{
+	protected Sku createSku(PimUserContext userContext, String name, String size, boolean active, BigDecimal basePrice) throws Exception{
 
 		Sku sku = new Sku();
 		
 		
-		sku.setDisplayName(displayName);		
+		sku.setName(name);		
 		sku.setSize(size);		
 		sku.setActive(active);		
 		sku.setBasePrice(basePrice);		
@@ -780,8 +780,8 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		userContext.getChecker().checkVersionOfSku(skuVersion);
 		
 
-		if(Sku.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfSku(parseString(newValueExpr));
+		if(Sku.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfSku(parseString(newValueExpr));
 		}
 		
 		if(Sku.SIZE_PROPERTY.equals(property)){

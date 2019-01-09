@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190108T1817
+-- BUILD WITH MODEL TIME 190109T1518
 drop database  if exists pim;
 create database pim;
 alter  database pim  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -28,7 +28,7 @@ create table site_data (
 drop table  if exists catalog_data;
 create table catalog_data (
 	id                  	varchar(64)          not null            comment 'Id',
-	display_name        	varchar(20)                              comment 'Display Name',
+	name                	varchar(20)                              comment 'Name',
 	seller_id           	varchar(32)                              comment 'Seller Id',
 	site                	varchar(48)                              comment 'Site',
 	version             	int                                      comment 'Version',
@@ -39,7 +39,7 @@ drop table  if exists level_one_category_data;
 create table level_one_category_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	catalog             	varchar(48)                              comment 'Catalog',
-	display_name        	varchar(52)                              comment 'Display Name',
+	name                	varchar(52)                              comment 'Name',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
@@ -48,7 +48,7 @@ drop table  if exists level_two_category_data;
 create table level_two_category_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	parent_category     	varchar(48)                              comment 'Parent Category',
-	display_name        	varchar(52)                              comment 'Display Name',
+	name                	varchar(52)                              comment 'Name',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
@@ -57,7 +57,7 @@ drop table  if exists level_n_category_data;
 create table level_n_category_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	parent_category     	varchar(48)                              comment 'Parent Category',
-	display_name        	varchar(44)                              comment 'Display Name',
+	name                	varchar(44)                              comment 'Name',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
@@ -75,7 +75,7 @@ create table brand_data (
 drop table  if exists product_data;
 create table product_data (
 	id                  	varchar(64)          not null            comment 'Id',
-	display_name        	varchar(20)                              comment 'Display Name',
+	name                	varchar(20)                              comment 'Name',
 	parent_category     	varchar(48)                              comment 'Parent Category',
 	brand               	varchar(48)                              comment 'Brand',
 	origin              	varchar(24)                              comment 'Origin',
@@ -89,7 +89,7 @@ create table product_data (
 drop table  if exists sku_data;
 create table sku_data (
 	id                  	varchar(64)          not null            comment 'Id',
-	display_name        	varchar(52)                              comment 'Display Name',
+	name                	varchar(52)                              comment 'Name',
 	size                	varchar(24)                              comment 'Size',
 	product             	varchar(48)                              comment 'Product',
 	active              	tinyint                                  comment 'Active',
@@ -279,8 +279,8 @@ create table form_action_data (
 insert into platform_data values ('P000001','Chain eComerce Platform','new generation of eCommerce platform based on opensource and modern tech','V1.0','1');
 
 	
-insert into site_data values ('S000001','The first customer site','The primary site for show the concept','P000001','2019-01-04 21:24:15','1');
-insert into site_data values ('S000002','The first customer site0002','The primary site for show the concept0002','P000001','2018-12-31 23:21:02','1');
+insert into site_data values ('S000001','The first customer site','The primary site for show the concept','P000001','2018-12-25 01:22:35','1');
+insert into site_data values ('S000002','The first customer site0002','The primary site for show the concept0002','P000001','2018-12-31 08:56:34','1');
 
 	
 insert into catalog_data values ('C000001','Cloth','SC000001','S000001','1');
@@ -354,200 +354,200 @@ insert into level_n_category_data values ('LNC000032','LTC000016','Level N Cat00
 insert into brand_data values ('B000001','Telsa Auto','logo.jpg','The brand a great that has Roadester, Model S and Model X, Model 3 is in development','1');
 
 	
-insert into product_data values ('P000001','Jeans','LNC000001','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development','2018-12-22 04:22:34','1');
-insert into product_data values ('P000002','Jeans0002','LNC000001','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0002','2018-12-20 20:51:39','1');
-insert into product_data values ('P000003','Jeans0003','LNC000002','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0003','2019-01-05 14:35:56','1');
-insert into product_data values ('P000004','Jeans0004','LNC000002','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0004','2019-01-07 08:23:56','1');
-insert into product_data values ('P000005','Jeans0005','LNC000003','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0005','2019-01-04 12:00:26','1');
-insert into product_data values ('P000006','Jeans0006','LNC000003','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0006','2018-12-28 11:41:08','1');
-insert into product_data values ('P000007','Jeans0007','LNC000004','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0007','2018-12-25 18:47:51','1');
-insert into product_data values ('P000008','Jeans0008','LNC000004','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0008','2019-01-03 08:15:07','1');
-insert into product_data values ('P000009','Jeans0009','LNC000005','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0009','2018-12-20 09:29:45','1');
-insert into product_data values ('P000010','Jeans0010','LNC000005','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0010','2019-01-02 18:15:56','1');
-insert into product_data values ('P000011','Jeans0011','LNC000006','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0011','2018-12-23 22:58:47','1');
-insert into product_data values ('P000012','Jeans0012','LNC000006','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0012','2019-01-08 22:36:22','1');
-insert into product_data values ('P000013','Jeans0013','LNC000007','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0013','2018-12-31 09:27:49','1');
-insert into product_data values ('P000014','Jeans0014','LNC000007','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0014','2019-01-05 09:39:25','1');
-insert into product_data values ('P000015','Jeans0015','LNC000008','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0015','2018-12-31 06:09:30','1');
-insert into product_data values ('P000016','Jeans0016','LNC000008','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0016','2019-01-01 14:37:38','1');
-insert into product_data values ('P000017','Jeans0017','LNC000009','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0017','2018-12-20 10:36:01','1');
-insert into product_data values ('P000018','Jeans0018','LNC000009','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0018','2019-01-08 06:57:31','1');
-insert into product_data values ('P000019','Jeans0019','LNC000010','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0019','2018-12-22 15:06:19','1');
-insert into product_data values ('P000020','Jeans0020','LNC000010','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0020','2018-12-24 14:14:16','1');
-insert into product_data values ('P000021','Jeans0021','LNC000011','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0021','2018-12-22 15:22:15','1');
-insert into product_data values ('P000022','Jeans0022','LNC000011','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0022','2019-01-01 09:49:54','1');
-insert into product_data values ('P000023','Jeans0023','LNC000012','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0023','2019-01-02 00:48:37','1');
-insert into product_data values ('P000024','Jeans0024','LNC000012','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0024','2018-12-22 10:13:22','1');
-insert into product_data values ('P000025','Jeans0025','LNC000013','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0025','2019-01-05 19:25:39','1');
-insert into product_data values ('P000026','Jeans0026','LNC000013','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0026','2018-12-19 06:16:29','1');
-insert into product_data values ('P000027','Jeans0027','LNC000014','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0027','2018-12-24 14:45:28','1');
-insert into product_data values ('P000028','Jeans0028','LNC000014','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0028','2018-12-25 02:46:59','1');
-insert into product_data values ('P000029','Jeans0029','LNC000015','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0029','2018-12-28 15:58:28','1');
-insert into product_data values ('P000030','Jeans0030','LNC000015','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0030','2018-12-19 22:30:04','1');
-insert into product_data values ('P000031','Jeans0031','LNC000016','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0031','2018-12-18 15:39:21','1');
-insert into product_data values ('P000032','Jeans0032','LNC000016','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0032','2019-01-04 05:28:14','1');
-insert into product_data values ('P000033','Jeans0033','LNC000017','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0033','2019-01-05 18:50:34','1');
-insert into product_data values ('P000034','Jeans0034','LNC000017','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0034','2019-01-03 10:55:36','1');
-insert into product_data values ('P000035','Jeans0035','LNC000018','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0035','2019-01-08 02:31:25','1');
-insert into product_data values ('P000036','Jeans0036','LNC000018','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0036','2019-01-05 23:28:18','1');
-insert into product_data values ('P000037','Jeans0037','LNC000019','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0037','2019-01-06 17:27:38','1');
-insert into product_data values ('P000038','Jeans0038','LNC000019','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0038','2018-12-19 03:45:53','1');
-insert into product_data values ('P000039','Jeans0039','LNC000020','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0039','2019-01-05 23:02:43','1');
-insert into product_data values ('P000040','Jeans0040','LNC000020','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0040','2019-01-06 13:57:11','1');
-insert into product_data values ('P000041','Jeans0041','LNC000021','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0041','2019-01-03 04:52:27','1');
-insert into product_data values ('P000042','Jeans0042','LNC000021','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0042','2019-01-08 23:08:57','1');
-insert into product_data values ('P000043','Jeans0043','LNC000022','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0043','2018-12-20 23:36:52','1');
-insert into product_data values ('P000044','Jeans0044','LNC000022','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0044','2018-12-24 21:40:04','1');
-insert into product_data values ('P000045','Jeans0045','LNC000023','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0045','2018-12-31 10:27:08','1');
-insert into product_data values ('P000046','Jeans0046','LNC000023','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0046','2018-12-21 02:26:17','1');
-insert into product_data values ('P000047','Jeans0047','LNC000024','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0047','2018-12-23 07:08:43','1');
-insert into product_data values ('P000048','Jeans0048','LNC000024','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0048','2018-12-29 13:37:24','1');
-insert into product_data values ('P000049','Jeans0049','LNC000025','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0049','2018-12-30 19:31:17','1');
-insert into product_data values ('P000050','Jeans0050','LNC000025','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0050','2019-01-07 06:13:39','1');
-insert into product_data values ('P000051','Jeans0051','LNC000026','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0051','2018-12-29 10:30:00','1');
-insert into product_data values ('P000052','Jeans0052','LNC000026','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0052','2019-01-04 07:08:19','1');
-insert into product_data values ('P000053','Jeans0053','LNC000027','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0053','2019-01-04 00:54:44','1');
-insert into product_data values ('P000054','Jeans0054','LNC000027','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0054','2018-12-20 00:11:12','1');
-insert into product_data values ('P000055','Jeans0055','LNC000028','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0055','2018-12-25 10:04:32','1');
-insert into product_data values ('P000056','Jeans0056','LNC000028','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0056','2018-12-31 05:40:23','1');
-insert into product_data values ('P000057','Jeans0057','LNC000029','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0057','2018-12-26 01:27:28','1');
-insert into product_data values ('P000058','Jeans0058','LNC000029','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0058','2019-01-04 21:44:59','1');
-insert into product_data values ('P000059','Jeans0059','LNC000030','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0059','2019-01-03 00:31:04','1');
-insert into product_data values ('P000060','Jeans0060','LNC000030','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0060','2018-12-29 15:11:33','1');
-insert into product_data values ('P000061','Jeans0061','LNC000031','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0061','2019-01-02 18:16:13','1');
-insert into product_data values ('P000062','Jeans0062','LNC000031','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0062','2018-12-19 14:08:02','1');
-insert into product_data values ('P000063','Jeans0063','LNC000032','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0063','2018-12-20 06:52:52','1');
-insert into product_data values ('P000064','Jeans0064','LNC000032','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0064','2018-12-23 22:32:07','1');
+insert into product_data values ('P000001','Jeans','LNC000001','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development','2018-12-20 18:25:25','1');
+insert into product_data values ('P000002','Jeans0002','LNC000001','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0002','2018-12-26 18:38:05','1');
+insert into product_data values ('P000003','Jeans0003','LNC000002','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0003','2018-12-31 10:00:33','1');
+insert into product_data values ('P000004','Jeans0004','LNC000002','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0004','2019-01-09 14:15:53','1');
+insert into product_data values ('P000005','Jeans0005','LNC000003','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0005','2018-12-27 02:44:46','1');
+insert into product_data values ('P000006','Jeans0006','LNC000003','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0006','2018-12-19 12:35:10','1');
+insert into product_data values ('P000007','Jeans0007','LNC000004','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0007','2018-12-30 04:49:15','1');
+insert into product_data values ('P000008','Jeans0008','LNC000004','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0008','2019-01-08 09:48:41','1');
+insert into product_data values ('P000009','Jeans0009','LNC000005','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0009','2019-01-01 06:08:11','1');
+insert into product_data values ('P000010','Jeans0010','LNC000005','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0010','2018-12-22 10:51:26','1');
+insert into product_data values ('P000011','Jeans0011','LNC000006','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0011','2018-12-29 12:06:59','1');
+insert into product_data values ('P000012','Jeans0012','LNC000006','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0012','2018-12-30 22:13:08','1');
+insert into product_data values ('P000013','Jeans0013','LNC000007','B000001','China','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0013','2019-01-01 05:13:26','1');
+insert into product_data values ('P000014','Jeans0014','LNC000007','B000001','US','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0014','2019-01-06 00:28:49','1');
+insert into product_data values ('P000015','Jeans0015','LNC000008','B000001','Japan','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0015','2019-01-07 11:29:31','1');
+insert into product_data values ('P000016','Jeans0016','LNC000008','B000001','French','C000001','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0016','2019-01-08 21:31:09','1');
+insert into product_data values ('P000017','Jeans0017','LNC000009','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0017','2018-12-24 21:41:05','1');
+insert into product_data values ('P000018','Jeans0018','LNC000009','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0018','2019-01-03 14:08:25','1');
+insert into product_data values ('P000019','Jeans0019','LNC000010','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0019','2018-12-26 07:07:17','1');
+insert into product_data values ('P000020','Jeans0020','LNC000010','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0020','2019-01-06 00:26:55','1');
+insert into product_data values ('P000021','Jeans0021','LNC000011','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0021','2018-12-23 04:27:01','1');
+insert into product_data values ('P000022','Jeans0022','LNC000011','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0022','2019-01-04 01:10:40','1');
+insert into product_data values ('P000023','Jeans0023','LNC000012','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0023','2018-12-27 03:31:07','1');
+insert into product_data values ('P000024','Jeans0024','LNC000012','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0024','2019-01-09 10:59:24','1');
+insert into product_data values ('P000025','Jeans0025','LNC000013','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0025','2019-01-05 14:22:41','1');
+insert into product_data values ('P000026','Jeans0026','LNC000013','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0026','2019-01-07 07:38:04','1');
+insert into product_data values ('P000027','Jeans0027','LNC000014','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0027','2019-01-09 04:44:04','1');
+insert into product_data values ('P000028','Jeans0028','LNC000014','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0028','2019-01-06 04:16:05','1');
+insert into product_data values ('P000029','Jeans0029','LNC000015','B000001','China','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0029','2019-01-07 14:07:01','1');
+insert into product_data values ('P000030','Jeans0030','LNC000015','B000001','US','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0030','2019-01-02 14:18:48','1');
+insert into product_data values ('P000031','Jeans0031','LNC000016','B000001','Japan','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0031','2018-12-26 20:09:50','1');
+insert into product_data values ('P000032','Jeans0032','LNC000016','B000001','French','C000002','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0032','2018-12-22 21:57:38','1');
+insert into product_data values ('P000033','Jeans0033','LNC000017','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0033','2018-12-21 21:35:05','1');
+insert into product_data values ('P000034','Jeans0034','LNC000017','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0034','2018-12-30 05:49:47','1');
+insert into product_data values ('P000035','Jeans0035','LNC000018','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0035','2018-12-28 01:06:30','1');
+insert into product_data values ('P000036','Jeans0036','LNC000018','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0036','2019-01-04 06:20:33','1');
+insert into product_data values ('P000037','Jeans0037','LNC000019','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0037','2018-12-21 17:29:25','1');
+insert into product_data values ('P000038','Jeans0038','LNC000019','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0038','2019-01-08 08:56:53','1');
+insert into product_data values ('P000039','Jeans0039','LNC000020','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0039','2018-12-22 17:05:57','1');
+insert into product_data values ('P000040','Jeans0040','LNC000020','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0040','2019-01-07 12:46:07','1');
+insert into product_data values ('P000041','Jeans0041','LNC000021','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0041','2018-12-23 23:16:50','1');
+insert into product_data values ('P000042','Jeans0042','LNC000021','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0042','2019-01-02 09:57:01','1');
+insert into product_data values ('P000043','Jeans0043','LNC000022','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0043','2018-12-25 00:12:34','1');
+insert into product_data values ('P000044','Jeans0044','LNC000022','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0044','2018-12-21 06:48:33','1');
+insert into product_data values ('P000045','Jeans0045','LNC000023','B000001','China','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0045','2019-01-09 02:33:07','1');
+insert into product_data values ('P000046','Jeans0046','LNC000023','B000001','US','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0046','2019-01-03 07:56:52','1');
+insert into product_data values ('P000047','Jeans0047','LNC000024','B000001','Japan','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0047','2018-12-30 20:41:42','1');
+insert into product_data values ('P000048','Jeans0048','LNC000024','B000001','French','C000003','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0048','2018-12-23 10:47:13','1');
+insert into product_data values ('P000049','Jeans0049','LNC000025','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0049','2018-12-28 19:57:47','1');
+insert into product_data values ('P000050','Jeans0050','LNC000025','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0050','2019-01-07 16:45:27','1');
+insert into product_data values ('P000051','Jeans0051','LNC000026','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0051','2019-01-02 22:46:22','1');
+insert into product_data values ('P000052','Jeans0052','LNC000026','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0052','2019-01-03 06:19:38','1');
+insert into product_data values ('P000053','Jeans0053','LNC000027','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0053','2019-01-02 01:47:54','1');
+insert into product_data values ('P000054','Jeans0054','LNC000027','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0054','2019-01-03 05:46:26','1');
+insert into product_data values ('P000055','Jeans0055','LNC000028','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0055','2018-12-30 21:06:46','1');
+insert into product_data values ('P000056','Jeans0056','LNC000028','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0056','2018-12-28 16:42:58','1');
+insert into product_data values ('P000057','Jeans0057','LNC000029','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0057','2019-01-01 17:34:25','1');
+insert into product_data values ('P000058','Jeans0058','LNC000029','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0058','2019-01-05 06:13:21','1');
+insert into product_data values ('P000059','Jeans0059','LNC000030','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0059','2019-01-06 16:43:52','1');
+insert into product_data values ('P000060','Jeans0060','LNC000030','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0060','2018-12-28 02:10:11','1');
+insert into product_data values ('P000061','Jeans0061','LNC000031','B000001','China','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0061','2018-12-26 09:38:43','1');
+insert into product_data values ('P000062','Jeans0062','LNC000031','B000001','US','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0062','2019-01-03 08:03:18','1');
+insert into product_data values ('P000063','Jeans0063','LNC000032','B000001','Japan','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0063','2019-01-01 02:35:40','1');
+insert into product_data values ('P000064','Jeans0064','LNC000032','B000001','French','C000004','The brand a great that has Roadester, Model S and Model X, Model 3 is in development0064','2018-12-31 15:21:25','1');
 
 	
-insert into sku_data values ('S000001','Jeans - Large','Large','P000001',1,'76.69','2018-12-19 22:43:40','1');
-insert into sku_data values ('S000002','Jeans - Large0002','Small','P000001',1,'73.22','2018-12-22 23:28:21','1');
-insert into sku_data values ('S000003','Jeans - Large0003','Medium','P000002',1,'73.70','2018-12-23 22:34:40','1');
-insert into sku_data values ('S000004','Jeans - Large0004','Large','P000002',1,'88.59','2018-12-28 07:54:59','1');
-insert into sku_data values ('S000005','Jeans - Large0005','Small','P000003',1,'85.62','2018-12-22 02:55:20','1');
-insert into sku_data values ('S000006','Jeans - Large0006','Medium','P000003',1,'97.60','2018-12-22 08:35:49','1');
-insert into sku_data values ('S000007','Jeans - Large0007','Large','P000004',1,'94.99','2018-12-29 05:51:39','1');
-insert into sku_data values ('S000008','Jeans - Large0008','Small','P000004',1,'81.37','2018-12-24 11:56:45','1');
-insert into sku_data values ('S000009','Jeans - Large0009','Medium','P000005',1,'86.02','2019-01-06 23:42:58','1');
-insert into sku_data values ('S000010','Jeans - Large0010','Large','P000005',1,'79.88','2018-12-31 14:14:28','1');
-insert into sku_data values ('S000011','Jeans - Large0011','Small','P000006',1,'94.96','2019-01-06 21:49:55','1');
-insert into sku_data values ('S000012','Jeans - Large0012','Medium','P000006',1,'85.22','2019-01-07 08:44:03','1');
-insert into sku_data values ('S000013','Jeans - Large0013','Large','P000007',1,'97.49','2019-01-02 08:52:30','1');
-insert into sku_data values ('S000014','Jeans - Large0014','Small','P000007',1,'96.29','2018-12-22 10:26:44','1');
-insert into sku_data values ('S000015','Jeans - Large0015','Medium','P000008',1,'97.39','2019-01-03 16:20:26','1');
-insert into sku_data values ('S000016','Jeans - Large0016','Large','P000008',1,'87.54','2018-12-23 03:49:55','1');
-insert into sku_data values ('S000017','Jeans - Large0017','Small','P000009',1,'97.64','2019-01-04 03:20:13','1');
-insert into sku_data values ('S000018','Jeans - Large0018','Medium','P000009',1,'84.68','2018-12-18 04:56:47','1');
-insert into sku_data values ('S000019','Jeans - Large0019','Large','P000010',1,'77.38','2018-12-22 23:48:25','1');
-insert into sku_data values ('S000020','Jeans - Large0020','Small','P000010',1,'78.97','2018-12-24 08:52:35','1');
-insert into sku_data values ('S000021','Jeans - Large0021','Medium','P000011',1,'86.73','2018-12-24 02:46:13','1');
-insert into sku_data values ('S000022','Jeans - Large0022','Large','P000011',1,'96.98','2018-12-25 12:18:49','1');
-insert into sku_data values ('S000023','Jeans - Large0023','Small','P000012',1,'75.03','2018-12-28 05:54:11','1');
-insert into sku_data values ('S000024','Jeans - Large0024','Medium','P000012',1,'85.83','2018-12-27 00:07:18','1');
-insert into sku_data values ('S000025','Jeans - Large0025','Large','P000013',1,'99.76','2019-01-01 05:38:30','1');
-insert into sku_data values ('S000026','Jeans - Large0026','Small','P000013',1,'97.80','2019-01-05 21:17:33','1');
-insert into sku_data values ('S000027','Jeans - Large0027','Medium','P000014',1,'97.52','2018-12-23 22:59:30','1');
-insert into sku_data values ('S000028','Jeans - Large0028','Large','P000014',1,'95.49','2018-12-28 08:08:16','1');
-insert into sku_data values ('S000029','Jeans - Large0029','Small','P000015',1,'101.46','2018-12-19 10:08:00','1');
-insert into sku_data values ('S000030','Jeans - Large0030','Medium','P000015',1,'101.73','2018-12-26 01:44:11','1');
-insert into sku_data values ('S000031','Jeans - Large0031','Large','P000016',1,'97.40','2018-12-26 21:09:35','1');
-insert into sku_data values ('S000032','Jeans - Large0032','Small','P000016',1,'91.03','2018-12-30 14:58:24','1');
-insert into sku_data values ('S000033','Jeans - Large0033','Medium','P000017',1,'94.59','2018-12-30 20:51:11','1');
-insert into sku_data values ('S000034','Jeans - Large0034','Large','P000017',1,'103.13','2019-01-07 08:43:11','1');
-insert into sku_data values ('S000035','Jeans - Large0035','Small','P000018',1,'90.25','2018-12-21 09:53:15','1');
-insert into sku_data values ('S000036','Jeans - Large0036','Medium','P000018',1,'93.71','2018-12-26 01:40:13','1');
-insert into sku_data values ('S000037','Jeans - Large0037','Large','P000019',1,'82.92','2018-12-24 00:04:26','1');
-insert into sku_data values ('S000038','Jeans - Large0038','Small','P000019',1,'80.27','2018-12-23 23:13:36','1');
-insert into sku_data values ('S000039','Jeans - Large0039','Medium','P000020',1,'95.81','2019-01-05 00:47:41','1');
-insert into sku_data values ('S000040','Jeans - Large0040','Large','P000020',1,'73.49','2018-12-29 22:49:15','1');
-insert into sku_data values ('S000041','Jeans - Large0041','Small','P000021',1,'79.75','2018-12-30 02:26:49','1');
-insert into sku_data values ('S000042','Jeans - Large0042','Medium','P000021',1,'100.41','2018-12-31 10:36:05','1');
-insert into sku_data values ('S000043','Jeans - Large0043','Large','P000022',1,'74.07','2018-12-21 03:42:19','1');
-insert into sku_data values ('S000044','Jeans - Large0044','Small','P000022',1,'75.28','2018-12-26 01:51:38','1');
-insert into sku_data values ('S000045','Jeans - Large0045','Medium','P000023',1,'97.73','2018-12-28 21:07:36','1');
-insert into sku_data values ('S000046','Jeans - Large0046','Large','P000023',1,'79.98','2018-12-25 22:09:16','1');
-insert into sku_data values ('S000047','Jeans - Large0047','Small','P000024',1,'82.21','2019-01-06 06:04:06','1');
-insert into sku_data values ('S000048','Jeans - Large0048','Medium','P000024',1,'95.82','2018-12-22 20:10:59','1');
-insert into sku_data values ('S000049','Jeans - Large0049','Large','P000025',1,'78.47','2019-01-05 18:14:57','1');
-insert into sku_data values ('S000050','Jeans - Large0050','Small','P000025',1,'78.00','2018-12-25 20:42:38','1');
-insert into sku_data values ('S000051','Jeans - Large0051','Medium','P000026',1,'96.34','2018-12-19 09:58:47','1');
-insert into sku_data values ('S000052','Jeans - Large0052','Large','P000026',1,'74.46','2018-12-29 07:46:23','1');
-insert into sku_data values ('S000053','Jeans - Large0053','Small','P000027',1,'84.75','2019-01-08 00:06:19','1');
-insert into sku_data values ('S000054','Jeans - Large0054','Medium','P000027',1,'73.09','2018-12-31 00:41:44','1');
-insert into sku_data values ('S000055','Jeans - Large0055','Large','P000028',1,'79.98','2019-01-01 08:26:25','1');
-insert into sku_data values ('S000056','Jeans - Large0056','Small','P000028',1,'74.60','2018-12-29 05:38:29','1');
-insert into sku_data values ('S000057','Jeans - Large0057','Medium','P000029',1,'79.20','2019-01-05 11:08:50','1');
-insert into sku_data values ('S000058','Jeans - Large0058','Large','P000029',1,'86.70','2018-12-30 07:56:52','1');
-insert into sku_data values ('S000059','Jeans - Large0059','Small','P000030',1,'99.35','2018-12-30 02:41:51','1');
-insert into sku_data values ('S000060','Jeans - Large0060','Medium','P000030',1,'74.69','2019-01-04 21:45:35','1');
-insert into sku_data values ('S000061','Jeans - Large0061','Large','P000031',1,'91.97','2018-12-23 06:46:21','1');
-insert into sku_data values ('S000062','Jeans - Large0062','Small','P000031',1,'82.90','2019-01-02 02:14:39','1');
-insert into sku_data values ('S000063','Jeans - Large0063','Medium','P000032',1,'91.90','2018-12-23 15:30:16','1');
-insert into sku_data values ('S000064','Jeans - Large0064','Large','P000032',1,'80.28','2019-01-01 08:46:48','1');
-insert into sku_data values ('S000065','Jeans - Large0065','Small','P000033',1,'85.94','2018-12-23 22:37:11','1');
-insert into sku_data values ('S000066','Jeans - Large0066','Medium','P000033',1,'89.36','2018-12-29 01:44:18','1');
-insert into sku_data values ('S000067','Jeans - Large0067','Large','P000034',1,'94.63','2018-12-31 18:32:31','1');
-insert into sku_data values ('S000068','Jeans - Large0068','Small','P000034',1,'84.32','2018-12-22 01:38:00','1');
-insert into sku_data values ('S000069','Jeans - Large0069','Medium','P000035',1,'89.84','2019-01-07 20:43:35','1');
-insert into sku_data values ('S000070','Jeans - Large0070','Large','P000035',1,'78.15','2018-12-28 21:29:27','1');
-insert into sku_data values ('S000071','Jeans - Large0071','Small','P000036',1,'89.70','2018-12-28 20:26:31','1');
-insert into sku_data values ('S000072','Jeans - Large0072','Medium','P000036',1,'76.43','2018-12-27 03:41:40','1');
-insert into sku_data values ('S000073','Jeans - Large0073','Large','P000037',1,'77.86','2019-01-06 21:04:42','1');
-insert into sku_data values ('S000074','Jeans - Large0074','Small','P000037',1,'97.42','2019-01-04 11:17:34','1');
-insert into sku_data values ('S000075','Jeans - Large0075','Medium','P000038',1,'72.36','2018-12-20 06:51:10','1');
-insert into sku_data values ('S000076','Jeans - Large0076','Large','P000038',1,'77.22','2018-12-29 20:48:30','1');
-insert into sku_data values ('S000077','Jeans - Large0077','Small','P000039',1,'88.93','2019-01-05 22:30:06','1');
-insert into sku_data values ('S000078','Jeans - Large0078','Medium','P000039',1,'84.46','2018-12-21 09:21:58','1');
-insert into sku_data values ('S000079','Jeans - Large0079','Large','P000040',1,'102.75','2019-01-01 01:47:21','1');
-insert into sku_data values ('S000080','Jeans - Large0080','Small','P000040',1,'73.32','2019-01-02 10:39:49','1');
-insert into sku_data values ('S000081','Jeans - Large0081','Medium','P000041',1,'79.70','2019-01-05 01:01:43','1');
-insert into sku_data values ('S000082','Jeans - Large0082','Large','P000041',1,'83.12','2019-01-05 15:08:03','1');
-insert into sku_data values ('S000083','Jeans - Large0083','Small','P000042',1,'95.04','2018-12-25 02:54:10','1');
-insert into sku_data values ('S000084','Jeans - Large0084','Medium','P000042',1,'92.36','2018-12-30 01:36:26','1');
-insert into sku_data values ('S000085','Jeans - Large0085','Large','P000043',1,'81.72','2019-01-08 21:17:13','1');
-insert into sku_data values ('S000086','Jeans - Large0086','Small','P000043',1,'94.94','2018-12-28 19:39:08','1');
-insert into sku_data values ('S000087','Jeans - Large0087','Medium','P000044',1,'80.66','2019-01-04 03:31:16','1');
-insert into sku_data values ('S000088','Jeans - Large0088','Large','P000044',1,'92.30','2018-12-19 07:59:22','1');
-insert into sku_data values ('S000089','Jeans - Large0089','Small','P000045',1,'79.59','2019-01-06 18:14:39','1');
-insert into sku_data values ('S000090','Jeans - Large0090','Medium','P000045',1,'85.79','2019-01-05 22:05:24','1');
-insert into sku_data values ('S000091','Jeans - Large0091','Large','P000046',1,'95.49','2019-01-03 06:29:16','1');
-insert into sku_data values ('S000092','Jeans - Large0092','Small','P000046',1,'74.59','2018-12-29 02:07:51','1');
-insert into sku_data values ('S000093','Jeans - Large0093','Medium','P000047',1,'102.92','2018-12-21 20:27:25','1');
-insert into sku_data values ('S000094','Jeans - Large0094','Large','P000047',1,'73.96','2018-12-23 01:39:21','1');
-insert into sku_data values ('S000095','Jeans - Large0095','Small','P000048',1,'102.59','2018-12-23 03:51:02','1');
-insert into sku_data values ('S000096','Jeans - Large0096','Medium','P000048',1,'80.22','2018-12-30 05:36:00','1');
-insert into sku_data values ('S000097','Jeans - Large0097','Large','P000049',1,'88.53','2018-12-19 01:21:25','1');
-insert into sku_data values ('S000098','Jeans - Large0098','Small','P000049',1,'93.89','2019-01-05 05:45:05','1');
-insert into sku_data values ('S000099','Jeans - Large0099','Medium','P000050',1,'75.67','2019-01-04 23:02:05','1');
-insert into sku_data values ('S000100','Jeans - Large0100','Large','P000050',1,'91.03','2019-01-05 18:41:44','1');
-insert into sku_data values ('S000101','Jeans - Large0101','Small','P000051',1,'82.94','2018-12-29 06:07:17','1');
-insert into sku_data values ('S000102','Jeans - Large0102','Medium','P000051',1,'100.73','2018-12-27 05:45:04','1');
-insert into sku_data values ('S000103','Jeans - Large0103','Large','P000052',1,'81.95','2018-12-30 08:20:34','1');
-insert into sku_data values ('S000104','Jeans - Large0104','Small','P000052',1,'98.99','2018-12-30 22:25:11','1');
-insert into sku_data values ('S000105','Jeans - Large0105','Medium','P000053',1,'78.32','2018-12-31 08:15:51','1');
-insert into sku_data values ('S000106','Jeans - Large0106','Large','P000053',1,'90.03','2018-12-19 15:59:42','1');
-insert into sku_data values ('S000107','Jeans - Large0107','Small','P000054',1,'102.81','2019-01-03 18:49:24','1');
-insert into sku_data values ('S000108','Jeans - Large0108','Medium','P000054',1,'102.88','2019-01-06 08:14:12','1');
-insert into sku_data values ('S000109','Jeans - Large0109','Large','P000055',1,'98.61','2018-12-26 15:05:22','1');
-insert into sku_data values ('S000110','Jeans - Large0110','Small','P000055',1,'79.63','2019-01-01 22:59:05','1');
-insert into sku_data values ('S000111','Jeans - Large0111','Medium','P000056',1,'96.42','2019-01-01 13:20:45','1');
-insert into sku_data values ('S000112','Jeans - Large0112','Large','P000056',1,'93.63','2018-12-19 02:18:19','1');
-insert into sku_data values ('S000113','Jeans - Large0113','Small','P000057',1,'92.05','2018-12-28 23:45:00','1');
-insert into sku_data values ('S000114','Jeans - Large0114','Medium','P000057',1,'88.60','2019-01-04 03:10:30','1');
-insert into sku_data values ('S000115','Jeans - Large0115','Large','P000058',1,'87.15','2018-12-31 07:31:31','1');
-insert into sku_data values ('S000116','Jeans - Large0116','Small','P000058',1,'81.97','2018-12-18 04:40:35','1');
-insert into sku_data values ('S000117','Jeans - Large0117','Medium','P000059',1,'76.48','2018-12-26 05:02:53','1');
-insert into sku_data values ('S000118','Jeans - Large0118','Large','P000059',1,'85.74','2019-01-02 02:20:58','1');
-insert into sku_data values ('S000119','Jeans - Large0119','Small','P000060',1,'89.47','2018-12-27 16:08:12','1');
-insert into sku_data values ('S000120','Jeans - Large0120','Medium','P000060',1,'90.32','2018-12-26 22:32:48','1');
-insert into sku_data values ('S000121','Jeans - Large0121','Large','P000061',1,'78.27','2018-12-29 21:55:19','1');
-insert into sku_data values ('S000122','Jeans - Large0122','Small','P000061',1,'88.59','2018-12-19 16:10:31','1');
-insert into sku_data values ('S000123','Jeans - Large0123','Medium','P000062',1,'99.93','2018-12-19 22:03:27','1');
-insert into sku_data values ('S000124','Jeans - Large0124','Large','P000062',1,'85.14','2018-12-23 20:51:27','1');
-insert into sku_data values ('S000125','Jeans - Large0125','Small','P000063',1,'79.00','2018-12-30 10:33:28','1');
-insert into sku_data values ('S000126','Jeans - Large0126','Medium','P000063',1,'91.47','2018-12-27 13:19:14','1');
-insert into sku_data values ('S000127','Jeans - Large0127','Large','P000064',1,'73.40','2018-12-30 05:46:59','1');
-insert into sku_data values ('S000128','Jeans - Large0128','Small','P000064',1,'96.78','2018-12-22 01:43:58','1');
+insert into sku_data values ('S000001','Jeans - Large','Large','P000001',1,'91.90','2019-01-02 13:44:08','1');
+insert into sku_data values ('S000002','Jeans - Large0002','Small','P000001',1,'85.45','2019-01-03 20:28:37','1');
+insert into sku_data values ('S000003','Jeans - Large0003','Medium','P000002',1,'90.39','2019-01-05 19:54:04','1');
+insert into sku_data values ('S000004','Jeans - Large0004','Large','P000002',1,'85.74','2019-01-03 04:52:22','1');
+insert into sku_data values ('S000005','Jeans - Large0005','Small','P000003',1,'95.48','2018-12-27 12:43:03','1');
+insert into sku_data values ('S000006','Jeans - Large0006','Medium','P000003',1,'100.56','2018-12-30 17:10:59','1');
+insert into sku_data values ('S000007','Jeans - Large0007','Large','P000004',1,'90.76','2019-01-01 01:19:43','1');
+insert into sku_data values ('S000008','Jeans - Large0008','Small','P000004',1,'74.14','2018-12-19 20:45:29','1');
+insert into sku_data values ('S000009','Jeans - Large0009','Medium','P000005',1,'99.45','2019-01-04 02:29:55','1');
+insert into sku_data values ('S000010','Jeans - Large0010','Large','P000005',1,'91.97','2018-12-31 17:08:00','1');
+insert into sku_data values ('S000011','Jeans - Large0011','Small','P000006',1,'87.53','2018-12-29 11:33:35','1');
+insert into sku_data values ('S000012','Jeans - Large0012','Medium','P000006',1,'77.37','2018-12-25 19:44:06','1');
+insert into sku_data values ('S000013','Jeans - Large0013','Large','P000007',1,'90.34','2018-12-29 16:32:00','1');
+insert into sku_data values ('S000014','Jeans - Large0014','Small','P000007',1,'85.44','2019-01-01 13:06:29','1');
+insert into sku_data values ('S000015','Jeans - Large0015','Medium','P000008',1,'94.96','2018-12-21 07:21:57','1');
+insert into sku_data values ('S000016','Jeans - Large0016','Large','P000008',1,'98.95','2018-12-22 18:34:59','1');
+insert into sku_data values ('S000017','Jeans - Large0017','Small','P000009',1,'96.04','2018-12-29 22:12:35','1');
+insert into sku_data values ('S000018','Jeans - Large0018','Medium','P000009',1,'96.24','2018-12-20 02:40:05','1');
+insert into sku_data values ('S000019','Jeans - Large0019','Large','P000010',1,'82.67','2018-12-29 15:12:52','1');
+insert into sku_data values ('S000020','Jeans - Large0020','Small','P000010',1,'73.53','2018-12-22 23:07:44','1');
+insert into sku_data values ('S000021','Jeans - Large0021','Medium','P000011',1,'78.31','2018-12-23 21:19:41','1');
+insert into sku_data values ('S000022','Jeans - Large0022','Large','P000011',1,'89.03','2019-01-05 04:56:15','1');
+insert into sku_data values ('S000023','Jeans - Large0023','Small','P000012',1,'73.41','2018-12-21 09:11:31','1');
+insert into sku_data values ('S000024','Jeans - Large0024','Medium','P000012',1,'88.13','2019-01-01 06:48:03','1');
+insert into sku_data values ('S000025','Jeans - Large0025','Large','P000013',1,'91.60','2018-12-30 04:30:22','1');
+insert into sku_data values ('S000026','Jeans - Large0026','Small','P000013',1,'93.58','2018-12-28 09:14:19','1');
+insert into sku_data values ('S000027','Jeans - Large0027','Medium','P000014',1,'74.67','2018-12-28 02:03:39','1');
+insert into sku_data values ('S000028','Jeans - Large0028','Large','P000014',1,'82.25','2019-01-06 03:10:27','1');
+insert into sku_data values ('S000029','Jeans - Large0029','Small','P000015',1,'81.56','2019-01-02 14:35:02','1');
+insert into sku_data values ('S000030','Jeans - Large0030','Medium','P000015',1,'103.13','2018-12-21 20:29:52','1');
+insert into sku_data values ('S000031','Jeans - Large0031','Large','P000016',1,'96.31','2018-12-24 18:37:28','1');
+insert into sku_data values ('S000032','Jeans - Large0032','Small','P000016',1,'89.32','2018-12-25 01:54:52','1');
+insert into sku_data values ('S000033','Jeans - Large0033','Medium','P000017',1,'82.11','2018-12-20 04:41:12','1');
+insert into sku_data values ('S000034','Jeans - Large0034','Large','P000017',1,'86.81','2019-01-02 20:07:55','1');
+insert into sku_data values ('S000035','Jeans - Large0035','Small','P000018',1,'95.68','2018-12-25 13:33:30','1');
+insert into sku_data values ('S000036','Jeans - Large0036','Medium','P000018',1,'93.15','2018-12-21 23:20:24','1');
+insert into sku_data values ('S000037','Jeans - Large0037','Large','P000019',1,'76.11','2019-01-04 13:37:01','1');
+insert into sku_data values ('S000038','Jeans - Large0038','Small','P000019',1,'98.91','2019-01-02 08:32:22','1');
+insert into sku_data values ('S000039','Jeans - Large0039','Medium','P000020',1,'86.78','2018-12-26 18:28:40','1');
+insert into sku_data values ('S000040','Jeans - Large0040','Large','P000020',1,'82.02','2018-12-24 02:12:52','1');
+insert into sku_data values ('S000041','Jeans - Large0041','Small','P000021',1,'77.39','2018-12-20 11:50:20','1');
+insert into sku_data values ('S000042','Jeans - Large0042','Medium','P000021',1,'88.85','2019-01-04 18:42:04','1');
+insert into sku_data values ('S000043','Jeans - Large0043','Large','P000022',1,'84.88','2018-12-25 05:36:21','1');
+insert into sku_data values ('S000044','Jeans - Large0044','Small','P000022',1,'101.67','2019-01-06 22:47:27','1');
+insert into sku_data values ('S000045','Jeans - Large0045','Medium','P000023',1,'86.01','2019-01-06 09:07:19','1');
+insert into sku_data values ('S000046','Jeans - Large0046','Large','P000023',1,'91.17','2019-01-01 21:01:05','1');
+insert into sku_data values ('S000047','Jeans - Large0047','Small','P000024',1,'76.49','2019-01-07 08:24:29','1');
+insert into sku_data values ('S000048','Jeans - Large0048','Medium','P000024',1,'100.24','2018-12-29 16:07:02','1');
+insert into sku_data values ('S000049','Jeans - Large0049','Large','P000025',1,'87.59','2019-01-08 11:06:26','1');
+insert into sku_data values ('S000050','Jeans - Large0050','Small','P000025',1,'74.45','2019-01-02 20:29:28','1');
+insert into sku_data values ('S000051','Jeans - Large0051','Medium','P000026',1,'73.22','2019-01-04 21:21:28','1');
+insert into sku_data values ('S000052','Jeans - Large0052','Large','P000026',1,'94.06','2018-12-29 10:01:21','1');
+insert into sku_data values ('S000053','Jeans - Large0053','Small','P000027',1,'73.74','2018-12-26 06:39:49','1');
+insert into sku_data values ('S000054','Jeans - Large0054','Medium','P000027',1,'81.98','2019-01-07 13:09:59','1');
+insert into sku_data values ('S000055','Jeans - Large0055','Large','P000028',1,'83.36','2018-12-27 16:24:02','1');
+insert into sku_data values ('S000056','Jeans - Large0056','Small','P000028',1,'91.35','2018-12-28 12:47:54','1');
+insert into sku_data values ('S000057','Jeans - Large0057','Medium','P000029',1,'83.93','2019-01-01 20:54:05','1');
+insert into sku_data values ('S000058','Jeans - Large0058','Large','P000029',1,'82.25','2019-01-01 03:21:22','1');
+insert into sku_data values ('S000059','Jeans - Large0059','Small','P000030',1,'75.24','2018-12-31 02:40:49','1');
+insert into sku_data values ('S000060','Jeans - Large0060','Medium','P000030',1,'101.33','2019-01-04 07:47:23','1');
+insert into sku_data values ('S000061','Jeans - Large0061','Large','P000031',1,'75.79','2018-12-18 20:54:13','1');
+insert into sku_data values ('S000062','Jeans - Large0062','Small','P000031',1,'85.05','2018-12-30 13:45:19','1');
+insert into sku_data values ('S000063','Jeans - Large0063','Medium','P000032',1,'91.17','2018-12-20 02:41:42','1');
+insert into sku_data values ('S000064','Jeans - Large0064','Large','P000032',1,'83.96','2018-12-25 17:06:52','1');
+insert into sku_data values ('S000065','Jeans - Large0065','Small','P000033',1,'72.98','2019-01-04 15:02:48','1');
+insert into sku_data values ('S000066','Jeans - Large0066','Medium','P000033',1,'80.13','2019-01-05 03:09:59','1');
+insert into sku_data values ('S000067','Jeans - Large0067','Large','P000034',1,'75.24','2018-12-28 14:14:51','1');
+insert into sku_data values ('S000068','Jeans - Large0068','Small','P000034',1,'90.17','2019-01-03 04:55:23','1');
+insert into sku_data values ('S000069','Jeans - Large0069','Medium','P000035',1,'72.52','2018-12-25 18:58:17','1');
+insert into sku_data values ('S000070','Jeans - Large0070','Large','P000035',1,'91.41','2018-12-30 21:08:54','1');
+insert into sku_data values ('S000071','Jeans - Large0071','Small','P000036',1,'84.73','2019-01-08 02:57:14','1');
+insert into sku_data values ('S000072','Jeans - Large0072','Medium','P000036',1,'92.02','2018-12-22 21:12:59','1');
+insert into sku_data values ('S000073','Jeans - Large0073','Large','P000037',1,'83.34','2019-01-07 16:40:23','1');
+insert into sku_data values ('S000074','Jeans - Large0074','Small','P000037',1,'73.78','2018-12-31 16:18:27','1');
+insert into sku_data values ('S000075','Jeans - Large0075','Medium','P000038',1,'92.12','2019-01-06 19:52:50','1');
+insert into sku_data values ('S000076','Jeans - Large0076','Large','P000038',1,'77.59','2018-12-25 17:02:17','1');
+insert into sku_data values ('S000077','Jeans - Large0077','Small','P000039',1,'103.14','2018-12-29 18:10:25','1');
+insert into sku_data values ('S000078','Jeans - Large0078','Medium','P000039',1,'84.80','2019-01-07 19:56:37','1');
+insert into sku_data values ('S000079','Jeans - Large0079','Large','P000040',1,'94.12','2018-12-30 15:04:11','1');
+insert into sku_data values ('S000080','Jeans - Large0080','Small','P000040',1,'80.23','2018-12-19 16:27:11','1');
+insert into sku_data values ('S000081','Jeans - Large0081','Medium','P000041',1,'80.01','2019-01-07 05:02:43','1');
+insert into sku_data values ('S000082','Jeans - Large0082','Large','P000041',1,'102.45','2018-12-22 12:34:04','1');
+insert into sku_data values ('S000083','Jeans - Large0083','Small','P000042',1,'90.70','2019-01-09 09:07:28','1');
+insert into sku_data values ('S000084','Jeans - Large0084','Medium','P000042',1,'82.54','2018-12-31 02:56:02','1');
+insert into sku_data values ('S000085','Jeans - Large0085','Large','P000043',1,'84.06','2018-12-31 20:02:45','1');
+insert into sku_data values ('S000086','Jeans - Large0086','Small','P000043',1,'91.29','2018-12-30 23:24:32','1');
+insert into sku_data values ('S000087','Jeans - Large0087','Medium','P000044',1,'77.67','2018-12-22 10:00:50','1');
+insert into sku_data values ('S000088','Jeans - Large0088','Large','P000044',1,'99.13','2018-12-27 02:45:53','1');
+insert into sku_data values ('S000089','Jeans - Large0089','Small','P000045',1,'100.76','2018-12-26 20:32:09','1');
+insert into sku_data values ('S000090','Jeans - Large0090','Medium','P000045',1,'75.42','2018-12-27 21:13:10','1');
+insert into sku_data values ('S000091','Jeans - Large0091','Large','P000046',1,'95.73','2019-01-04 14:28:05','1');
+insert into sku_data values ('S000092','Jeans - Large0092','Small','P000046',1,'84.59','2018-12-23 19:28:58','1');
+insert into sku_data values ('S000093','Jeans - Large0093','Medium','P000047',1,'89.11','2018-12-23 12:20:35','1');
+insert into sku_data values ('S000094','Jeans - Large0094','Large','P000047',1,'92.84','2019-01-04 20:30:21','1');
+insert into sku_data values ('S000095','Jeans - Large0095','Small','P000048',1,'92.68','2018-12-26 00:43:33','1');
+insert into sku_data values ('S000096','Jeans - Large0096','Medium','P000048',1,'79.01','2019-01-07 05:34:09','1');
+insert into sku_data values ('S000097','Jeans - Large0097','Large','P000049',1,'72.60','2018-12-26 00:56:07','1');
+insert into sku_data values ('S000098','Jeans - Large0098','Small','P000049',1,'83.85','2018-12-29 03:29:13','1');
+insert into sku_data values ('S000099','Jeans - Large0099','Medium','P000050',1,'90.38','2018-12-31 08:24:09','1');
+insert into sku_data values ('S000100','Jeans - Large0100','Large','P000050',1,'98.14','2018-12-19 13:48:37','1');
+insert into sku_data values ('S000101','Jeans - Large0101','Small','P000051',1,'85.37','2018-12-26 23:22:24','1');
+insert into sku_data values ('S000102','Jeans - Large0102','Medium','P000051',1,'98.92','2018-12-31 23:06:23','1');
+insert into sku_data values ('S000103','Jeans - Large0103','Large','P000052',1,'88.23','2018-12-20 11:50:34','1');
+insert into sku_data values ('S000104','Jeans - Large0104','Small','P000052',1,'103.15','2019-01-01 19:44:13','1');
+insert into sku_data values ('S000105','Jeans - Large0105','Medium','P000053',1,'97.82','2019-01-07 10:18:18','1');
+insert into sku_data values ('S000106','Jeans - Large0106','Large','P000053',1,'89.02','2018-12-29 21:24:31','1');
+insert into sku_data values ('S000107','Jeans - Large0107','Small','P000054',1,'86.44','2019-01-03 10:19:22','1');
+insert into sku_data values ('S000108','Jeans - Large0108','Medium','P000054',1,'98.94','2018-12-31 05:09:59','1');
+insert into sku_data values ('S000109','Jeans - Large0109','Large','P000055',1,'99.94','2019-01-08 06:40:09','1');
+insert into sku_data values ('S000110','Jeans - Large0110','Small','P000055',1,'82.10','2018-12-30 05:47:49','1');
+insert into sku_data values ('S000111','Jeans - Large0111','Medium','P000056',1,'78.58','2018-12-28 21:04:14','1');
+insert into sku_data values ('S000112','Jeans - Large0112','Large','P000056',1,'92.14','2018-12-26 23:27:23','1');
+insert into sku_data values ('S000113','Jeans - Large0113','Small','P000057',1,'79.66','2018-12-19 09:34:16','1');
+insert into sku_data values ('S000114','Jeans - Large0114','Medium','P000057',1,'85.87','2018-12-21 05:53:16','1');
+insert into sku_data values ('S000115','Jeans - Large0115','Large','P000058',1,'102.91','2018-12-29 20:28:00','1');
+insert into sku_data values ('S000116','Jeans - Large0116','Small','P000058',1,'97.09','2018-12-29 16:53:13','1');
+insert into sku_data values ('S000117','Jeans - Large0117','Medium','P000059',1,'90.05','2018-12-22 20:24:05','1');
+insert into sku_data values ('S000118','Jeans - Large0118','Large','P000059',1,'102.65','2018-12-23 13:04:36','1');
+insert into sku_data values ('S000119','Jeans - Large0119','Small','P000060',1,'93.36','2019-01-04 19:47:37','1');
+insert into sku_data values ('S000120','Jeans - Large0120','Medium','P000060',1,'91.35','2018-12-25 05:35:30','1');
+insert into sku_data values ('S000121','Jeans - Large0121','Large','P000061',1,'96.12','2018-12-31 14:51:24','1');
+insert into sku_data values ('S000122','Jeans - Large0122','Small','P000061',1,'76.41','2019-01-07 15:32:03','1');
+insert into sku_data values ('S000123','Jeans - Large0123','Medium','P000062',1,'99.53','2018-12-25 12:29:51','1');
+insert into sku_data values ('S000124','Jeans - Large0124','Large','P000062',1,'93.32','2019-01-01 09:14:42','1');
+insert into sku_data values ('S000125','Jeans - Large0125','Small','P000063',1,'89.24','2018-12-18 21:08:01','1');
+insert into sku_data values ('S000126','Jeans - Large0126','Medium','P000063',1,'80.33','2019-01-02 00:44:36','1');
+insert into sku_data values ('S000127','Jeans - Large0127','Large','P000064',1,'75.02','2018-12-19 18:55:42','1');
+insert into sku_data values ('S000128','Jeans - Large0128','Small','P000064',1,'93.43','2019-01-08 12:31:46','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -557,11 +557,11 @@ insert into user_white_list_data values ('UWL000001','clariones','tester;ios-spo
 insert into user_white_list_data values ('UWL000002','13808188512','tester;ios-spokesperson0002','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-01-01 01:01:15','2018-12-28 21:03:56','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-01-02 19:16:26','2018-12-20 07:31:56','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-01-02 09:44:45','2018-12-24 08:45:27','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2018-12-31 14:09:31','2019-01-05 08:17:51','UD000001',NULL,'BLOCKED0002','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2018-12-19 05:21:42','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2018-12-22 21:18:43','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -592,10 +592,10 @@ insert into object_access_data values ('OA000007','控制访问列表10007','Fra
 insert into object_access_data values ('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000006','1');
 
 	
-insert into login_history_data values ('LH000001','2019-01-06 16:09:05','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2018-12-30 21:31:14','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2018-12-26 22:50:34','192.168.1.1','登陆成功0003','SU000002','1');
-insert into login_history_data values ('LH000004','2019-01-07 11:24:47','192.168.1.2','登陆成功0004','SU000002','1');
+insert into login_history_data values ('LH000001','2018-12-20 00:19:33','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2018-12-28 21:41:25','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2018-12-22 13:35:38','192.168.1.1','登陆成功0003','SU000002','1');
+insert into login_history_data values ('LH000004','2018-12-29 13:42:57','192.168.1.2','登陆成功0004','SU000002','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');

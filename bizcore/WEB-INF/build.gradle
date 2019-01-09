@@ -1,4 +1,4 @@
-group 'com.doublechain'
+group 'com.doublechaintech'
 version '1.0.0'
 
 apply plugin: 'war'
@@ -13,11 +13,14 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 sourceSets {
     main {
+    	output.resourcesDir = file('WEB-INF/classes')
+        java.outputDir = file('WEB-INF/classes')
+        
         java {
-            srcDirs = ['WEB-INF/caf_core_src', 'WEB-INF/caf_custom_src', 'WEB-INF/shuxiang_core_src', 'WEB-INF/shuxiang_custom_src']
+            srcDirs = ['WEB-INF/caf_core_src', 'WEB-INF/caf_custom_src', 'WEB-INF/pim_core_src', 'WEB-INF/pim_custom_src']
         }
         resources {
-            srcDirs = ['WEB-INF/caf_core_src', 'WEB-INF/caf_custom_src', 'WEB-INF/shuxiang_core_src', 'WEB-INF/shuxiang_custom_src']
+            srcDirs = ['WEB-INF/caf_core_src', 'WEB-INF/caf_custom_src', 'WEB-INF/pim_core_src', 'WEB-INF/pim_custom_src']
         }
     }
     test {
@@ -38,7 +41,7 @@ repositories {
 }
 
 dependencies {
-
+	compile group: 'com.auth0', name: 'java-jwt', version: '3.4.0'
     compile group: 'org.apache.poi', name: 'poi', version: '3.17'
     compile group: 'cglib', name: 'cglib', version: '3.2.6'
     compile group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: '3.3.1'
@@ -68,15 +71,13 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-tx', version: '4.3.16.RELEASE'
     compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
     compile fileTree(dir: 'WEB-INF/lib', include: '*.jar')
-
     providedCompile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
-
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 war {
     from 'viewlayers'
-    archiveName = 'shuxiang.war'
+    archiveName = 'pim.war'
     webXml = file('WEB-INF/web.xml')
 }
 

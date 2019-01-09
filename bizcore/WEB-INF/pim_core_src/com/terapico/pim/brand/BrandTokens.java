@@ -118,7 +118,7 @@ public class BrandTokens extends CommonTokens{
 	}
 	
 	public BrandTokens searchAllTextOfProductList(String verb, String value){	
-		String field = "id|displayName|origin|remark";
+		String field = "id|name|origin|remark";
 		addSearchMoreOptions(PRODUCT_LIST,productListSearchCounter++, field, verb, value);
 		return this;
 	}

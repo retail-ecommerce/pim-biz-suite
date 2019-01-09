@@ -451,7 +451,7 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 	
 	
 
-	protected void checkParamsForAddingCatalog(PimUserContext userContext, String siteId, String displayName, String sellerId,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingCatalog(PimUserContext userContext, String siteId, String name, String sellerId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -460,7 +460,7 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 		userContext.getChecker().checkIdOfSite(siteId);
 
 		
-		userContext.getChecker().checkDisplayNameOfCatalog(displayName);
+		userContext.getChecker().checkNameOfCatalog(name);
 		
 		userContext.getChecker().checkSellerIdOfCatalog(sellerId);
 	
@@ -468,12 +468,12 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 
 	
 	}
-	public  Site addCatalog(PimUserContext userContext, String siteId, String displayName, String sellerId, String [] tokensExpr) throws Exception
+	public  Site addCatalog(PimUserContext userContext, String siteId, String name, String sellerId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingCatalog(userContext,siteId,displayName, sellerId,tokensExpr);
+		checkParamsForAddingCatalog(userContext,siteId,name, sellerId,tokensExpr);
 		
-		Catalog catalog = createCatalog(userContext,displayName, sellerId);
+		Catalog catalog = createCatalog(userContext,name, sellerId);
 		
 		Site site = loadSite(userContext, siteId, allTokens());
 		synchronized(site){ 
@@ -486,20 +486,20 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 			return present(userContext,site, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingCatalogProperties(PimUserContext userContext, String siteId,String id,String displayName,String sellerId,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingCatalogProperties(PimUserContext userContext, String siteId,String id,String name,String sellerId,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSite(siteId);
 		userContext.getChecker().checkIdOfCatalog(id);
 		
-		userContext.getChecker().checkDisplayNameOfCatalog( displayName);
+		userContext.getChecker().checkNameOfCatalog( name);
 		userContext.getChecker().checkSellerIdOfCatalog( sellerId);
 
 		userContext.getChecker().throwExceptionIfHasErrors(SiteManagerException.class);
 		
 	}
-	public  Site updateCatalogProperties(PimUserContext userContext, String siteId, String id,String displayName,String sellerId, String [] tokensExpr) throws Exception
+	public  Site updateCatalogProperties(PimUserContext userContext, String siteId, String id,String name,String sellerId, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingCatalogProperties(userContext,siteId,id,displayName,sellerId,tokensExpr);
+		checkParamsForUpdatingCatalogProperties(userContext,siteId,id,name,sellerId,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -514,7 +514,7 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 		
 		Catalog item = siteToUpdate.getCatalogList().first();
 		
-		item.updateDisplayName( displayName );
+		item.updateName( name );
 		item.updateSellerId( sellerId );
 
 		
@@ -526,12 +526,12 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 	}
 	
 	
-	protected Catalog createCatalog(PimUserContext userContext, String displayName, String sellerId) throws Exception{
+	protected Catalog createCatalog(PimUserContext userContext, String name, String sellerId) throws Exception{
 
 		Catalog catalog = new Catalog();
 		
 		
-		catalog.setDisplayName(displayName);		
+		catalog.setName(name);		
 		catalog.setSellerId(sellerId);
 	
 		
@@ -644,8 +644,8 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 		userContext.getChecker().checkVersionOfCatalog(catalogVersion);
 		
 
-		if(Catalog.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfCatalog(parseString(newValueExpr));
+		if(Catalog.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfCatalog(parseString(newValueExpr));
 		}
 		
 		if(Catalog.SELLER_ID_PROPERTY.equals(property)){

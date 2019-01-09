@@ -12,7 +12,7 @@ public interface LevelNCategoryManager{
 
 		
 
-	public LevelNCategory createLevelNCategory(PimUserContext userContext, String parentCategoryId, String displayName) throws Exception;	
+	public LevelNCategory createLevelNCategory(PimUserContext userContext, String parentCategoryId, String name) throws Exception;	
 	public LevelNCategory updateLevelNCategory(PimUserContext userContext,String levelNCategoryId, int levelNCategoryVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public LevelNCategory loadLevelNCategory(PimUserContext userContext, String levelNCategoryId, String [] tokensExpr) throws Exception;
 	public LevelNCategory internalSaveLevelNCategory(PimUserContext userContext, LevelNCategory levelNCategory) throws Exception;
@@ -28,9 +28,9 @@ public interface LevelNCategoryManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  ProductManager getProductManager(PimUserContext userContext, String levelNCategoryId, String displayName, String brandId, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
+	//public  ProductManager getProductManager(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
 	
-	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String displayName, String brandId, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
+	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
 	public  LevelNCategory removeProduct(PimUserContext userContext, String levelNCategoryId, String productId, int productVersion,String [] tokensExpr)  throws Exception;
 	public  LevelNCategory updateProduct(PimUserContext userContext, String levelNCategoryId, String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

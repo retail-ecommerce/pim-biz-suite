@@ -154,7 +154,7 @@ public class ProductTokens extends CommonTokens{
 	}
 	
 	public ProductTokens searchAllTextOfSkuList(String verb, String value){	
-		String field = "id|displayName|size";
+		String field = "id|name|size";
 		addSearchMoreOptions(SKU_LIST,skuListSearchCounter++, field, verb, value);
 		return this;
 	}

@@ -12,7 +12,7 @@ public interface ProductManager{
 
 		
 
-	public Product createProduct(PimUserContext userContext, String displayName, String parentCategoryId, String brandId, String origin, String catalogId, String remark) throws Exception;	
+	public Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark) throws Exception;	
 	public Product updateProduct(PimUserContext userContext,String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Product loadProduct(PimUserContext userContext, String productId, String [] tokensExpr) throws Exception;
 	public Product internalSaveProduct(PimUserContext userContext, Product product) throws Exception;
@@ -30,9 +30,9 @@ public interface ProductManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  SkuManager getSkuManager(PimUserContext userContext, String productId, String displayName, String size, boolean active, BigDecimal basePrice ,String [] tokensExpr)  throws Exception;
+	//public  SkuManager getSkuManager(PimUserContext userContext, String productId, String name, String size, boolean active, BigDecimal basePrice ,String [] tokensExpr)  throws Exception;
 	
-	public  Product addSku(PimUserContext userContext, String productId, String displayName, String size, boolean active, BigDecimal basePrice , String [] tokensExpr)  throws Exception;
+	public  Product addSku(PimUserContext userContext, String productId, String name, String size, boolean active, BigDecimal basePrice , String [] tokensExpr)  throws Exception;
 	public  Product removeSku(PimUserContext userContext, String productId, String skuId, int skuVersion,String [] tokensExpr)  throws Exception;
 	public  Product updateSku(PimUserContext userContext, String productId, String skuId, int skuVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

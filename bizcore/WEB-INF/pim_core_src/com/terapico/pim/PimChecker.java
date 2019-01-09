@@ -122,11 +122,11 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  DISPLAY_NAME_OF_CATALOG ="catalog.display_name";
-	public PimChecker checkDisplayNameOfCatalog(String displayName)
+	public static final String  NAME_OF_CATALOG ="catalog.name";
+	public PimChecker checkNameOfCatalog(String name)
 	{
 		
-	 	checkStringLengthRange(displayName,2, 20,DISPLAY_NAME_OF_CATALOG ); 		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_CATALOG ); 		
 		
 		return this;
 	}	 			
@@ -176,11 +176,11 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  DISPLAY_NAME_OF_LEVEL_ONE_CATEGORY ="level_one_category.display_name";
-	public PimChecker checkDisplayNameOfLevelOneCategory(String displayName)
+	public static final String  NAME_OF_LEVEL_ONE_CATEGORY ="level_one_category.name";
+	public PimChecker checkNameOfLevelOneCategory(String name)
 	{
 		
-	 	checkStringLengthRange(displayName,4, 52,DISPLAY_NAME_OF_LEVEL_ONE_CATEGORY ); 		
+	 	checkStringLengthRange(name,4, 52,NAME_OF_LEVEL_ONE_CATEGORY ); 		
 		
 		return this;
 	}	 			
@@ -212,11 +212,11 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  DISPLAY_NAME_OF_LEVEL_TWO_CATEGORY ="level_two_category.display_name";
-	public PimChecker checkDisplayNameOfLevelTwoCategory(String displayName)
+	public static final String  NAME_OF_LEVEL_TWO_CATEGORY ="level_two_category.name";
+	public PimChecker checkNameOfLevelTwoCategory(String name)
 	{
 		
-	 	checkStringLengthRange(displayName,4, 52,DISPLAY_NAME_OF_LEVEL_TWO_CATEGORY ); 		
+	 	checkStringLengthRange(name,4, 52,NAME_OF_LEVEL_TWO_CATEGORY ); 		
 		
 		return this;
 	}	 			
@@ -248,11 +248,11 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  DISPLAY_NAME_OF_LEVEL_N_CATEGORY ="level_n_category.display_name";
-	public PimChecker checkDisplayNameOfLevelNCategory(String displayName)
+	public static final String  NAME_OF_LEVEL_N_CATEGORY ="level_n_category.name";
+	public PimChecker checkNameOfLevelNCategory(String name)
 	{
 		
-	 	checkStringLengthRange(displayName,3, 44,DISPLAY_NAME_OF_LEVEL_N_CATEGORY ); 		
+	 	checkStringLengthRange(name,3, 44,NAME_OF_LEVEL_N_CATEGORY ); 		
 		
 		return this;
 	}	 			
@@ -320,11 +320,11 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  DISPLAY_NAME_OF_PRODUCT ="product.display_name";
-	public PimChecker checkDisplayNameOfProduct(String displayName)
+	public static final String  NAME_OF_PRODUCT ="product.name";
+	public PimChecker checkNameOfProduct(String name)
 	{
 		
-	 	checkStringLengthRange(displayName,2, 20,DISPLAY_NAME_OF_PRODUCT ); 		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_PRODUCT ); 		
 		
 		return this;
 	}	 			
@@ -392,11 +392,11 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  DISPLAY_NAME_OF_SKU ="sku.display_name";
-	public PimChecker checkDisplayNameOfSku(String displayName)
+	public static final String  NAME_OF_SKU ="sku.name";
+	public PimChecker checkNameOfSku(String name)
 	{
 		
-	 	checkStringLengthRange(displayName,4, 52,DISPLAY_NAME_OF_SKU ); 		
+	 	checkStringLengthRange(name,4, 52,NAME_OF_SKU ); 		
 		
 		return this;
 	}	 			

@@ -12,7 +12,7 @@ public interface LevelTwoCategoryManager{
 
 		
 
-	public LevelTwoCategory createLevelTwoCategory(PimUserContext userContext, String parentCategoryId, String displayName) throws Exception;	
+	public LevelTwoCategory createLevelTwoCategory(PimUserContext userContext, String parentCategoryId, String name) throws Exception;	
 	public LevelTwoCategory updateLevelTwoCategory(PimUserContext userContext,String levelTwoCategoryId, int levelTwoCategoryVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public LevelTwoCategory loadLevelTwoCategory(PimUserContext userContext, String levelTwoCategoryId, String [] tokensExpr) throws Exception;
 	public LevelTwoCategory internalSaveLevelTwoCategory(PimUserContext userContext, LevelTwoCategory levelTwoCategory) throws Exception;
@@ -28,9 +28,9 @@ public interface LevelTwoCategoryManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  LevelNCategoryManager getLevelNCategoryManager(PimUserContext userContext, String levelTwoCategoryId, String displayName ,String [] tokensExpr)  throws Exception;
+	//public  LevelNCategoryManager getLevelNCategoryManager(PimUserContext userContext, String levelTwoCategoryId, String name ,String [] tokensExpr)  throws Exception;
 	
-	public  LevelTwoCategory addLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String displayName , String [] tokensExpr)  throws Exception;
+	public  LevelTwoCategory addLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String name , String [] tokensExpr)  throws Exception;
 	public  LevelTwoCategory removeLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String levelNCategoryId, int levelNCategoryVersion,String [] tokensExpr)  throws Exception;
 	public  LevelTwoCategory updateLevelNCategory(PimUserContext userContext, String levelTwoCategoryId, String levelNCategoryId, int levelNCategoryVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

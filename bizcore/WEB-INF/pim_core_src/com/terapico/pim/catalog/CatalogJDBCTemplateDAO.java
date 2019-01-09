@@ -625,7 +625,7 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	protected Object[] prepareCatalogUpdateParameters(Catalog catalog){
  		Object[] parameters = new Object[6];
  
- 		parameters[0] = catalog.getDisplayName();
+ 		parameters[0] = catalog.getName();
  		parameters[1] = catalog.getSellerId(); 	
  		if(catalog.getSite() != null){
  			parameters[2] = catalog.getSite().getId();
@@ -643,7 +643,7 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		catalog.setId(newCatalogId);
 		parameters[0] =  catalog.getId();
  
- 		parameters[1] = catalog.getDisplayName();
+ 		parameters[1] = catalog.getName();
  		parameters[2] = catalog.getSellerId(); 	
  		if(catalog.getSite() != null){
  			parameters[3] = catalog.getSite().getId();
@@ -1037,13 +1037,13 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
     public SmartList<Catalog> requestCandidateCatalogForLevelOneCategory(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(CatalogTable.COLUMN_DISPLAY_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
+		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
     }
 		
     public SmartList<Catalog> requestCandidateCatalogForProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(CatalogTable.COLUMN_DISPLAY_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
+		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
     }
 		
 

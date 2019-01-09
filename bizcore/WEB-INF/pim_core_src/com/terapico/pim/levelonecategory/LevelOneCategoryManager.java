@@ -12,7 +12,7 @@ public interface LevelOneCategoryManager{
 
 		
 
-	public LevelOneCategory createLevelOneCategory(PimUserContext userContext, String catalogId, String displayName) throws Exception;	
+	public LevelOneCategory createLevelOneCategory(PimUserContext userContext, String catalogId, String name) throws Exception;	
 	public LevelOneCategory updateLevelOneCategory(PimUserContext userContext,String levelOneCategoryId, int levelOneCategoryVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public LevelOneCategory loadLevelOneCategory(PimUserContext userContext, String levelOneCategoryId, String [] tokensExpr) throws Exception;
 	public LevelOneCategory internalSaveLevelOneCategory(PimUserContext userContext, LevelOneCategory levelOneCategory) throws Exception;
@@ -28,9 +28,9 @@ public interface LevelOneCategoryManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  LevelTwoCategoryManager getLevelTwoCategoryManager(PimUserContext userContext, String levelOneCategoryId, String displayName ,String [] tokensExpr)  throws Exception;
+	//public  LevelTwoCategoryManager getLevelTwoCategoryManager(PimUserContext userContext, String levelOneCategoryId, String name ,String [] tokensExpr)  throws Exception;
 	
-	public  LevelOneCategory addLevelTwoCategory(PimUserContext userContext, String levelOneCategoryId, String displayName , String [] tokensExpr)  throws Exception;
+	public  LevelOneCategory addLevelTwoCategory(PimUserContext userContext, String levelOneCategoryId, String name , String [] tokensExpr)  throws Exception;
 	public  LevelOneCategory removeLevelTwoCategory(PimUserContext userContext, String levelOneCategoryId, String levelTwoCategoryId, int levelTwoCategoryVersion,String [] tokensExpr)  throws Exception;
 	public  LevelOneCategory updateLevelTwoCategory(PimUserContext userContext, String levelOneCategoryId, String levelTwoCategoryId, int levelTwoCategoryVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

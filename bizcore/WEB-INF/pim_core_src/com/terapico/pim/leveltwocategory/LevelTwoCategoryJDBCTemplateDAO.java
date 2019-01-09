@@ -529,7 +529,7 @@ public class LevelTwoCategoryJDBCTemplateDAO extends PimNamingServiceDAO impleme
  			parameters[0] = levelTwoCategory.getParentCategory().getId();
  		}
  
- 		parameters[1] = levelTwoCategory.getDisplayName();		
+ 		parameters[1] = levelTwoCategory.getName();		
  		parameters[2] = levelTwoCategory.nextVersion();
  		parameters[3] = levelTwoCategory.getId();
  		parameters[4] = levelTwoCategory.getVersion();
@@ -547,7 +547,7 @@ public class LevelTwoCategoryJDBCTemplateDAO extends PimNamingServiceDAO impleme
  		
  		}
  		
- 		parameters[2] = levelTwoCategory.getDisplayName();		
+ 		parameters[2] = levelTwoCategory.getName();		
  				
  		return parameters;
  	}

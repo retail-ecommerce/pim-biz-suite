@@ -169,14 +169,14 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
  	
 
 
-	public LevelNCategory createLevelNCategory(PimUserContext userContext,String parentCategoryId, String displayName) throws Exception
+	public LevelNCategory createLevelNCategory(PimUserContext userContext,String parentCategoryId, String name) throws Exception
 	{
 		
 		
 
 		
 
-		userContext.getChecker().checkDisplayNameOfLevelNCategory(displayName);
+		userContext.getChecker().checkNameOfLevelNCategory(name);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(LevelNCategoryManagerException.class);
 
@@ -188,7 +188,7 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		levelNCategory.setParentCategory(parentCategory);
 		
 		
-		levelNCategory.setDisplayName(displayName);
+		levelNCategory.setName(name);
 
 		levelNCategory = saveLevelNCategory(userContext, levelNCategory, emptyOptions());
 		
@@ -215,8 +215,8 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		
 
 		
-		if(LevelNCategory.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfLevelNCategory(parseString(newValueExpr));
+		if(LevelNCategory.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfLevelNCategory(parseString(newValueExpr));
 		}
 	
 		userContext.getChecker().throwExceptionIfHasErrors(LevelNCategoryManagerException.class);
@@ -465,7 +465,7 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 	
 	
 
-	protected void checkParamsForAddingProduct(PimUserContext userContext, String levelNCategoryId, String displayName, String brandId, String origin, String catalogId, String remark,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -474,7 +474,7 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		userContext.getChecker().checkIdOfLevelNCategory(levelNCategoryId);
 
 		
-		userContext.getChecker().checkDisplayNameOfProduct(displayName);
+		userContext.getChecker().checkNameOfProduct(name);
 		
 		userContext.getChecker().checkBrandIdOfProduct(brandId);
 		
@@ -488,12 +488,12 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 
 	
 	}
-	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String displayName, String brandId, String origin, String catalogId, String remark, String [] tokensExpr) throws Exception
+	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingProduct(userContext,levelNCategoryId,displayName, brandId, origin, catalogId, remark,tokensExpr);
+		checkParamsForAddingProduct(userContext,levelNCategoryId,name, brandId, origin, catalogId, remark,tokensExpr);
 		
-		Product product = createProduct(userContext,displayName, brandId, origin, catalogId, remark);
+		Product product = createProduct(userContext,name, brandId, origin, catalogId, remark);
 		
 		LevelNCategory levelNCategory = loadLevelNCategory(userContext, levelNCategoryId, allTokens());
 		synchronized(levelNCategory){ 
@@ -506,21 +506,21 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 			return present(userContext,levelNCategory, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingProductProperties(PimUserContext userContext, String levelNCategoryId,String id,String displayName,String origin,String remark,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingProductProperties(PimUserContext userContext, String levelNCategoryId,String id,String name,String origin,String remark,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfLevelNCategory(levelNCategoryId);
 		userContext.getChecker().checkIdOfProduct(id);
 		
-		userContext.getChecker().checkDisplayNameOfProduct( displayName);
+		userContext.getChecker().checkNameOfProduct( name);
 		userContext.getChecker().checkOriginOfProduct( origin);
 		userContext.getChecker().checkRemarkOfProduct( remark);
 
 		userContext.getChecker().throwExceptionIfHasErrors(LevelNCategoryManagerException.class);
 		
 	}
-	public  LevelNCategory updateProductProperties(PimUserContext userContext, String levelNCategoryId, String id,String displayName,String origin,String remark, String [] tokensExpr) throws Exception
+	public  LevelNCategory updateProductProperties(PimUserContext userContext, String levelNCategoryId, String id,String name,String origin,String remark, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingProductProperties(userContext,levelNCategoryId,id,displayName,origin,remark,tokensExpr);
+		checkParamsForUpdatingProductProperties(userContext,levelNCategoryId,id,name,origin,remark,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -535,7 +535,7 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		
 		Product item = levelNCategoryToUpdate.getProductList().first();
 		
-		item.updateDisplayName( displayName );
+		item.updateName( name );
 		item.updateOrigin( origin );
 		item.updateRemark( remark );
 
@@ -548,12 +548,12 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 	}
 	
 	
-	protected Product createProduct(PimUserContext userContext, String displayName, String brandId, String origin, String catalogId, String remark) throws Exception{
+	protected Product createProduct(PimUserContext userContext, String name, String brandId, String origin, String catalogId, String remark) throws Exception{
 
 		Product product = new Product();
 		
 		
-		product.setDisplayName(displayName);		
+		product.setName(name);		
 		Brand  brand = new Brand();
 		brand.setId(brandId);		
 		product.setBrand(brand);		
@@ -674,8 +674,8 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		userContext.getChecker().checkVersionOfProduct(productVersion);
 		
 
-		if(Product.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfProduct(parseString(newValueExpr));
+		if(Product.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfProduct(parseString(newValueExpr));
 		}
 		
 		if(Product.ORIGIN_PROPERTY.equals(property)){

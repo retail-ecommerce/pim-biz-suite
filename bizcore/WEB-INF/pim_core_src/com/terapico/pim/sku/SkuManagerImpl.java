@@ -161,14 +161,14 @@ public class SkuManagerImpl extends CustomPimCheckerManager implements SkuManage
  	
 
 
-	public Sku createSku(PimUserContext userContext,String displayName, String size, String productId, boolean active, BigDecimal basePrice) throws Exception
+	public Sku createSku(PimUserContext userContext,String name, String size, String productId, boolean active, BigDecimal basePrice) throws Exception
 	{
 		
 		
 
 		
 
-		userContext.getChecker().checkDisplayNameOfSku(displayName);
+		userContext.getChecker().checkNameOfSku(name);
 		userContext.getChecker().checkSizeOfSku(size);
 		userContext.getChecker().checkActiveOfSku(active);
 		userContext.getChecker().checkBasePriceOfSku(basePrice);
@@ -178,7 +178,7 @@ public class SkuManagerImpl extends CustomPimCheckerManager implements SkuManage
 
 		Sku sku=createNewSku();	
 
-		sku.setDisplayName(displayName);
+		sku.setName(name);
 		sku.setSize(size);
 			
 		Product product = loadProduct(userContext, productId,emptyOptions());
@@ -212,8 +212,8 @@ public class SkuManagerImpl extends CustomPimCheckerManager implements SkuManage
 		userContext.getChecker().checkVersionOfSku( skuVersion);
 		
 
-		if(Sku.DISPLAY_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisplayNameOfSku(parseString(newValueExpr));
+		if(Sku.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfSku(parseString(newValueExpr));
 		}
 		if(Sku.SIZE_PROPERTY.equals(property)){
 			userContext.getChecker().checkSizeOfSku(parseString(newValueExpr));
@@ -367,7 +367,7 @@ public class SkuManagerImpl extends CustomPimCheckerManager implements SkuManage
 		result.setFilterKey(filterKey==null?"":filterKey.trim());
 		result.setPageNo(pageNo);
 		result.setValueFieldName("id");
-		result.setDisplayFieldName("displayName");
+		result.setDisplayFieldName("name");
 		
 		pageNo = Math.max(1, pageNo);
 		int pageSize = 20;

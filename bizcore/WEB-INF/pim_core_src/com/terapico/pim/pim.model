@@ -16,24 +16,24 @@
 		last_update_time="updateTime()"
 		
 	/>
-	<catalog display_name="Cloth"  seller_id="SC000001" site="$(site)"/>	
+	<catalog name="Cloth"  seller_id="SC000001" site="$(site)"/>	
 	
-	<level_one_category catalog="$(catalog)" display_name="Level One Cat"/>	
-	<level_two_category parent_category="$(level_one_category)" display_name="Level Two Cat"/>	
+	<level_one_category catalog="$(catalog)" name="Level One Cat"/>	
+	<level_two_category parent_category="$(level_one_category)" name="Level Two Cat"/>	
 	
-	<level_n_category parent_category="$(level_two_category)" display_name="Level N Cat"/>	
+	<level_n_category parent_category="$(level_two_category)" name="Level N Cat"/>	
 	<brand brand_name="Telsa Auto" 
 		logo="logo.jpg" 
 		remark="The brand a great that has Roadester, Model S and Model X, Model 3 is in development"
 	/>
-	<product display_name="Jeans" parent_category="$(level_n_category)" brand="$(brand)" 
+	<product name="Jeans" parent_category="$(level_n_category)" brand="$(brand)" 
 		origin="China|US|Japan|French"
 		catalog="$(catalog)"
 		remark="The brand a great that has Roadester, Model S and Model X, Model 3 is in development"
 		last_update_time="updateTime()"
 	/>
 
-	<sku display_name="Jeans - Large" 
+	<sku name="Jeans - Large" 
 		size="Large|Small|Medium" 
 		product="$(product)" 
 		active="true" 
