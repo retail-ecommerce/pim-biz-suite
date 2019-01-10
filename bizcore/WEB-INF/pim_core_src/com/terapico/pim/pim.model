@@ -1,5 +1,5 @@
 <?xml version='1.0' ?>
-<root org="tera_pico">
+<root org="tera_pico" chinese_name="Product Information Services" english_name="Product Information Services">
 
 	<platform
 		name="Chain eComerce Platform"

@@ -77,7 +77,7 @@ public class PimUserContextImpl extends UserContextImpl implements PimUserContex
 	public Map<String,String> getLocaleMap(){
 		
 		init();
-		return chineseMap;
+		return englishMap;
 		
 	}
 	
