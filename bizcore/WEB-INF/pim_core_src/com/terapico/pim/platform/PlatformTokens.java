@@ -63,7 +63,9 @@ public class PlatformTokens extends CommonTokens{
 	protected static PlatformTokens allTokens(){
 		
 		return start()
-			.withSiteList();
+			.withSiteList()
+			.withCatalogList()
+			.withBrandList();
 	
 	}
 	public static PlatformTokens withoutListsTokens(){
@@ -144,10 +146,136 @@ public class PlatformTokens extends CommonTokens{
 	
 	
 		
+	protected static final String CATALOG_LIST = "catalogList";
+	public String getCatalogList(){
+		return CATALOG_LIST;
+	}
+	public PlatformTokens withCatalogList(){		
+		addSimpleOptions(CATALOG_LIST);
+		return this;
+	}
+	public PlatformTokens analyzeCatalogList(){		
+		addSimpleOptions(CATALOG_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeCatalogListEnabled(){		
+		
+		return checkOptions(this.options(), CATALOG_LIST+".anaylze");
+	}
+	public PlatformTokens extractMoreFromCatalogList(String idsSeperatedWithComma){		
+		addSimpleOptions(CATALOG_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int catalogListSortCounter = 0;
+	public PlatformTokens sortCatalogListWith(String field, String descOrAsc){		
+		addSortMoreOptions(CATALOG_LIST,catalogListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int catalogListSearchCounter = 0;
+	public PlatformTokens searchCatalogListWith(String field, String verb, String value){		
+		addSearchMoreOptions(CATALOG_LIST,catalogListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public PlatformTokens searchAllTextOfCatalogList(String verb, String value){	
+		String field = "id|name|sellerId";
+		addSearchMoreOptions(CATALOG_LIST,catalogListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public PlatformTokens rowsPerPageOfCatalogList(int rowsPerPage){		
+		addSimpleOptions(CATALOG_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public PlatformTokens currentPageNumberOfCatalogList(int currentPageNumber){		
+		addSimpleOptions(CATALOG_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public PlatformTokens retainColumnsOfCatalogList(String[] columns){		
+		addSimpleOptions(CATALOG_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public PlatformTokens excludeColumnsOfCatalogList(String[] columns){		
+		addSimpleOptions(CATALOG_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
+	protected static final String BRAND_LIST = "brandList";
+	public String getBrandList(){
+		return BRAND_LIST;
+	}
+	public PlatformTokens withBrandList(){		
+		addSimpleOptions(BRAND_LIST);
+		return this;
+	}
+	public PlatformTokens analyzeBrandList(){		
+		addSimpleOptions(BRAND_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeBrandListEnabled(){		
+		
+		return checkOptions(this.options(), BRAND_LIST+".anaylze");
+	}
+	public PlatformTokens extractMoreFromBrandList(String idsSeperatedWithComma){		
+		addSimpleOptions(BRAND_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int brandListSortCounter = 0;
+	public PlatformTokens sortBrandListWith(String field, String descOrAsc){		
+		addSortMoreOptions(BRAND_LIST,brandListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int brandListSearchCounter = 0;
+	public PlatformTokens searchBrandListWith(String field, String verb, String value){		
+		addSearchMoreOptions(BRAND_LIST,brandListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public PlatformTokens searchAllTextOfBrandList(String verb, String value){	
+		String field = "id|brandName|remark";
+		addSearchMoreOptions(BRAND_LIST,brandListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public PlatformTokens rowsPerPageOfBrandList(int rowsPerPage){		
+		addSimpleOptions(BRAND_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public PlatformTokens currentPageNumberOfBrandList(int currentPageNumber){		
+		addSimpleOptions(BRAND_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public PlatformTokens retainColumnsOfBrandList(String[] columns){		
+		addSimpleOptions(BRAND_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public PlatformTokens excludeColumnsOfBrandList(String[] columns){		
+		addSimpleOptions(BRAND_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  PlatformTokens searchEntireObjectText(String verb, String value){
 		
 		searchAllTextOfSiteList(verb, value);	
+		searchAllTextOfCatalogList(verb, value);	
+		searchAllTextOfBrandList(verb, value);	
 		return this;
 	}
 }

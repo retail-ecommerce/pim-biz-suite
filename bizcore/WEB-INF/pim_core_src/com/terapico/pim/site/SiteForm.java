@@ -207,6 +207,20 @@ public class SiteForm extends BaseForm {
 		return siteIdFieldForCatalog("siteId","");
 	}
 
+
+	public SiteForm platformIdFieldForCatalog(String parameterName, String initValue){
+		FormField field =  platformIdFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public SiteForm platformIdFieldForCatalog(String initValue){
+		return platformIdFieldForCatalog("platformId",initValue);
+	}
+	public SiteForm platformIdFieldForCatalog(){
+		return platformIdFieldForCatalog("platformId","");
+	}
+
 	
 
 	

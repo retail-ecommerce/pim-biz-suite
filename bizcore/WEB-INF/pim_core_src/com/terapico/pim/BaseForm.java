@@ -248,6 +248,19 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField platformIdFromCatalog(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("catalog.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
+		return field;
+	}
+
 	protected FormField idFromLevelOneCategory(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("Id");
@@ -414,6 +427,19 @@ public class BaseForm extends GenericForm{
 		field.setType("text");
 		field.setRequired(true);
 		field.setPlaceholder("请填写Remark");
+		return field;
+	}
+
+	protected FormField platformIdFromBrand(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("brand.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
 		return field;
 	}
 

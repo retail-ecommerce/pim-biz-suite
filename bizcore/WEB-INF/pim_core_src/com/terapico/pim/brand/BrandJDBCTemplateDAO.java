@@ -19,14 +19,25 @@ import com.terapico.pim.PimUserContext;
 
 
 import com.terapico.pim.product.Product;
+import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.product.ProductDAO;
+import com.terapico.pim.platform.PlatformDAO;
 
 
 
 import org.springframework.dao.EmptyResultDataAccessException;
 
 public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDAO{
+ 
+ 	
+ 	private  PlatformDAO  platformDAO;
+ 	public void setPlatformDAO(PlatformDAO platformDAO){
+	 	this.platformDAO = platformDAO;
+ 	}
+ 	public PlatformDAO getPlatformDAO(){
+	 	return this.platformDAO;
+ 	}
 
 
 			
@@ -190,7 +201,21 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 	
 	}
 
+ 
 
+ 	protected boolean isExtractPlatformEnabled(Map<String,Object> options){
+ 		
+	 	return checkOptions(options, BrandTokens.PLATFORM);
+ 	}
+
+ 	protected boolean isSavePlatformEnabled(Map<String,Object> options){
+	 	
+ 		return checkOptions(options, BrandTokens.PLATFORM);
+ 	}
+ 	
+
+ 	
+ 
 		
 	
 	protected boolean isExtractProductListEnabled(Map<String,Object> options){		
@@ -231,7 +256,11 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 	protected Brand loadInternalBrand(AccessKey accessKey, Map<String,Object> loadOptions) throws Exception{
 		
 		Brand brand = extractBrand(accessKey, loadOptions);
-
+ 	
+ 		if(isExtractPlatformEnabled(loadOptions)){
+	 		extractPlatform(brand, loadOptions);
+ 		}
+ 
 		
 		if(isExtractProductListEnabled(loadOptions)){
 	 		extractProductList(brand, loadOptions);
@@ -245,7 +274,27 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 		
 	}
 
-	
+	 
+
+ 	protected Brand extractPlatform(Brand brand, Map<String,Object> options) throws Exception{
+
+		if(brand.getPlatform() == null){
+			return brand;
+		}
+		String platformId = brand.getPlatform().getId();
+		if( platformId == null){
+			return brand;
+		}
+		Platform platform = getPlatformDAO().load(platformId,options);
+		if(platform != null){
+			brand.setPlatform(platform);
+		}
+		
+ 		
+ 		return brand;
+ 	}
+ 		
+ 
 		
 	protected void enhanceProductList(SmartList<Product> productList,Map<String,Object> options){
 		//extract multiple list from difference sources
@@ -298,6 +347,40 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 	
 		
 		
+  	
+ 	public SmartList<Brand> findBrandByPlatform(String platformId,Map<String,Object> options){
+ 	
+  		SmartList<Brand> resultList = queryWith(BrandTable.COLUMN_PLATFORM, platformId, options, getBrandMapper());
+		// analyzeBrandByPlatform(resultList, platformId, options);
+		return resultList;
+ 	}
+ 	 
+ 
+ 	public SmartList<Brand> findBrandByPlatform(String platformId, int start, int count,Map<String,Object> options){
+ 		
+ 		SmartList<Brand> resultList =  queryWithRange(BrandTable.COLUMN_PLATFORM, platformId, options, getBrandMapper(), start, count);
+ 		//analyzeBrandByPlatform(resultList, platformId, options);
+ 		return resultList;
+ 		
+ 	}
+ 	public void analyzeBrandByPlatform(SmartList<Brand> resultList, String platformId, Map<String,Object> options){
+		if(resultList==null){
+			return;//do nothing when the list is null.
+		}
+
+ 	
+ 		
+ 	}
+ 	@Override
+ 	public int countBrandByPlatform(String platformId,Map<String,Object> options){
+
+ 		return countWith(BrandTable.COLUMN_PLATFORM, platformId, options);
+ 	}
+ 	@Override
+	public Map<String, Integer> countBrandByPlatformIds(String[] ids, Map<String, Object> options) {
+		return countWithIds(BrandTable.COLUMN_PLATFORM, ids, options);
+	}
+ 	
  	
 		
 		
@@ -440,26 +523,35 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
  		return prepareBrandCreateParameters(brand);
  	}
  	protected Object[] prepareBrandUpdateParameters(Brand brand){
- 		Object[] parameters = new Object[6];
+ 		Object[] parameters = new Object[7];
  
  		parameters[0] = brand.getBrandName();
  		parameters[1] = brand.getLogo();
- 		parameters[2] = brand.getRemark();		
- 		parameters[3] = brand.nextVersion();
- 		parameters[4] = brand.getId();
- 		parameters[5] = brand.getVersion();
+ 		parameters[2] = brand.getRemark(); 	
+ 		if(brand.getPlatform() != null){
+ 			parameters[3] = brand.getPlatform().getId();
+ 		}
+ 		
+ 		parameters[4] = brand.nextVersion();
+ 		parameters[5] = brand.getId();
+ 		parameters[6] = brand.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareBrandCreateParameters(Brand brand){
-		Object[] parameters = new Object[4];
+		Object[] parameters = new Object[5];
 		String newBrandId=getNextId();
 		brand.setId(newBrandId);
 		parameters[0] =  brand.getId();
  
  		parameters[1] = brand.getBrandName();
  		parameters[2] = brand.getLogo();
- 		parameters[3] = brand.getRemark();		
+ 		parameters[3] = brand.getRemark(); 	
+ 		if(brand.getPlatform() != null){
+ 			parameters[4] = brand.getPlatform().getId();
+ 		
+ 		}
+ 				
  				
  		return parameters;
  	}
@@ -467,7 +559,11 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 	protected Brand saveInternalBrand(Brand brand, Map<String,Object> options){
 		
 		saveBrand(brand);
-
+ 	
+ 		if(isSavePlatformEnabled(options)){
+	 		savePlatform(brand, options);
+ 		}
+ 
 		
 		if(isSaveProductListEnabled(options)){
 	 		saveProductList(brand, options);
@@ -483,7 +579,24 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 	
 	
 	//======================================================================================
+	 
+ 
+ 	protected Brand savePlatform(Brand brand, Map<String,Object> options){
+ 		//Call inject DAO to execute this method
+ 		if(brand.getPlatform() == null){
+ 			return brand;//do nothing when it is null
+ 		}
+ 		
+ 		getPlatformDAO().save(brand.getPlatform(),options);
+ 		return brand;
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	 
 	
+ 
 
 	
 	public Brand planToRemoveProductList(Brand brand, String productIds[], Map<String,Object> options)throws Exception{

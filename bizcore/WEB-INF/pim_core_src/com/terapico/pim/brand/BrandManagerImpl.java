@@ -21,7 +21,9 @@ import com.terapico.pim.PimCheckerManager;
 import com.terapico.pim.CustomPimCheckerManager;
 
 import com.terapico.pim.product.Product;
+import com.terapico.pim.platform.Platform;
 
+import com.terapico.pim.platform.CandidatePlatform;
 
 import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.catalog.Catalog;
@@ -150,6 +152,7 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		addAction(userContext, brand, tokens,"@update","updateBrand","updateBrand/"+brand.getId()+"/","main","primary");
 		addAction(userContext, brand, tokens,"@copy","cloneBrand","cloneBrand/"+brand.getId()+"/","main","primary");
 		
+		addAction(userContext, brand, tokens,"brand.transfer_to_platform","transferToAnotherPlatform","transferToAnotherPlatform/"+brand.getId()+"/","main","primary");
 		addAction(userContext, brand, tokens,"brand.addProduct","addProduct","addProduct/"+brand.getId()+"/","productList","primary");
 		addAction(userContext, brand, tokens,"brand.removeProduct","removeProduct","removeProduct/"+brand.getId()+"/","productList","primary");
 		addAction(userContext, brand, tokens,"brand.updateProduct","updateProduct","updateProduct/"+brand.getId()+"/","productList","primary");
@@ -166,7 +169,7 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
  	
 
 
-	public Brand createBrand(PimUserContext userContext,String brandName, String logo, String remark) throws Exception
+	public Brand createBrand(PimUserContext userContext,String brandName, String logo, String remark, String platformId) throws Exception
 	{
 		
 		
@@ -185,6 +188,11 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		brand.setBrandName(brandName);
 		brand.setLogo(logo);
 		brand.setRemark(remark);
+			
+		Platform platform = loadPlatform(userContext, platformId,emptyOptions());
+		brand.setPlatform(platform);
+		
+		
 
 		brand = saveBrand(userContext, brand, emptyOptions());
 		
@@ -217,7 +225,9 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		}
 		if(Brand.REMARK_PROPERTY.equals(property)){
 			userContext.getChecker().checkRemarkOfBrand(parseString(newValueExpr));
-		}
+		}		
+
+		
 	
 		userContext.getChecker().throwExceptionIfHasErrors(BrandManagerException.class);
 	
@@ -323,7 +333,66 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		return BrandTokens.mergeAll(tokens).done();
 	}
 	
-//--------------------------------------------------------------
+	protected void checkParamsForTransferingAnotherPlatform(PimUserContext userContext, String brandId, String anotherPlatformId) throws Exception
+ 	{
+ 		
+ 		userContext.getChecker().checkIdOfBrand(brandId);
+ 		userContext.getChecker().checkIdOfPlatform(anotherPlatformId);//check for optional reference
+ 		userContext.getChecker().throwExceptionIfHasErrors(BrandManagerException.class);
+ 		
+ 	}
+ 	public Brand transferToAnotherPlatform(PimUserContext userContext, String brandId, String anotherPlatformId) throws Exception
+ 	{
+ 		checkParamsForTransferingAnotherPlatform(userContext, brandId,anotherPlatformId);
+ 
+		Brand brand = loadBrand(userContext, brandId, allTokens());	
+		synchronized(brand){
+			//will be good when the brand loaded from this JVM process cache.
+			//also good when there is a ram based DAO implementation
+			Platform platform = loadPlatform(userContext, anotherPlatformId, emptyOptions());		
+			brand.updatePlatform(platform);		
+			brand = saveBrand(userContext, brand, emptyOptions());
+			
+			return present(userContext,brand, allTokens());
+			
+		}
+
+ 	}
+ 	
+	 	
+ 	
+ 	
+	public CandidatePlatform requestCandidatePlatform(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
+
+		CandidatePlatform result = new CandidatePlatform();
+		result.setOwnerClass(ownerClass);
+		result.setOwnerId(id);
+		result.setFilterKey(filterKey==null?"":filterKey.trim());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName("name");
+		
+		pageNo = Math.max(1, pageNo);
+		int pageSize = 20;
+		//requestCandidateProductForSkuAsOwner
+		SmartList<Platform> candidateList = userContext.getDAOGroup().getPlatformDAO().requestCandidatePlatformForBrand(userContext,ownerClass, id, filterKey, pageNo, pageSize);
+		result.setCandidates(candidateList);
+		int totalCount = candidateList.getTotalCount();
+		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
+		return result;
+	}
+ 	
+ //--------------------------------------------------------------
+	
+	 	
+ 	protected Platform loadPlatform(PimUserContext userContext, String newPlatformId, Map<String,Object> options) throws Exception
+ 	{
+		
+ 		return userContext.getDAOGroup().getPlatformDAO().load(newPlatformId, options);
+ 	}
+ 	
+ 	
+ 	
 	
 	//--------------------------------------------------------------
 

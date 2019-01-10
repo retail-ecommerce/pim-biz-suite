@@ -23,8 +23,10 @@ import com.terapico.pim.CustomPimCheckerManager;
 import com.terapico.pim.site.Site;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.levelonecategory.LevelOneCategory;
+import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.site.CandidateSite;
+import com.terapico.pim.platform.CandidatePlatform;
 
 import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.catalog.Catalog;
@@ -154,6 +156,7 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		addAction(userContext, catalog, tokens,"@copy","cloneCatalog","cloneCatalog/"+catalog.getId()+"/","main","primary");
 		
 		addAction(userContext, catalog, tokens,"catalog.transfer_to_site","transferToAnotherSite","transferToAnotherSite/"+catalog.getId()+"/","main","primary");
+		addAction(userContext, catalog, tokens,"catalog.transfer_to_platform","transferToAnotherPlatform","transferToAnotherPlatform/"+catalog.getId()+"/","main","primary");
 		addAction(userContext, catalog, tokens,"catalog.addLevelOneCategory","addLevelOneCategory","addLevelOneCategory/"+catalog.getId()+"/","levelOneCategoryList","primary");
 		addAction(userContext, catalog, tokens,"catalog.removeLevelOneCategory","removeLevelOneCategory","removeLevelOneCategory/"+catalog.getId()+"/","levelOneCategoryList","primary");
 		addAction(userContext, catalog, tokens,"catalog.updateLevelOneCategory","updateLevelOneCategory","updateLevelOneCategory/"+catalog.getId()+"/","levelOneCategoryList","primary");
@@ -174,7 +177,7 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
  	
 
 
-	public Catalog createCatalog(PimUserContext userContext,String name, String sellerId, String siteId) throws Exception
+	public Catalog createCatalog(PimUserContext userContext,String name, String sellerId, String siteId, String platformId) throws Exception
 	{
 		
 		
@@ -194,6 +197,11 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 			
 		Site site = loadSite(userContext, siteId,emptyOptions());
 		catalog.setSite(site);
+		
+		
+			
+		Platform platform = loadPlatform(userContext, platformId,emptyOptions());
+		catalog.setPlatform(platform);
 		
 		
 
@@ -226,6 +234,8 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		if(Catalog.SELLER_ID_PROPERTY.equals(property)){
 			userContext.getChecker().checkSellerIdOfCatalog(parseString(newValueExpr));
 		}		
+
+				
 
 		
 	
@@ -383,6 +393,55 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		return result;
 	}
  	
+ 	protected void checkParamsForTransferingAnotherPlatform(PimUserContext userContext, String catalogId, String anotherPlatformId) throws Exception
+ 	{
+ 		
+ 		userContext.getChecker().checkIdOfCatalog(catalogId);
+ 		userContext.getChecker().checkIdOfPlatform(anotherPlatformId);//check for optional reference
+ 		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+ 		
+ 	}
+ 	public Catalog transferToAnotherPlatform(PimUserContext userContext, String catalogId, String anotherPlatformId) throws Exception
+ 	{
+ 		checkParamsForTransferingAnotherPlatform(userContext, catalogId,anotherPlatformId);
+ 
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());	
+		synchronized(catalog){
+			//will be good when the catalog loaded from this JVM process cache.
+			//also good when there is a ram based DAO implementation
+			Platform platform = loadPlatform(userContext, anotherPlatformId, emptyOptions());		
+			catalog.updatePlatform(platform);		
+			catalog = saveCatalog(userContext, catalog, emptyOptions());
+			
+			return present(userContext,catalog, allTokens());
+			
+		}
+
+ 	}
+ 	
+	 	
+ 	
+ 	
+	public CandidatePlatform requestCandidatePlatform(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
+
+		CandidatePlatform result = new CandidatePlatform();
+		result.setOwnerClass(ownerClass);
+		result.setOwnerId(id);
+		result.setFilterKey(filterKey==null?"":filterKey.trim());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName("name");
+		
+		pageNo = Math.max(1, pageNo);
+		int pageSize = 20;
+		//requestCandidateProductForSkuAsOwner
+		SmartList<Platform> candidateList = userContext.getDAOGroup().getPlatformDAO().requestCandidatePlatformForCatalog(userContext,ownerClass, id, filterKey, pageNo, pageSize);
+		result.setCandidates(candidateList);
+		int totalCount = candidateList.getTotalCount();
+		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
+		return result;
+	}
+ 	
  //--------------------------------------------------------------
 	
 	 	
@@ -390,6 +449,16 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
  	{
 		
  		return userContext.getDAOGroup().getSiteDAO().load(newSiteId, options);
+ 	}
+ 	
+ 	
+ 	
+	
+	 	
+ 	protected Platform loadPlatform(PimUserContext userContext, String newPlatformId, Map<String,Object> options) throws Exception
+ 	{
+		
+ 		return userContext.getDAOGroup().getPlatformDAO().load(newPlatformId, options);
  	}
  	
  	

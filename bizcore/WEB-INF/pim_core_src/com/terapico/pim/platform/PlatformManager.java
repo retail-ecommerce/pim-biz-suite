@@ -37,6 +37,26 @@ public interface PlatformManager{
 
 	*/
 
+	//public  CatalogManager getCatalogManager(PimUserContext userContext, String platformId, String name, String sellerId, String siteId ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addCatalog(PimUserContext userContext, String platformId, String name, String sellerId, String siteId , String [] tokensExpr)  throws Exception;
+	public  Platform removeCatalog(PimUserContext userContext, String platformId, String catalogId, int catalogVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateCatalog(PimUserContext userContext, String platformId, String catalogId, int catalogVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  BrandManager getBrandManager(PimUserContext userContext, String platformId, String brandName, String logo, String remark ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addBrand(PimUserContext userContext, String platformId, String brandName, String logo, String remark , String [] tokensExpr)  throws Exception;
+	public  Platform removeBrand(PimUserContext userContext, String platformId, String brandId, int brandVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateBrand(PimUserContext userContext, String platformId, String brandId, int brandVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
 
 
 }

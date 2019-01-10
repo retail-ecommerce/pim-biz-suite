@@ -112,7 +112,7 @@ public class BaseRelation{
 		String [] siteRelatedObjectNames = {"platform:Platform"};
 		addRelationIndex("Site",siteRelatedObjectNames);
 
-		String [] catalogRelatedObjectNames = {"site:Site"};
+		String [] catalogRelatedObjectNames = {"site:Site","platform:Platform"};
 		addRelationIndex("Catalog",catalogRelatedObjectNames);
 
 		String [] levelOneCategoryRelatedObjectNames = {"catalog:Catalog"};
@@ -123,6 +123,9 @@ public class BaseRelation{
 
 		String [] levelNCategoryRelatedObjectNames = {"parent_category:LevelTwoCategory"};
 		addRelationIndex("LevelNCategory",levelNCategoryRelatedObjectNames);
+
+		String [] brandRelatedObjectNames = {"platform:Platform"};
+		addRelationIndex("Brand",brandRelatedObjectNames);
 
 		String [] productRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog"};
 		addRelationIndex("Product",productRelatedObjectNames);
@@ -182,9 +185,11 @@ public class BaseRelation{
 	{
 		addGenericRelation("Site"                                  ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Catalog"                               ,TRUST_CHAIN_READ,"site");
+		addGenericRelation("Catalog"                               ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("LevelOneCategory"                      ,TRUST_CHAIN_READ,"catalog");
 		addGenericRelation("LevelTwoCategory"                      ,TRUST_CHAIN_READ,"parentCategory");
 		addGenericRelation("LevelNCategory"                        ,TRUST_CHAIN_READ,"parentCategory");
+		addGenericRelation("Brand"                                 ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"parentCategory");
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"brand");
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"catalog");

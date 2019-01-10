@@ -121,6 +121,14 @@ public class PimCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
+	public static final String  PLATFORM_OF_CATALOG ="catalog.platform";
+	protected void checkPlatformIdOfCatalog(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfCatalog(userContext,platformId, messageList); 		
+		
+	}	 			
+	
 	public static final String  VERSION_OF_CATALOG ="catalog.version";
 	protected void checkVersionOfCatalog(PimUserContext userContext, int version, List<Message> messageList)
 	{
@@ -254,6 +262,14 @@ public class PimCheckerManager extends BaseManagerImpl {
 	{
 		
 	 	checkStringLengthRange(remark,22, 336,REMARK_OF_BRAND, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_BRAND ="brand.platform";
+	protected void checkPlatformIdOfBrand(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfBrand(userContext,platformId, messageList); 		
 		
 	}	 			
 	

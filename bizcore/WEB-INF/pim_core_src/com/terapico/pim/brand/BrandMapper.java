@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.math.BigDecimal;
 import com.terapico.pim.BaseRowMapper;
+import com.terapico.pim.platform.Platform;
 
 public class BrandMapper extends BaseRowMapper<Brand>{
 	
@@ -15,6 +16,7 @@ public class BrandMapper extends BaseRowMapper<Brand>{
  		setBrandName(brand, rs, rowNumber); 		
  		setLogo(brand, rs, rowNumber); 		
  		setRemark(brand, rs, rowNumber); 		
+ 		setPlatform(brand, rs, rowNumber); 		
  		setVersion(brand, rs, rowNumber);
 
 		return brand;
@@ -71,7 +73,25 @@ public class BrandMapper extends BaseRowMapper<Brand>{
 		
 		brand.setRemark(remark);
 	}
-		
+		 		
+ 	protected void setPlatform(Brand brand, ResultSet rs, int rowNumber) throws SQLException{
+ 		String platformId = rs.getString(BrandTable.COLUMN_PLATFORM);
+ 		if( platformId == null){
+ 			return;
+ 		}
+ 		if( platformId.isEmpty()){
+ 			return;
+ 		}
+ 		Platform platform = brand.getPlatform();
+ 		if( platform != null ){
+ 			//if the root object 'brand' already have the property, just set the id for it;
+ 			platform.setId(platformId);
+ 			
+ 			return;
+ 		}
+ 		brand.setPlatform(createEmptyPlatform(platformId));
+ 	}
+ 	
 	protected void setVersion(Brand brand, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
@@ -86,6 +106,13 @@ public class BrandMapper extends BaseRowMapper<Brand>{
 		
 		
 
+ 	protected Platform  createEmptyPlatform(String platformId){
+ 		Platform platform = new Platform();
+ 		platform.setId(platformId);
+ 		platform.setVersion(Integer.MAX_VALUE);
+ 		return platform;
+ 	}
+ 	
 }
 
 

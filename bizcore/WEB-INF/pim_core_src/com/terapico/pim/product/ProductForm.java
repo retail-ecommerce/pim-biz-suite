@@ -233,6 +233,20 @@ public class ProductForm extends BaseForm {
 	}
 
 
+	public ProductForm platformIdFieldOfBrand(String parameterName, String initValue){
+		FormField field =  platformIdFromBrand(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public ProductForm platformIdFieldOfBrand(String initValue){
+		return platformIdFieldOfBrand("platformId",initValue);
+	}
+	public ProductForm platformIdFieldOfBrand(){
+		return platformIdFieldOfBrand("platformId","");
+	}
+
+
 	public ProductForm catalogIdFieldOfCatalog(String parameterName, String initValue){
 		FormField field =  idFromCatalog(parameterName, initValue);
 		this.addFormField(field);	
@@ -286,6 +300,20 @@ public class ProductForm extends BaseForm {
 	}
 	public ProductForm siteIdFieldOfCatalog(){
 		return siteIdFieldOfCatalog("siteId","");
+	}
+
+
+	public ProductForm platformIdFieldOfCatalog(String parameterName, String initValue){
+		FormField field =  platformIdFromCatalog(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public ProductForm platformIdFieldOfCatalog(String initValue){
+		return platformIdFieldOfCatalog("platformId",initValue);
+	}
+	public ProductForm platformIdFieldOfCatalog(){
+		return platformIdFieldOfCatalog("platformId","");
 	}
 
 	

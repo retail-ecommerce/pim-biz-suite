@@ -8,6 +8,7 @@ import com.terapico.pim.SmartList;
 import com.terapico.pim.MultipleAccessKey;
 import com.terapico.pim.PimUserContext;
 import com.terapico.pim.product.ProductDAO;
+import com.terapico.pim.platform.PlatformDAO;
 
 
 public interface BrandDAO{
@@ -57,6 +58,14 @@ public interface BrandDAO{
 	
 	
 	public SmartList<Brand> queryList(String sql, Object ... parmeters);
-}
+ 
+ 	public SmartList<Brand> findBrandByPlatform(String platformId, Map<String,Object> options);
+ 	public int countBrandByPlatform(String platformId, Map<String,Object> options);
+ 	public Map<String, Integer> countBrandByPlatformIds(String[] ids, Map<String,Object> options);
+ 	public SmartList<Brand> findBrandByPlatform(String platformId, int start, int count, Map<String,Object> options);
+ 	public void analyzeBrandByPlatform(SmartList<Brand> resultList, String platformId, Map<String,Object> options);
+
+ 
+ }
 
 

@@ -52,6 +52,10 @@ public interface SiteDAO{
 	public Site planToRemoveCatalogListWithSellerId(Site site, String sellerIdId, Map<String,Object> options)throws Exception;
 	public int countCatalogListWithSellerId(String siteId, String sellerIdId, Map<String,Object> options)throws Exception;
 	
+	//disconnect Site with platform in Catalog
+	public Site planToRemoveCatalogListWithPlatform(Site site, String platformId, Map<String,Object> options)throws Exception;
+	public int countCatalogListWithPlatform(String siteId, String platformId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<Site> queryList(String sql, Object ... parmeters);
  

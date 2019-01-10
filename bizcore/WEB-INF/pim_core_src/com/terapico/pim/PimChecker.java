@@ -149,6 +149,15 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  PLATFORM_OF_CATALOG ="catalog.platform";
+	public PimChecker checkPlatformIdOfCatalog(String platformId)
+	{
+		
+	 	checkIdOfCatalog(platformId ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  VERSION_OF_CATALOG ="catalog.version";
 	public PimChecker checkVersionOfCatalog(int version)
 	{
@@ -298,6 +307,15 @@ public class PimChecker extends BaseChecker{
 	{
 		
 	 	checkStringLengthRange(remark,22, 336,REMARK_OF_BRAND ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_BRAND ="brand.platform";
+	public PimChecker checkPlatformIdOfBrand(String platformId)
+	{
+		
+	 	checkIdOfBrand(platformId ); 		
 		
 		return this;
 	}	 			

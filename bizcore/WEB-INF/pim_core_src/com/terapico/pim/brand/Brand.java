@@ -12,6 +12,7 @@ import com.terapico.pim.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.terapico.pim.product.Product;
+import com.terapico.pim.platform.Platform;
 
 @JsonSerialize(using = BrandSerializer.class)
 public class Brand extends BaseEntity implements  java.io.Serializable{
@@ -21,6 +22,7 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 	public static final String BRAND_NAME_PROPERTY            = "brandName"         ;
 	public static final String LOGO_PROPERTY                  = "logo"              ;
 	public static final String REMARK_PROPERTY                = "remark"            ;
+	public static final String PLATFORM_PROPERTY              = "platform"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
 	public static final String PRODUCT_LIST                             = "productList"       ;
@@ -48,6 +50,7 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 	protected		String              	mBrandName          ;
 	protected		String              	mLogo               ;
 	protected		String              	mRemark             ;
+	protected		Platform            	mPlatform           ;
 	protected		int                 	mVersion            ;
 	
 	
@@ -59,15 +62,17 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 	}
 	//disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
+		setPlatform( null );
 
 		this.changed = true;
 	}
 	
-	public 	Brand(String brandName, String logo, String remark)
+	public 	Brand(String brandName, String logo, String remark, Platform platform)
 	{
 		setBrandName(brandName);
 		setLogo(logo);
 		setRemark(remark);
+		setPlatform(platform);
 
 		this.mProductList = new SmartList<Product>();	
 	}
@@ -192,6 +197,24 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 	}
 	
 	
+	public void setPlatform(Platform platform){
+		this.mPlatform = platform;;
+	}
+	public Platform getPlatform(){
+		return this.mPlatform;
+	}
+	public Brand updatePlatform(Platform platform){
+		this.mPlatform = platform;;
+		this.changed = true;
+		return this;
+	}
+	
+	
+	public void clearPlatform(){
+		setPlatform ( null );
+		this.changed = true;
+	}
+	
 	public void setVersion(int version){
 		this.mVersion = version;;
 	}
@@ -306,6 +329,7 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
+		addToEntityList(this, entityList, getPlatform(), internalType);
 
 		
 	}
@@ -335,6 +359,7 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, BRAND_NAME_PROPERTY, getBrandName());
 		appendKeyValuePair(result, LOGO_PROPERTY, getLogo());
 		appendKeyValuePair(result, REMARK_PROPERTY, getRemark());
+		appendKeyValuePair(result, PLATFORM_PROPERTY, getPlatform());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 		appendKeyValuePair(result, PRODUCT_LIST, getProductList());
 		if(!getProductList().isEmpty()){
@@ -359,6 +384,7 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 			dest.setBrandName(getBrandName());
 			dest.setLogo(getLogo());
 			dest.setRemark(getRemark());
+			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
 			dest.setProductList(getProductList());
 
@@ -375,6 +401,9 @@ public class Brand extends BaseEntity implements  java.io.Serializable{
 		stringBuilder.append("\tbrandName='"+getBrandName()+"';");
 		stringBuilder.append("\tlogo='"+getLogo()+"';");
 		stringBuilder.append("\tremark='"+getRemark()+"';");
+		if(getPlatform() != null ){
+ 			stringBuilder.append("\tplatform='Platform("+getPlatform().getId()+")';");
+ 		}
 		stringBuilder.append("\tversion='"+getVersion()+"';");
 		stringBuilder.append("}");
 

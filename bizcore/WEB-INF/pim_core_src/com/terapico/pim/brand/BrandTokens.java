@@ -63,12 +63,14 @@ public class BrandTokens extends CommonTokens{
 	protected static BrandTokens allTokens(){
 		
 		return start()
+			.withPlatform()
 			.withProductList();
 	
 	}
 	public static BrandTokens withoutListsTokens(){
 		
-		return start();
+		return start()
+			.withPlatform();
 	
 	}
 	
@@ -82,6 +84,16 @@ public class BrandTokens extends CommonTokens{
 		return start().done();
 	}
 
+	protected static final String PLATFORM = "platform";
+	public String getPlatform(){
+		return PLATFORM;
+	}
+	public BrandTokens withPlatform(){		
+		addSimpleOptions(PLATFORM);
+		return this;
+	}
+	
+	
 	protected static final String PRODUCT_LIST = "productList";
 	public String getProductList(){
 		return PRODUCT_LIST;

@@ -75,8 +75,78 @@ public class BrandForm extends BaseForm {
 		return remarkField("remark","");
 	}
 
+
+	public BrandForm platformIdField(String parameterName, String initValue){
+		FormField field = platformIdFromBrand(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public BrandForm platformIdField(String initValue){
+		return platformIdField("platformId",initValue);
+	}
+	public BrandForm platformIdField(){
+		return platformIdField("platformId","");
+	}
+
 	
 	
+
+
+	public BrandForm platformIdFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  idFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public BrandForm platformIdFieldOfPlatform(String initValue){
+		return platformIdFieldOfPlatform("platformId",initValue);
+	}
+	public BrandForm platformIdFieldOfPlatform(){
+		return platformIdFieldOfPlatform("platformId","");
+	}
+
+
+	public BrandForm nameFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  nameFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public BrandForm nameFieldOfPlatform(String initValue){
+		return nameFieldOfPlatform("name",initValue);
+	}
+	public BrandForm nameFieldOfPlatform(){
+		return nameFieldOfPlatform("name","");
+	}
+
+
+	public BrandForm introductionFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  introductionFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public BrandForm introductionFieldOfPlatform(String initValue){
+		return introductionFieldOfPlatform("introduction",initValue);
+	}
+	public BrandForm introductionFieldOfPlatform(){
+		return introductionFieldOfPlatform("introduction","");
+	}
+
+
+	public BrandForm currentVersionFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  currentVersionFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public BrandForm currentVersionFieldOfPlatform(String initValue){
+		return currentVersionFieldOfPlatform("currentVersion",initValue);
+	}
+	public BrandForm currentVersionFieldOfPlatform(){
+		return currentVersionFieldOfPlatform("currentVersion","");
+	}
 
 	
 
@@ -195,7 +265,17 @@ public class BrandForm extends BaseForm {
 
 	
 
+	
+ 	public BrandForm transferToAnotherPlatformAction(){
+		FormAction action = new FormAction();
+		action.setLabel("显示");
+		action.setLocaleKey("show");
+		action.setUrl("transferToAnotherPlatform/brandId/");
+		this.addFormAction(action);
+		return this;
+	}
 
+ 
 
 	public BrandForm showAction(){
 		FormAction action = new FormAction();

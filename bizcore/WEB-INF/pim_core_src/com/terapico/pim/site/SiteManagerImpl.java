@@ -26,6 +26,7 @@ import com.terapico.pim.platform.Platform;
 import com.terapico.pim.platform.CandidatePlatform;
 
 import com.terapico.pim.site.Site;
+import com.terapico.pim.platform.Platform;
 
 
 
@@ -445,13 +446,31 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 				return site;
 			}
 	}
+	//disconnect Site with platform in Catalog
+	protected Site breakWithCatalogByPlatform(PimUserContext userContext, String siteId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Site site = loadSite(userContext, siteId, allTokens());
+
+			synchronized(site){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getSiteDAO().planToRemoveCatalogListWithPlatform(site, platformId, this.emptyOptions());
+
+				site = saveSite(userContext, site, tokens().withCatalogList().done());
+				return site;
+			}
+	}
 	
 	
 	
 	
 	
 
-	protected void checkParamsForAddingCatalog(PimUserContext userContext, String siteId, String name, String sellerId,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingCatalog(PimUserContext userContext, String siteId, String name, String sellerId, String platformId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -463,17 +482,19 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 		userContext.getChecker().checkNameOfCatalog(name);
 		
 		userContext.getChecker().checkSellerIdOfCatalog(sellerId);
+		
+		userContext.getChecker().checkPlatformIdOfCatalog(platformId);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(SiteManagerException.class);
 
 	
 	}
-	public  Site addCatalog(PimUserContext userContext, String siteId, String name, String sellerId, String [] tokensExpr) throws Exception
+	public  Site addCatalog(PimUserContext userContext, String siteId, String name, String sellerId, String platformId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingCatalog(userContext,siteId,name, sellerId,tokensExpr);
+		checkParamsForAddingCatalog(userContext,siteId,name, sellerId, platformId,tokensExpr);
 		
-		Catalog catalog = createCatalog(userContext,name, sellerId);
+		Catalog catalog = createCatalog(userContext,name, sellerId, platformId);
 		
 		Site site = loadSite(userContext, siteId, allTokens());
 		synchronized(site){ 
@@ -526,13 +547,16 @@ public class SiteManagerImpl extends CustomPimCheckerManager implements SiteMana
 	}
 	
 	
-	protected Catalog createCatalog(PimUserContext userContext, String name, String sellerId) throws Exception{
+	protected Catalog createCatalog(PimUserContext userContext, String name, String sellerId, String platformId) throws Exception{
 
 		Catalog catalog = new Catalog();
 		
 		
 		catalog.setName(name);		
-		catalog.setSellerId(sellerId);
+		catalog.setSellerId(sellerId);		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		catalog.setPlatform(platform);
 	
 		
 		return catalog;

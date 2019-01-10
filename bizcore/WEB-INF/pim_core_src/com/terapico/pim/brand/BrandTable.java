@@ -21,13 +21,14 @@ public class BrandTable{
 	static final String COLUMN_BRAND_NAME = "brand_name";
 	static final String COLUMN_LOGO = "logo";
 	static final String COLUMN_REMARK = "remark";
+	static final String COLUMN_PLATFORM = "platform";
 	static final String COLUMN_VERSION = "version";
  
 	static final String []ALL_CLOUMNS = {COLUMN_ID, 
-		COLUMN_BRAND_NAME, COLUMN_LOGO, COLUMN_REMARK, 
+		COLUMN_BRAND_NAME, COLUMN_LOGO, COLUMN_REMARK, COLUMN_PLATFORM, 
 		COLUMN_VERSION};
 	static final String []NORMAL_CLOUMNS = {
-		COLUMN_BRAND_NAME, COLUMN_LOGO, COLUMN_REMARK
+		COLUMN_BRAND_NAME, COLUMN_LOGO, COLUMN_REMARK, COLUMN_PLATFORM
 		};
 	
 	

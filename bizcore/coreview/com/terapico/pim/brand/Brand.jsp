@@ -127,7 +127,12 @@
 	
 	
 
-	
+	<div class="row">
+<c:set var="platform" value="${ result.platform}" scope="request" />
+<sky:include page="com/terapico/pim/platform/Platform$Info.jsp" />
+
+</div>
+
 
 
 

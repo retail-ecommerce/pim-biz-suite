@@ -6,6 +6,7 @@ import java.util.Date;
 import java.math.BigDecimal;
 import com.terapico.pim.BaseRowMapper;
 import com.terapico.pim.site.Site;
+import com.terapico.pim.platform.Platform;
 
 public class CatalogMapper extends BaseRowMapper<Catalog>{
 	
@@ -16,6 +17,7 @@ public class CatalogMapper extends BaseRowMapper<Catalog>{
  		setName(catalog, rs, rowNumber); 		
  		setSellerId(catalog, rs, rowNumber); 		
  		setSite(catalog, rs, rowNumber); 		
+ 		setPlatform(catalog, rs, rowNumber); 		
  		setVersion(catalog, rs, rowNumber);
 
 		return catalog;
@@ -78,6 +80,24 @@ public class CatalogMapper extends BaseRowMapper<Catalog>{
  		}
  		catalog.setSite(createEmptySite(siteId));
  	}
+ 	 		
+ 	protected void setPlatform(Catalog catalog, ResultSet rs, int rowNumber) throws SQLException{
+ 		String platformId = rs.getString(CatalogTable.COLUMN_PLATFORM);
+ 		if( platformId == null){
+ 			return;
+ 		}
+ 		if( platformId.isEmpty()){
+ 			return;
+ 		}
+ 		Platform platform = catalog.getPlatform();
+ 		if( platform != null ){
+ 			//if the root object 'catalog' already have the property, just set the id for it;
+ 			platform.setId(platformId);
+ 			
+ 			return;
+ 		}
+ 		catalog.setPlatform(createEmptyPlatform(platformId));
+ 	}
  	
 	protected void setVersion(Catalog catalog, ResultSet rs, int rowNumber) throws SQLException{
 	
@@ -98,6 +118,13 @@ public class CatalogMapper extends BaseRowMapper<Catalog>{
  		site.setId(siteId);
  		site.setVersion(Integer.MAX_VALUE);
  		return site;
+ 	}
+ 	
+ 	protected Platform  createEmptyPlatform(String platformId){
+ 		Platform platform = new Platform();
+ 		platform.setId(platformId);
+ 		platform.setVersion(Integer.MAX_VALUE);
+ 		return platform;
  	}
  	
 }

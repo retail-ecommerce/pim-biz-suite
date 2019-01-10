@@ -21,13 +21,14 @@ public class CatalogTable{
 	static final String COLUMN_NAME = "name";
 	static final String COLUMN_SELLER_ID = "seller_id";
 	static final String COLUMN_SITE = "site";
+	static final String COLUMN_PLATFORM = "platform";
 	static final String COLUMN_VERSION = "version";
  
 	static final String []ALL_CLOUMNS = {COLUMN_ID, 
-		COLUMN_NAME, COLUMN_SELLER_ID, COLUMN_SITE, 
+		COLUMN_NAME, COLUMN_SELLER_ID, COLUMN_SITE, COLUMN_PLATFORM, 
 		COLUMN_VERSION};
 	static final String []NORMAL_CLOUMNS = {
-		COLUMN_NAME, COLUMN_SELLER_ID, COLUMN_SITE
+		COLUMN_NAME, COLUMN_SELLER_ID, COLUMN_SITE, COLUMN_PLATFORM
 		};
 	
 	

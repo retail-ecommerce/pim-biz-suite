@@ -9,7 +9,7 @@
 	<bean id="checker" class="com.terapico.pim.PimChecker" scope="prototype"></bean>
 
 	<bean id="platformManagerBase" class="com.terapico.pim.platform.PlatformManagerImpl"/>
-	<bean id="platformManager" class="com.terapico.pim.platform.PlatformManagerImpl" parent="platformManagerBase" ></bean>
+	<bean id="platformManager" class="com.terapico.pim.platform.PlatformCustomManagerImpl" parent="platformManagerBase" ></bean>
 	
 	<bean id="siteManagerBase" class="com.terapico.pim.site.SiteManagerImpl"/>
 	<bean id="siteManager" class="com.terapico.pim.site.SiteManagerImpl" parent="siteManagerBase" ></bean>

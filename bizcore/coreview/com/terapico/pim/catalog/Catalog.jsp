@@ -132,6 +132,9 @@
 <c:set var="site" value="${ result.site}" scope="request" />
 <sky:include page="com/terapico/pim/site/Site$Info.jsp" />
 
+<c:set var="platform" value="${ result.platform}" scope="request" />
+<sky:include page="com/terapico/pim/platform/Platform$Info.jsp" />
+
 </div>
 
 

@@ -75,6 +75,20 @@ public class CatalogForm extends BaseForm {
 		return siteIdField("siteId","");
 	}
 
+
+	public CatalogForm platformIdField(String parameterName, String initValue){
+		FormField field = platformIdFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public CatalogForm platformIdField(String initValue){
+		return platformIdField("platformId",initValue);
+	}
+	public CatalogForm platformIdField(){
+		return platformIdField("platformId","");
+	}
+
 	
 	
 
@@ -146,6 +160,62 @@ public class CatalogForm extends BaseForm {
 	}
 	public CatalogForm lastUpdateTimeFieldOfSite(){
 		return lastUpdateTimeFieldOfSite("lastUpdateTime","");
+	}
+
+
+	public CatalogForm platformIdFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  idFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public CatalogForm platformIdFieldOfPlatform(String initValue){
+		return platformIdFieldOfPlatform("platformId",initValue);
+	}
+	public CatalogForm platformIdFieldOfPlatform(){
+		return platformIdFieldOfPlatform("platformId","");
+	}
+
+
+	public CatalogForm nameFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  nameFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public CatalogForm nameFieldOfPlatform(String initValue){
+		return nameFieldOfPlatform("name",initValue);
+	}
+	public CatalogForm nameFieldOfPlatform(){
+		return nameFieldOfPlatform("name","");
+	}
+
+
+	public CatalogForm introductionFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  introductionFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public CatalogForm introductionFieldOfPlatform(String initValue){
+		return introductionFieldOfPlatform("introduction",initValue);
+	}
+	public CatalogForm introductionFieldOfPlatform(){
+		return introductionFieldOfPlatform("introduction","");
+	}
+
+
+	public CatalogForm currentVersionFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  currentVersionFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public CatalogForm currentVersionFieldOfPlatform(String initValue){
+		return currentVersionFieldOfPlatform("currentVersion",initValue);
+	}
+	public CatalogForm currentVersionFieldOfPlatform(){
+		return currentVersionFieldOfPlatform("currentVersion","");
 	}
 
 	
@@ -313,6 +383,16 @@ public class CatalogForm extends BaseForm {
 		action.setLabel("显示");
 		action.setLocaleKey("show");
 		action.setUrl("transferToAnotherSite/catalogId/");
+		this.addFormAction(action);
+		return this;
+	}
+
+ 	
+ 	public CatalogForm transferToAnotherPlatformAction(){
+		FormAction action = new FormAction();
+		action.setLabel("显示");
+		action.setLocaleKey("show");
+		action.setUrl("transferToAnotherPlatform/catalogId/");
 		this.addFormAction(action);
 		return this;
 	}

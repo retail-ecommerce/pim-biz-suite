@@ -687,6 +687,50 @@ public class SiteJDBCTemplateDAO extends PimNamingServiceDAO implements SiteDAO{
 		return count;
 	}
 	
+	//disconnect Site with platform in Catalog
+	public Site planToRemoveCatalogListWithPlatform(Site site, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Catalog.SITE_PROPERTY, site.getId());
+		key.put(Catalog.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<Catalog> externalCatalogList = getCatalogDAO().
+				findCatalogWithKey(key, options);
+		if(externalCatalogList == null){
+			return site;
+		}
+		if(externalCatalogList.isEmpty()){
+			return site;
+		}
+		
+		for(Catalog catalog: externalCatalogList){
+			catalog.clearPlatform();
+			catalog.clearSite();
+			
+		}
+		
+		
+		SmartList<Catalog> catalogList = site.getCatalogList();		
+		catalogList.addAllToRemoveList(externalCatalogList);
+		return site;
+	}
+	
+	public int countCatalogListWithPlatform(String siteId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Catalog.SITE_PROPERTY, siteId);
+		key.put(Catalog.PLATFORM_PROPERTY, platformId);
+		
+		int count = getCatalogDAO().countCatalogWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Site saveCatalogList(Site site, Map<String,Object> options){

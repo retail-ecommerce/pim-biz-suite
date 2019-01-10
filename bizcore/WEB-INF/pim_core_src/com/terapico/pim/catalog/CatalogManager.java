@@ -12,13 +12,14 @@ public interface CatalogManager{
 
 		
 
-	public Catalog createCatalog(PimUserContext userContext, String name, String sellerId, String siteId) throws Exception;	
+	public Catalog createCatalog(PimUserContext userContext, String name, String sellerId, String siteId, String platformId) throws Exception;	
 	public Catalog updateCatalog(PimUserContext userContext,String catalogId, int catalogVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Catalog loadCatalog(PimUserContext userContext, String catalogId, String [] tokensExpr) throws Exception;
 	public Catalog internalSaveCatalog(PimUserContext userContext, Catalog catalog) throws Exception;
 	public Catalog internalSaveCatalog(PimUserContext userContext, Catalog catalog,Map<String,Object>option) throws Exception;
 	
 	public Catalog transferToAnotherSite(PimUserContext userContext, String catalogId, String anotherSiteId)  throws Exception;
+ 	public Catalog transferToAnotherPlatform(PimUserContext userContext, String catalogId, String anotherPlatformId)  throws Exception;
  
 
 	public void delete(PimUserContext userContext, String catalogId, int version) throws Exception;

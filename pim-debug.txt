@@ -17,6 +17,7 @@ Id|Id
 Name|Name
 Seller Id|Seller Id
 Site|Site
+Platform|Platform
 Version|Version
 Level One Category|Level One Category
 Id|Id
@@ -38,6 +39,7 @@ Id|Id
 Brand Name|Brand Name
 Logo|Logo
 Remark|Remark
+Platform|Platform
 Version|Version
 Product|Product
 Id|Id

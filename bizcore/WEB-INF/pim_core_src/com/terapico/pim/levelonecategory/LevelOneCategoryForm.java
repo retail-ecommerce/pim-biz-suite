@@ -120,6 +120,20 @@ public class LevelOneCategoryForm extends BaseForm {
 		return siteIdFieldOfCatalog("siteId","");
 	}
 
+
+	public LevelOneCategoryForm platformIdFieldOfCatalog(String parameterName, String initValue){
+		FormField field =  platformIdFromCatalog(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public LevelOneCategoryForm platformIdFieldOfCatalog(String initValue){
+		return platformIdFieldOfCatalog("platformId",initValue);
+	}
+	public LevelOneCategoryForm platformIdFieldOfCatalog(){
+		return platformIdFieldOfCatalog("platformId","");
+	}
+
 	
 
 

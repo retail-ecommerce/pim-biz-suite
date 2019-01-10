@@ -12,13 +12,14 @@ public interface BrandManager{
 
 		
 
-	public Brand createBrand(PimUserContext userContext, String brandName, String logo, String remark) throws Exception;	
+	public Brand createBrand(PimUserContext userContext, String brandName, String logo, String remark, String platformId) throws Exception;	
 	public Brand updateBrand(PimUserContext userContext,String brandId, int brandVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Brand loadBrand(PimUserContext userContext, String brandId, String [] tokensExpr) throws Exception;
 	public Brand internalSaveBrand(PimUserContext userContext, Brand brand) throws Exception;
 	public Brand internalSaveBrand(PimUserContext userContext, Brand brand,Map<String,Object>option) throws Exception;
 	
-
+	public Brand transferToAnotherPlatform(PimUserContext userContext, String brandId, String anotherPlatformId)  throws Exception;
+ 
 
 	public void delete(PimUserContext userContext, String brandId, int version) throws Exception;
 	public int deleteAll(PimUserContext userContext, String secureCode ) throws Exception;

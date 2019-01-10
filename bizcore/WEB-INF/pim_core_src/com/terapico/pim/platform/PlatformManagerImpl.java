@@ -21,8 +21,11 @@ import com.terapico.pim.PimCheckerManager;
 import com.terapico.pim.CustomPimCheckerManager;
 
 import com.terapico.pim.site.Site;
+import com.terapico.pim.catalog.Catalog;
+import com.terapico.pim.brand.Brand;
 
 
+import com.terapico.pim.site.Site;
 import com.terapico.pim.platform.Platform;
 
 
@@ -152,6 +155,14 @@ public class PlatformManagerImpl extends CustomPimCheckerManager implements Plat
 		addAction(userContext, platform, tokens,"platform.removeSite","removeSite","removeSite/"+platform.getId()+"/","siteList","primary");
 		addAction(userContext, platform, tokens,"platform.updateSite","updateSite","updateSite/"+platform.getId()+"/","siteList","primary");
 		addAction(userContext, platform, tokens,"platform.copySiteFrom","copySiteFrom","copySiteFrom/"+platform.getId()+"/","siteList","primary");
+		addAction(userContext, platform, tokens,"platform.addCatalog","addCatalog","addCatalog/"+platform.getId()+"/","catalogList","primary");
+		addAction(userContext, platform, tokens,"platform.removeCatalog","removeCatalog","removeCatalog/"+platform.getId()+"/","catalogList","primary");
+		addAction(userContext, platform, tokens,"platform.updateCatalog","updateCatalog","updateCatalog/"+platform.getId()+"/","catalogList","primary");
+		addAction(userContext, platform, tokens,"platform.copyCatalogFrom","copyCatalogFrom","copyCatalogFrom/"+platform.getId()+"/","catalogList","primary");
+		addAction(userContext, platform, tokens,"platform.addBrand","addBrand","addBrand/"+platform.getId()+"/","brandList","primary");
+		addAction(userContext, platform, tokens,"platform.removeBrand","removeBrand","removeBrand/"+platform.getId()+"/","brandList","primary");
+		addAction(userContext, platform, tokens,"platform.updateBrand","updateBrand","updateBrand/"+platform.getId()+"/","brandList","primary");
+		addAction(userContext, platform, tokens,"platform.copyBrandFrom","copyBrandFrom","copyBrandFrom/"+platform.getId()+"/","brandList","primary");
 	
 		
 		
@@ -314,6 +325,8 @@ public class PlatformManagerImpl extends CustomPimCheckerManager implements Plat
 	protected Map<String,Object> viewTokens(){
 		return tokens().allTokens()
 		.sortSiteListWith("id","desc")
+		.sortCatalogListWith("id","desc")
+		.sortBrandListWith("id","desc")
 		.done();
 
 	}
@@ -362,6 +375,42 @@ public class PlatformManagerImpl extends CustomPimCheckerManager implements Plat
 	}
 
 
+	//disconnect Platform with seller_id in Catalog
+	protected Platform breakWithCatalogBySellerId(PimUserContext userContext, String platformId, String sellerIdId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+
+			synchronized(platform){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveCatalogListWithSellerId(platform, sellerIdId, this.emptyOptions());
+
+				platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+				return platform;
+			}
+	}
+	//disconnect Platform with site in Catalog
+	protected Platform breakWithCatalogBySite(PimUserContext userContext, String platformId, String siteId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+
+			synchronized(platform){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveCatalogListWithSite(platform, siteId, this.emptyOptions());
+
+				platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+				return platform;
+			}
+	}
 	
 	
 	
@@ -601,6 +650,506 @@ public class PlatformManagerImpl extends CustomPimCheckerManager implements Plat
 			site.changeProperty(property, newValueExpr);
 			site.updateLastUpdateTime(userContext.now());
 			platform = savePlatform(userContext, platform, tokens().withSiteList().done());
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingCatalog(PimUserContext userContext, String platformId, String name, String sellerId, String siteId,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+
+		
+		userContext.getChecker().checkNameOfCatalog(name);
+		
+		userContext.getChecker().checkSellerIdOfCatalog(sellerId);
+		
+		userContext.getChecker().checkSiteIdOfCatalog(siteId);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+
+	
+	}
+	public  Platform addCatalog(PimUserContext userContext, String platformId, String name, String sellerId, String siteId, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingCatalog(userContext,platformId,name, sellerId, siteId,tokensExpr);
+		
+		Catalog catalog = createCatalog(userContext,name, sellerId, siteId);
+		
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.addCatalog( catalog );		
+			platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+			
+			userContext.getManagerGroup().getCatalogManager().onNewInstanceCreated(userContext, catalog);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingCatalogProperties(PimUserContext userContext, String platformId,String id,String name,String sellerId,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfCatalog(id);
+		
+		userContext.getChecker().checkNameOfCatalog( name);
+		userContext.getChecker().checkSellerIdOfCatalog( sellerId);
+
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform updateCatalogProperties(PimUserContext userContext, String platformId, String id,String name,String sellerId, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingCatalogProperties(userContext,platformId,id,name,sellerId,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withCatalogListList()
+				.searchCatalogListWith(Catalog.ID_PROPERTY, "is", id).done();
+		
+		Platform platformToUpdate = loadPlatform(userContext, platformId, options);
+		
+		if(platformToUpdate.getCatalogList().isEmpty()){
+			throw new PlatformManagerException("Catalog is NOT FOUND with id: '"+id+"'");
+		}
+		
+		Catalog item = platformToUpdate.getCatalogList().first();
+		
+		item.updateName( name );
+		item.updateSellerId( sellerId );
+
+		
+		//checkParamsForAddingCatalog(userContext,platformId,name, code, used,tokensExpr);
+		Platform platform = savePlatform(userContext, platformToUpdate, tokens().withCatalogList().done());
+		synchronized(platform){ 
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected Catalog createCatalog(PimUserContext userContext, String name, String sellerId, String siteId) throws Exception{
+
+		Catalog catalog = new Catalog();
+		
+		
+		catalog.setName(name);		
+		catalog.setSellerId(sellerId);		
+		Site  site = new Site();
+		site.setId(siteId);		
+		catalog.setSite(site);
+	
+		
+		return catalog;
+	
+		
+	}
+	
+	protected Catalog createIndexedCatalog(String id, int version){
+
+		Catalog catalog = new Catalog();
+		catalog.setId(id);
+		catalog.setVersion(version);
+		return catalog;			
+		
+	}
+	
+	protected void checkParamsForRemovingCatalogList(PimUserContext userContext, String platformId, 
+			String catalogIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		for(String catalogId: catalogIds){
+			userContext.getChecker().checkIdOfCatalog(catalogId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform removeCatalogList(PimUserContext userContext, String platformId, 
+			String catalogIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingCatalogList(userContext, platformId,  catalogIds, tokensExpr);
+			
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+			synchronized(platform){ 
+				//Will be good when the platform loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveCatalogList(platform, catalogIds, allTokens());
+				platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+				deleteRelationListInGraph(userContext, platform.getCatalogList());
+				return present(userContext,platform, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingCatalog(PimUserContext userContext, String platformId, 
+		String catalogId, int catalogVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkVersionOfCatalog(catalogVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform removeCatalog(PimUserContext userContext, String platformId, 
+		String catalogId, int catalogVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingCatalog(userContext,platformId, catalogId, catalogVersion,tokensExpr);
+		
+		Catalog catalog = createIndexedCatalog(catalogId, catalogVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.removeCatalog( catalog );		
+			platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+			deleteRelationInGraph(userContext, catalog);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingCatalog(PimUserContext userContext, String platformId, 
+		String catalogId, int catalogVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkVersionOfCatalog(catalogVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform copyCatalogFrom(PimUserContext userContext, String platformId, 
+		String catalogId, int catalogVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingCatalog(userContext,platformId, catalogId, catalogVersion,tokensExpr);
+		
+		Catalog catalog = createIndexedCatalog(catalogId, catalogVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			
+			
+			platform.copyCatalogFrom( catalog );		
+			platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+			
+			userContext.getManagerGroup().getCatalogManager().onNewInstanceCreated(userContext, (Catalog)platform.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingCatalog(PimUserContext userContext, String platformId, String catalogId, int catalogVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkVersionOfCatalog(catalogVersion);
+		
+
+		if(Catalog.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfCatalog(parseString(newValueExpr));
+		}
+		
+		if(Catalog.SELLER_ID_PROPERTY.equals(property)){
+			userContext.getChecker().checkSellerIdOfCatalog(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	
+	public  Platform updateCatalog(PimUserContext userContext, String platformId, String catalogId, int catalogVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingCatalog(userContext, platformId, catalogId, catalogVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withCatalogList().searchCatalogListWith(Catalog.ID_PROPERTY, "eq", catalogId).done();
+		
+		
+		
+		Platform platform = loadPlatform(userContext, platformId, loadTokens);
+		
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//platform.removeCatalog( catalog );	
+			//make changes to AcceleraterAccount.
+			Catalog catalogIndex = createIndexedCatalog(catalogId, catalogVersion);
+		
+			Catalog catalog = platform.findTheCatalog(catalogIndex);
+			if(catalog == null){
+				throw new PlatformManagerException(catalog+" is NOT FOUND" );
+			}
+			
+			catalog.changeProperty(property, newValueExpr);
+			
+			platform = savePlatform(userContext, platform, tokens().withCatalogList().done());
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingBrand(PimUserContext userContext, String platformId, String brandName, String logo, String remark,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+
+		
+		userContext.getChecker().checkBrandNameOfBrand(brandName);
+		
+		userContext.getChecker().checkLogoOfBrand(logo);
+		
+		userContext.getChecker().checkRemarkOfBrand(remark);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+
+	
+	}
+	public  Platform addBrand(PimUserContext userContext, String platformId, String brandName, String logo, String remark, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingBrand(userContext,platformId,brandName, logo, remark,tokensExpr);
+		
+		Brand brand = createBrand(userContext,brandName, logo, remark);
+		
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.addBrand( brand );		
+			platform = savePlatform(userContext, platform, tokens().withBrandList().done());
+			
+			userContext.getManagerGroup().getBrandManager().onNewInstanceCreated(userContext, brand);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingBrandProperties(PimUserContext userContext, String platformId,String id,String brandName,String logo,String remark,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfBrand(id);
+		
+		userContext.getChecker().checkBrandNameOfBrand( brandName);
+		userContext.getChecker().checkLogoOfBrand( logo);
+		userContext.getChecker().checkRemarkOfBrand( remark);
+
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform updateBrandProperties(PimUserContext userContext, String platformId, String id,String brandName,String logo,String remark, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingBrandProperties(userContext,platformId,id,brandName,logo,remark,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withBrandListList()
+				.searchBrandListWith(Brand.ID_PROPERTY, "is", id).done();
+		
+		Platform platformToUpdate = loadPlatform(userContext, platformId, options);
+		
+		if(platformToUpdate.getBrandList().isEmpty()){
+			throw new PlatformManagerException("Brand is NOT FOUND with id: '"+id+"'");
+		}
+		
+		Brand item = platformToUpdate.getBrandList().first();
+		
+		item.updateBrandName( brandName );
+		item.updateLogo( logo );
+		item.updateRemark( remark );
+
+		
+		//checkParamsForAddingBrand(userContext,platformId,name, code, used,tokensExpr);
+		Platform platform = savePlatform(userContext, platformToUpdate, tokens().withBrandList().done());
+		synchronized(platform){ 
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected Brand createBrand(PimUserContext userContext, String brandName, String logo, String remark) throws Exception{
+
+		Brand brand = new Brand();
+		
+		
+		brand.setBrandName(brandName);		
+		brand.setLogo(logo);		
+		brand.setRemark(remark);
+	
+		
+		return brand;
+	
+		
+	}
+	
+	protected Brand createIndexedBrand(String id, int version){
+
+		Brand brand = new Brand();
+		brand.setId(id);
+		brand.setVersion(version);
+		return brand;			
+		
+	}
+	
+	protected void checkParamsForRemovingBrandList(PimUserContext userContext, String platformId, 
+			String brandIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		for(String brandId: brandIds){
+			userContext.getChecker().checkIdOfBrand(brandId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform removeBrandList(PimUserContext userContext, String platformId, 
+			String brandIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingBrandList(userContext, platformId,  brandIds, tokensExpr);
+			
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+			synchronized(platform){ 
+				//Will be good when the platform loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveBrandList(platform, brandIds, allTokens());
+				platform = savePlatform(userContext, platform, tokens().withBrandList().done());
+				deleteRelationListInGraph(userContext, platform.getBrandList());
+				return present(userContext,platform, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingBrand(PimUserContext userContext, String platformId, 
+		String brandId, int brandVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfBrand(brandId);
+		userContext.getChecker().checkVersionOfBrand(brandVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform removeBrand(PimUserContext userContext, String platformId, 
+		String brandId, int brandVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingBrand(userContext,platformId, brandId, brandVersion,tokensExpr);
+		
+		Brand brand = createIndexedBrand(brandId, brandVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.removeBrand( brand );		
+			platform = savePlatform(userContext, platform, tokens().withBrandList().done());
+			deleteRelationInGraph(userContext, brand);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingBrand(PimUserContext userContext, String platformId, 
+		String brandId, int brandVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfBrand(brandId);
+		userContext.getChecker().checkVersionOfBrand(brandVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform copyBrandFrom(PimUserContext userContext, String platformId, 
+		String brandId, int brandVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingBrand(userContext,platformId, brandId, brandVersion,tokensExpr);
+		
+		Brand brand = createIndexedBrand(brandId, brandVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			
+			
+			platform.copyBrandFrom( brand );		
+			platform = savePlatform(userContext, platform, tokens().withBrandList().done());
+			
+			userContext.getManagerGroup().getBrandManager().onNewInstanceCreated(userContext, (Brand)platform.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingBrand(PimUserContext userContext, String platformId, String brandId, int brandVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfBrand(brandId);
+		userContext.getChecker().checkVersionOfBrand(brandVersion);
+		
+
+		if(Brand.BRAND_NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkBrandNameOfBrand(parseString(newValueExpr));
+		}
+		
+		if(Brand.LOGO_PROPERTY.equals(property)){
+			userContext.getChecker().checkLogoOfBrand(parseString(newValueExpr));
+		}
+		
+		if(Brand.REMARK_PROPERTY.equals(property)){
+			userContext.getChecker().checkRemarkOfBrand(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	
+	public  Platform updateBrand(PimUserContext userContext, String platformId, String brandId, int brandVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingBrand(userContext, platformId, brandId, brandVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withBrandList().searchBrandListWith(Brand.ID_PROPERTY, "eq", brandId).done();
+		
+		
+		
+		Platform platform = loadPlatform(userContext, platformId, loadTokens);
+		
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//platform.removeBrand( brand );	
+			//make changes to AcceleraterAccount.
+			Brand brandIndex = createIndexedBrand(brandId, brandVersion);
+		
+			Brand brand = platform.findTheBrand(brandIndex);
+			if(brand == null){
+				throw new PlatformManagerException(brand+" is NOT FOUND" );
+			}
+			
+			brand.changeProperty(property, newValueExpr);
+			
+			platform = savePlatform(userContext, platform, tokens().withBrandList().done());
 			return present(userContext,platform, mergedAllTokens(tokensExpr));
 		}
 

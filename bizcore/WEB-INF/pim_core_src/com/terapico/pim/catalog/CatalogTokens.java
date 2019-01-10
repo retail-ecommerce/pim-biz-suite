@@ -64,6 +64,7 @@ public class CatalogTokens extends CommonTokens{
 		
 		return start()
 			.withSite()
+			.withPlatform()
 			.withLevelOneCategoryList()
 			.withProductList();
 	
@@ -71,7 +72,8 @@ public class CatalogTokens extends CommonTokens{
 	public static CatalogTokens withoutListsTokens(){
 		
 		return start()
-			.withSite();
+			.withSite()
+			.withPlatform();
 	
 	}
 	
@@ -91,6 +93,16 @@ public class CatalogTokens extends CommonTokens{
 	}
 	public CatalogTokens withSite(){		
 		addSimpleOptions(SITE);
+		return this;
+	}
+	
+	
+	protected static final String PLATFORM = "platform";
+	public String getPlatform(){
+		return PLATFORM;
+	}
+	public CatalogTokens withPlatform(){		
+		addSimpleOptions(PLATFORM);
 		return this;
 	}
 	

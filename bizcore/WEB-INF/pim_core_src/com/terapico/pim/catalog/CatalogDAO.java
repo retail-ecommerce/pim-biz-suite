@@ -10,6 +10,7 @@ import com.terapico.pim.PimUserContext;
 import com.terapico.pim.product.ProductDAO;
 import com.terapico.pim.site.SiteDAO;
 import com.terapico.pim.levelonecategory.LevelOneCategoryDAO;
+import com.terapico.pim.platform.PlatformDAO;
 
 
 public interface CatalogDAO{
@@ -72,6 +73,14 @@ public interface CatalogDAO{
  	public Map<String, Integer> countCatalogBySiteIds(String[] ids, Map<String,Object> options);
  	public SmartList<Catalog> findCatalogBySite(String siteId, int start, int count, Map<String,Object> options);
  	public void analyzeCatalogBySite(SmartList<Catalog> resultList, String siteId, Map<String,Object> options);
+
+ 
+  
+ 	public SmartList<Catalog> findCatalogByPlatform(String platformId, Map<String,Object> options);
+ 	public int countCatalogByPlatform(String platformId, Map<String,Object> options);
+ 	public Map<String, Integer> countCatalogByPlatformIds(String[] ids, Map<String,Object> options);
+ 	public SmartList<Catalog> findCatalogByPlatform(String platformId, int start, int count, Map<String,Object> options);
+ 	public void analyzeCatalogByPlatform(SmartList<Catalog> resultList, String platformId, Map<String,Object> options);
 
  
  }

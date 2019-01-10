@@ -151,6 +151,146 @@ public class PlatformForm extends BaseForm {
 		return lastUpdateTimeFieldForSite("lastUpdateTime","");
 	}
 
+
+	public PlatformForm catalogIdFieldForCatalog(String parameterName, String initValue){
+		FormField field =  idFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm catalogIdFieldForCatalog(String initValue){
+		return catalogIdFieldForCatalog("catalogId",initValue);
+	}
+	public PlatformForm catalogIdFieldForCatalog(){
+		return catalogIdFieldForCatalog("catalogId","");
+	}
+
+
+	public PlatformForm nameFieldForCatalog(String parameterName, String initValue){
+		FormField field =  nameFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm nameFieldForCatalog(String initValue){
+		return nameFieldForCatalog("name",initValue);
+	}
+	public PlatformForm nameFieldForCatalog(){
+		return nameFieldForCatalog("name","");
+	}
+
+
+	public PlatformForm sellerIdFieldForCatalog(String parameterName, String initValue){
+		FormField field =  sellerIdFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm sellerIdFieldForCatalog(String initValue){
+		return sellerIdFieldForCatalog("sellerId",initValue);
+	}
+	public PlatformForm sellerIdFieldForCatalog(){
+		return sellerIdFieldForCatalog("sellerId","");
+	}
+
+
+	public PlatformForm siteIdFieldForCatalog(String parameterName, String initValue){
+		FormField field =  siteIdFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm siteIdFieldForCatalog(String initValue){
+		return siteIdFieldForCatalog("siteId",initValue);
+	}
+	public PlatformForm siteIdFieldForCatalog(){
+		return siteIdFieldForCatalog("siteId","");
+	}
+
+
+	public PlatformForm platformIdFieldForCatalog(String parameterName, String initValue){
+		FormField field =  platformIdFromCatalog(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForCatalog(String initValue){
+		return platformIdFieldForCatalog("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForCatalog(){
+		return platformIdFieldForCatalog("platformId","");
+	}
+
+
+	public PlatformForm brandIdFieldForBrand(String parameterName, String initValue){
+		FormField field =  idFromBrand(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm brandIdFieldForBrand(String initValue){
+		return brandIdFieldForBrand("brandId",initValue);
+	}
+	public PlatformForm brandIdFieldForBrand(){
+		return brandIdFieldForBrand("brandId","");
+	}
+
+
+	public PlatformForm brandNameFieldForBrand(String parameterName, String initValue){
+		FormField field =  brandNameFromBrand(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm brandNameFieldForBrand(String initValue){
+		return brandNameFieldForBrand("brandName",initValue);
+	}
+	public PlatformForm brandNameFieldForBrand(){
+		return brandNameFieldForBrand("brandName","");
+	}
+
+
+	public PlatformForm logoFieldForBrand(String parameterName, String initValue){
+		FormField field =  logoFromBrand(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm logoFieldForBrand(String initValue){
+		return logoFieldForBrand("logo",initValue);
+	}
+	public PlatformForm logoFieldForBrand(){
+		return logoFieldForBrand("logo","");
+	}
+
+
+	public PlatformForm remarkFieldForBrand(String parameterName, String initValue){
+		FormField field =  remarkFromBrand(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm remarkFieldForBrand(String initValue){
+		return remarkFieldForBrand("remark",initValue);
+	}
+	public PlatformForm remarkFieldForBrand(){
+		return remarkFieldForBrand("remark","");
+	}
+
+
+	public PlatformForm platformIdFieldForBrand(String parameterName, String initValue){
+		FormField field =  platformIdFromBrand(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForBrand(String initValue){
+		return platformIdFieldForBrand("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForBrand(){
+		return platformIdFieldForBrand("platformId","");
+	}
+
 	
 
 

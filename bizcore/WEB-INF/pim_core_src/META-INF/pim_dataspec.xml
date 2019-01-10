@@ -28,6 +28,7 @@
 			<field name="name" type="string" checkType="StringLengthRange" min="2" max="20" description="Name" />
 			<field name="seller_id" type="string" checkType="StringLengthRange" min="3" max="32" description="Seller Id" />
 			<field name="site" type="reference" checkType="exist(site)" description="Site" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>
@@ -65,6 +66,7 @@
 			<field name="brand_name" type="string" checkType="StringLengthRange" min="3" max="40" description="Brand Name" />
 			<field name="logo" type="string_image" checkType="Image" min="0" max="512" description="Logo" />
 			<field name="remark" type="string" checkType="StringLengthRange" min="22" max="336" description="Remark" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.terapico.pim.site.Site;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.levelonecategory.LevelOneCategory;
+import com.terapico.pim.platform.Platform;
 
 @JsonSerialize(using = CatalogSerializer.class)
 public class Catalog extends BaseEntity implements  java.io.Serializable{
@@ -23,6 +24,7 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 	public static final String NAME_PROPERTY                  = "name"              ;
 	public static final String SELLER_ID_PROPERTY             = "sellerId"          ;
 	public static final String SITE_PROPERTY                  = "site"              ;
+	public static final String PLATFORM_PROPERTY              = "platform"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
 	public static final String LEVEL_ONE_CATEGORY_LIST                  = "levelOneCategoryList";
@@ -51,6 +53,7 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 	protected		String              	mName               ;
 	protected		String              	mSellerId           ;
 	protected		Site                	mSite               ;
+	protected		Platform            	mPlatform           ;
 	protected		int                 	mVersion            ;
 	
 	
@@ -64,15 +67,17 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 	//disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setSite( null );
+		setPlatform( null );
 
 		this.changed = true;
 	}
 	
-	public 	Catalog(String name, String sellerId, Site site)
+	public 	Catalog(String name, String sellerId, Site site, Platform platform)
 	{
 		setName(name);
 		setSellerId(sellerId);
 		setSite(site);
+		setPlatform(platform);
 
 		this.mLevelOneCategoryList = new SmartList<LevelOneCategory>();
 		this.mProductList = new SmartList<Product>();	
@@ -187,6 +192,24 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 	
 	public void clearSite(){
 		setSite ( null );
+		this.changed = true;
+	}
+	
+	public void setPlatform(Platform platform){
+		this.mPlatform = platform;;
+	}
+	public Platform getPlatform(){
+		return this.mPlatform;
+	}
+	public Catalog updatePlatform(Platform platform){
+		this.mPlatform = platform;;
+		this.changed = true;
+		return this;
+	}
+	
+	
+	public void clearPlatform(){
+		setPlatform ( null );
 		this.changed = true;
 	}
 	
@@ -403,6 +426,7 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
 		addToEntityList(this, entityList, getSite(), internalType);
+		addToEntityList(this, entityList, getPlatform(), internalType);
 
 		
 	}
@@ -434,6 +458,7 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, NAME_PROPERTY, getName());
 		appendKeyValuePair(result, SELLER_ID_PROPERTY, getSellerId());
 		appendKeyValuePair(result, SITE_PROPERTY, getSite());
+		appendKeyValuePair(result, PLATFORM_PROPERTY, getPlatform());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 		appendKeyValuePair(result, LEVEL_ONE_CATEGORY_LIST, getLevelOneCategoryList());
 		if(!getLevelOneCategoryList().isEmpty()){
@@ -463,6 +488,7 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 			dest.setName(getName());
 			dest.setSellerId(getSellerId());
 			dest.setSite(getSite());
+			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
 			dest.setLevelOneCategoryList(getLevelOneCategoryList());
 			dest.setProductList(getProductList());
@@ -481,6 +507,9 @@ public class Catalog extends BaseEntity implements  java.io.Serializable{
 		stringBuilder.append("\tsellerId='"+getSellerId()+"';");
 		if(getSite() != null ){
  			stringBuilder.append("\tsite='Site("+getSite().getId()+")';");
+ 		}
+		if(getPlatform() != null ){
+ 			stringBuilder.append("\tplatform='Platform("+getPlatform().getId()+")';");
  		}
 		stringBuilder.append("\tversion='"+getVersion()+"';");
 		stringBuilder.append("}");

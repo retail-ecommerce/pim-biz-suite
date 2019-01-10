@@ -107,6 +107,9 @@
 <c:if test="${param.referName ne 'remark'}">
 	<th>${userContext.localeMap['brand.remark']}</th>
 </c:if>
+<c:if test="${param.referName ne 'platform'}">
+	<th>${userContext.localeMap['brand.platform']}</th>
+</c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
 		<tbody>
@@ -116,7 +119,26 @@
 <c:if test="${param.referName ne 'brandName'}">	<td contenteditable='true' class='edit-value'  propertyToChange='brandName' storedCellValue='${item.brandName}' prefix='${ownerBeanName}Manager/updateBrand/${result.id}/${item.id}/'>${item.brandName}</td>
 </c:if><c:if test="${param.referName ne 'logo'}">	<td contenteditable='true' class='edit-value'  propertyToChange='logo' storedCellValue='${item.logo}' prefix='${ownerBeanName}Manager/updateBrand/${result.id}/${item.id}/'>${item.logo}</td>
 </c:if><c:if test="${param.referName ne 'remark'}">	<td contenteditable='true' class='edit-value'  propertyToChange='remark' storedCellValue='${item.remark}' prefix='${ownerBeanName}Manager/updateBrand/${result.id}/${item.id}/'>${item.remark}</td>
+</c:if><c:if test="${param.referName ne 'platform'}">
+	<td class="select_candidate_td"
+			data-candidate-method="./brandManager/requestCandidatePlatform/${ownerBeanName}/${item.id}/"
+			data-switch-method="./brandManager/transferToAnotherPlatform/${item.id}/"
+			data-link-template="./platformManager/view/${'$'}{ID}/">
+		<span class="display_span">
+			<c:if test="${not empty  item.platform}">
+			<a href='./platformManager/view/${item.platform.id}/'>${item.platform.displayName}</a>
+			</c:if>
+			<c:if test="${empty  item.platform}">
+			<a href='#'></a>
+			</c:if>
+			<button class="btn btn-link candidate-action">...</button>
+		</span>
+		<div class="candidate_span" style="display:none;">
+			<input type="text" data-provide="typeahead" class="input-sm form-control candidate-filter-input" autocomplete="off" />
+		</div>
+	</td>
 </c:if>
+
 				<td>
 
 				<a href='#${ownerBeanName}Manager/removeBrand/${result.id}/${item.id}/' class='delete-action btn btn-danger btn-xs'><i class="fa fa-trash-o fa-lg"></i> ${userContext.localeMap['@delete']}</a>

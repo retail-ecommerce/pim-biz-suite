@@ -107,6 +107,9 @@
 <c:if test="${param.referName ne 'site'}">
 	<th>${userContext.localeMap['catalog.site']}</th>
 </c:if>
+<c:if test="${param.referName ne 'platform'}">
+	<th>${userContext.localeMap['catalog.platform']}</th>
+</c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
 		<tbody>
@@ -125,6 +128,25 @@
 			<a href='./siteManager/view/${item.site.id}/'>${item.site.displayName}</a>
 			</c:if>
 			<c:if test="${empty  item.site}">
+			<a href='#'></a>
+			</c:if>
+			<button class="btn btn-link candidate-action">...</button>
+		</span>
+		<div class="candidate_span" style="display:none;">
+			<input type="text" data-provide="typeahead" class="input-sm form-control candidate-filter-input" autocomplete="off" />
+		</div>
+	</td>
+</c:if>
+<c:if test="${param.referName ne 'platform'}">
+	<td class="select_candidate_td"
+			data-candidate-method="./catalogManager/requestCandidatePlatform/${ownerBeanName}/${item.id}/"
+			data-switch-method="./catalogManager/transferToAnotherPlatform/${item.id}/"
+			data-link-template="./platformManager/view/${'$'}{ID}/">
+		<span class="display_span">
+			<c:if test="${not empty  item.platform}">
+			<a href='./platformManager/view/${item.platform.id}/'>${item.platform.displayName}</a>
+			</c:if>
+			<c:if test="${empty  item.platform}">
 			<a href='#'></a>
 			</c:if>
 			<button class="btn btn-link candidate-action">...</button>

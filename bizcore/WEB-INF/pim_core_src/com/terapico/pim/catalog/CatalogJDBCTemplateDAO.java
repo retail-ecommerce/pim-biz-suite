@@ -21,10 +21,12 @@ import com.terapico.pim.PimUserContext;
 import com.terapico.pim.site.Site;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.levelonecategory.LevelOneCategory;
+import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.product.ProductDAO;
 import com.terapico.pim.site.SiteDAO;
 import com.terapico.pim.levelonecategory.LevelOneCategoryDAO;
+import com.terapico.pim.platform.PlatformDAO;
 
 
 
@@ -39,6 +41,15 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	}
  	public SiteDAO getSiteDAO(){
 	 	return this.siteDAO;
+ 	}
+ 
+ 	
+ 	private  PlatformDAO  platformDAO;
+ 	public void setPlatformDAO(PlatformDAO platformDAO){
+	 	this.platformDAO = platformDAO;
+ 	}
+ 	public PlatformDAO getPlatformDAO(){
+	 	return this.platformDAO;
  	}
 
 
@@ -243,6 +254,20 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	
 
  	
+  
+
+ 	protected boolean isExtractPlatformEnabled(Map<String,Object> options){
+ 		
+	 	return checkOptions(options, CatalogTokens.PLATFORM);
+ 	}
+
+ 	protected boolean isSavePlatformEnabled(Map<String,Object> options){
+	 	
+ 		return checkOptions(options, CatalogTokens.PLATFORM);
+ 	}
+ 	
+
+ 	
  
 		
 	
@@ -302,6 +327,10 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		if(isExtractSiteEnabled(loadOptions)){
 	 		extractSite(catalog, loadOptions);
  		}
+  	
+ 		if(isExtractPlatformEnabled(loadOptions)){
+	 		extractPlatform(catalog, loadOptions);
+ 		}
  
 		
 		if(isExtractLevelOneCategoryListEnabled(loadOptions)){
@@ -338,6 +367,26 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		Site site = getSiteDAO().load(siteId,options);
 		if(site != null){
 			catalog.setSite(site);
+		}
+		
+ 		
+ 		return catalog;
+ 	}
+ 		
+  
+
+ 	protected Catalog extractPlatform(Catalog catalog, Map<String,Object> options) throws Exception{
+
+		if(catalog.getPlatform() == null){
+			return catalog;
+		}
+		String platformId = catalog.getPlatform().getId();
+		if( platformId == null){
+			return catalog;
+		}
+		Platform platform = getPlatformDAO().load(platformId,options);
+		if(platform != null){
+			catalog.setPlatform(platform);
 		}
 		
  		
@@ -467,6 +516,15 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		if(resultList==null){
 			return;//do nothing when the list is null.
 		}
+		
+ 		MultipleAccessKey filterKey = new MultipleAccessKey();
+ 		filterKey.put(Catalog.SITE_PROPERTY, siteId);
+ 		Map<String,Object> emptyOptions = new HashMap<String,Object>();
+ 		
+ 		StatsInfo info = new StatsInfo();
+ 		
+ 		
+ 		resultList.setStatsInfo(info);
 
  	
  		
@@ -479,6 +537,49 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	@Override
 	public Map<String, Integer> countCatalogBySiteIds(String[] ids, Map<String, Object> options) {
 		return countWithIds(CatalogTable.COLUMN_SITE, ids, options);
+	}
+ 	
+  	
+ 	public SmartList<Catalog> findCatalogByPlatform(String platformId,Map<String,Object> options){
+ 	
+  		SmartList<Catalog> resultList = queryWith(CatalogTable.COLUMN_PLATFORM, platformId, options, getCatalogMapper());
+		// analyzeCatalogByPlatform(resultList, platformId, options);
+		return resultList;
+ 	}
+ 	 
+ 
+ 	public SmartList<Catalog> findCatalogByPlatform(String platformId, int start, int count,Map<String,Object> options){
+ 		
+ 		SmartList<Catalog> resultList =  queryWithRange(CatalogTable.COLUMN_PLATFORM, platformId, options, getCatalogMapper(), start, count);
+ 		//analyzeCatalogByPlatform(resultList, platformId, options);
+ 		return resultList;
+ 		
+ 	}
+ 	public void analyzeCatalogByPlatform(SmartList<Catalog> resultList, String platformId, Map<String,Object> options){
+		if(resultList==null){
+			return;//do nothing when the list is null.
+		}
+		
+ 		MultipleAccessKey filterKey = new MultipleAccessKey();
+ 		filterKey.put(Catalog.PLATFORM_PROPERTY, platformId);
+ 		Map<String,Object> emptyOptions = new HashMap<String,Object>();
+ 		
+ 		StatsInfo info = new StatsInfo();
+ 		
+ 		
+ 		resultList.setStatsInfo(info);
+
+ 	
+ 		
+ 	}
+ 	@Override
+ 	public int countCatalogByPlatform(String platformId,Map<String,Object> options){
+
+ 		return countWith(CatalogTable.COLUMN_PLATFORM, platformId, options);
+ 	}
+ 	@Override
+	public Map<String, Integer> countCatalogByPlatformIds(String[] ids, Map<String, Object> options) {
+		return countWithIds(CatalogTable.COLUMN_PLATFORM, ids, options);
 	}
  	
  	
@@ -623,22 +724,26 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		return prepareCatalogCreateParameters(catalog);
  	}
  	protected Object[] prepareCatalogUpdateParameters(Catalog catalog){
- 		Object[] parameters = new Object[6];
+ 		Object[] parameters = new Object[7];
  
  		parameters[0] = catalog.getName();
  		parameters[1] = catalog.getSellerId(); 	
  		if(catalog.getSite() != null){
  			parameters[2] = catalog.getSite().getId();
  		}
+  	
+ 		if(catalog.getPlatform() != null){
+ 			parameters[3] = catalog.getPlatform().getId();
+ 		}
  		
- 		parameters[3] = catalog.nextVersion();
- 		parameters[4] = catalog.getId();
- 		parameters[5] = catalog.getVersion();
+ 		parameters[4] = catalog.nextVersion();
+ 		parameters[5] = catalog.getId();
+ 		parameters[6] = catalog.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareCatalogCreateParameters(Catalog catalog){
-		Object[] parameters = new Object[4];
+		Object[] parameters = new Object[5];
 		String newCatalogId=getNextId();
 		catalog.setId(newCatalogId);
 		parameters[0] =  catalog.getId();
@@ -647,6 +752,11 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		parameters[2] = catalog.getSellerId(); 	
  		if(catalog.getSite() != null){
  			parameters[3] = catalog.getSite().getId();
+ 		
+ 		}
+ 		 	
+ 		if(catalog.getPlatform() != null){
+ 			parameters[4] = catalog.getPlatform().getId();
  		
  		}
  				
@@ -660,6 +770,10 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	
  		if(isSaveSiteEnabled(options)){
 	 		saveSite(catalog, options);
+ 		}
+  	
+ 		if(isSavePlatformEnabled(options)){
+	 		savePlatform(catalog, options);
  		}
  
 		
@@ -693,6 +807,23 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		}
  		
  		getSiteDAO().save(catalog.getSite(),options);
+ 		return catalog;
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	 
+	
+  
+ 
+ 	protected Catalog savePlatform(Catalog catalog, Map<String,Object> options){
+ 		//Call inject DAO to execute this method
+ 		if(catalog.getPlatform() == null){
+ 			return catalog;//do nothing when it is null
+ 		}
+ 		
+ 		getPlatformDAO().save(catalog.getPlatform(),options);
  		return catalog;
  		
  	}

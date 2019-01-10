@@ -8,6 +8,8 @@ import com.terapico.pim.SmartList;
 import com.terapico.pim.MultipleAccessKey;
 import com.terapico.pim.PimUserContext;
 import com.terapico.pim.site.SiteDAO;
+import com.terapico.pim.catalog.CatalogDAO;
+import com.terapico.pim.brand.BrandDAO;
 
 
 public interface PlatformDAO{
@@ -40,11 +42,33 @@ public interface PlatformDAO{
 
 	public SiteDAO getSiteDAO();
 		
+	public CatalogDAO getCatalogDAO();
+		
+	public BrandDAO getBrandDAO();
+		
 	
  	public SmartList<Platform> requestCandidatePlatformForSite(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
+ 	public SmartList<Platform> requestCandidatePlatformForCatalog(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Platform> requestCandidatePlatformForBrand(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
 	
 	public Platform planToRemoveSiteList(Platform platform, String siteIds[], Map<String,Object> options)throws Exception;
+
+
+	public Platform planToRemoveCatalogList(Platform platform, String catalogIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Platform with seller_id in Catalog
+	public Platform planToRemoveCatalogListWithSellerId(Platform platform, String sellerIdId, Map<String,Object> options)throws Exception;
+	public int countCatalogListWithSellerId(String platformId, String sellerIdId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Platform with site in Catalog
+	public Platform planToRemoveCatalogListWithSite(Platform platform, String siteId, Map<String,Object> options)throws Exception;
+	public int countCatalogListWithSite(String platformId, String siteId, Map<String,Object> options)throws Exception;
+	
+	public Platform planToRemoveBrandList(Platform platform, String brandIds[], Map<String,Object> options)throws Exception;
 
 
 	
