@@ -90,6 +90,12 @@ const internalSummaryOf = (product,targetComponent) =>{
 	      ProductService.transferToAnotherParentCategory,"anotherParentCategoryId",product.parentCategory?product.parentCategory.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
+<Description term="Brand">{product.brand==null?"未分配":product.brand.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"Brand","brand",ProductService.requestCandidateBrand,
+	      ProductService.transferToAnotherBrand,"anotherBrandId",product.brand?product.brand.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
 <Description term="Origin">{product.origin}</Description> 
 <Description term="Catalog">{product.catalog==null?"未分配":product.catalog.displayName}
  <Icon type="swap" onClick={()=>

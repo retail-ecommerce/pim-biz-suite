@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190109T2341) @Thu Jan 10 12:10:27 CST 2019, 22 objects and 156 fields===========================
+=================Execute Report (Model Time 190110T1504) @Thu Jan 10 15:08:13 CST 2019, 22 objects and 158 fields===========================
 
 
 
@@ -24,6 +24,12 @@ Info: Add virtual field [sites(es)] to <platform>
 
 Info: Add virtual field [catalogs(es)] to <site>
 	catalog.site
+
+
+ processing: catalog.platform.platform
+
+Info: Add virtual field [catalogs(es)] to <platform>
+	catalog.platform
 
 
  processing: level_one_category
@@ -54,6 +60,12 @@ Info: Add virtual field [level_n_categorys(es)] to <level_two_category>
 
 
  processing: brand
+
+
+ processing: brand.platform.platform
+
+Info: Add virtual field [brands(es)] to <platform>
+	brand.platform
 
 
  processing: product
@@ -96,8 +108,10 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(1){
+	references field(3){
 		siteList	platform(基本信息)--platform;
+		catalogList	platform(基本信息)--platform;
+		brandList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
 
@@ -116,11 +130,12 @@ site{
 } depth=1; isRoot = false
 
 catalog{
-	fields(5){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('Cloth'), verb: false, required: true;
 		string	seller_id('SC000001'), verb: false, required: true;
 		site	site('$(object)'), verb: false, required: true, referenceBy: catalogList;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: catalogList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -166,17 +181,18 @@ level_n_category{
 } depth=5; isRoot = false
 
 brand{
-	fields(5){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	brand_name('Telsa Auto'), verb: false, required: true;
 		string_image	logo('logo.jpg'), verb: false, required: true;
 		string	remark('The brand a great that has Roadester, Model S and Model X, Model 3 is in development'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: brandList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){
 		productList	brand(基本信息)--brand;
 	}
-} depth=0; isRoot = true
+} depth=1; isRoot = false
 
 product{
 	fields(9){
@@ -218,8 +234,10 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(1){
+	references field(3){
 		siteList	platform(基本信息)--platform;
+		catalogList	platform(基本信息)--platform;
+		brandList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
 
@@ -238,11 +256,12 @@ site{
 } depth=1; isRoot = false
 
 catalog{
-	fields(5){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('Cloth'), verb: false, required: true;
 		string	seller_id('SC000001'), verb: false, required: true;
 		site	site('$(object)'), verb: false, required: true, referenceBy: catalogList;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: catalogList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -288,17 +307,18 @@ level_n_category{
 } depth=5; isRoot = false
 
 brand{
-	fields(5){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	brand_name('Telsa Auto'), verb: false, required: true;
 		string_image	logo('logo.jpg'), verb: false, required: true;
 		string	remark('The brand a great that has Roadester, Model S and Model X, Model 3 is in development'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: brandList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){
 		productList	brand(基本信息)--brand;
 	}
-} depth=0; isRoot = true
+} depth=1; isRoot = false
 
 product{
 	fields(9){
@@ -544,11 +564,3 @@ form_action{
 
 
 =================================End Report=================================
-
-
-
-
-
-
-
-

@@ -204,6 +204,98 @@ class PlatformBizApp extends React.PureComponent {
     }))(SiteUpdateForm)
   }
 
+  getCatalogSearch = () => {
+    const {CatalogSearch} = GlobalComponents;
+    return connect(state => ({
+      rule: state.rule,
+      name: "Catalog",
+      role: "catalog",
+      data: state._platform.catalogList,
+      metaInfo: state._platform.catalogListMetaInfo,
+      count: state._platform.catalogCount,
+      currentPage: state._platform.catalogCurrentPageNumber,
+      searchFormParameters: state._platform.catalogSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'catalogList', ref:state._platform, 
+      listDisplayName: 'Catalog列表' }, // this is for model namespace and
+    }))(CatalogSearch)
+  }
+  getCatalogCreateForm = () => {
+   	const {CatalogCreateForm} = GlobalComponents;
+    return connect(state => ({
+      rule: state.rule,
+      role: "catalog",
+      data: state._platform.catalogList,
+      metaInfo: state._platform.catalogListMetaInfo,
+      count: state._platform.catalogCount,
+      currentPage: state._platform.catalogCurrentPageNumber,
+      searchFormParameters: state._platform.catalogSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'catalogList', ref:state._platform, listDisplayName: 'Catalog列表'}, // this is for model namespace and
+    }))(CatalogCreateForm)
+  }
+  
+  getCatalogUpdateForm = () => {
+  	const {CatalogUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "catalog",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'catalogList', ref:state._platform, listDisplayName: 'Catalog列表' }, // this is for model namespace and
+    }))(CatalogUpdateForm)
+  }
+
+  getBrandSearch = () => {
+    const {BrandSearch} = GlobalComponents;
+    return connect(state => ({
+      rule: state.rule,
+      name: "Brand",
+      role: "brand",
+      data: state._platform.brandList,
+      metaInfo: state._platform.brandListMetaInfo,
+      count: state._platform.brandCount,
+      currentPage: state._platform.brandCurrentPageNumber,
+      searchFormParameters: state._platform.brandSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'brandList', ref:state._platform, 
+      listDisplayName: 'Brand列表' }, // this is for model namespace and
+    }))(BrandSearch)
+  }
+  getBrandCreateForm = () => {
+   	const {BrandCreateForm} = GlobalComponents;
+    return connect(state => ({
+      rule: state.rule,
+      role: "brand",
+      data: state._platform.brandList,
+      metaInfo: state._platform.brandListMetaInfo,
+      count: state._platform.brandCount,
+      currentPage: state._platform.brandCurrentPageNumber,
+      searchFormParameters: state._platform.brandSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'brandList', ref:state._platform, listDisplayName: 'Brand列表'}, // this is for model namespace and
+    }))(BrandCreateForm)
+  }
+  
+  getBrandUpdateForm = () => {
+  	const {BrandUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "brand",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'brandList', ref:state._platform, listDisplayName: 'Brand列表' }, // this is for model namespace and
+    }))(BrandUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -220,6 +312,14 @@ class PlatformBizApp extends React.PureComponent {
   	{path:"/platform/:id/list/siteList", component: this.getSiteSearch()},
   	{path:"/platform/:id/list/siteCreateForm", component: this.getSiteCreateForm()},
   	{path:"/platform/:id/list/siteUpdateForm", component: this.getSiteUpdateForm()},
+   	
+  	{path:"/platform/:id/list/catalogList", component: this.getCatalogSearch()},
+  	{path:"/platform/:id/list/catalogCreateForm", component: this.getCatalogCreateForm()},
+  	{path:"/platform/:id/list/catalogUpdateForm", component: this.getCatalogUpdateForm()},
+   	
+  	{path:"/platform/:id/list/brandList", component: this.getBrandSearch()},
+  	{path:"/platform/:id/list/brandCreateForm", component: this.getBrandCreateForm()},
+  	{path:"/platform/:id/list/brandUpdateForm", component: this.getBrandUpdateForm()},
      	
   	
   	]

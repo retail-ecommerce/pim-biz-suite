@@ -132,6 +132,7 @@ componentDidMount() {
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'name'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'sellerId'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'site'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'platform'))
 
      
       console.log("the final parameter", paramList)
@@ -276,6 +277,21 @@ componentDidMount() {
                     disabled={!availableForEdit('site')}
                     targetType={"site"} 
                     requestFunction={CatalogService.requestCandidateSite}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+ <Col md={8} sm={24}>
+                    <Form.Item label="Platform">
+                  {getFieldDecorator('platform', {
+                    initialValue: tryinit('platform'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('platform')}
+                    targetType={"platform"} 
+                    requestFunction={CatalogService.requestCandidatePlatform}/>
                   
                  
                   )}

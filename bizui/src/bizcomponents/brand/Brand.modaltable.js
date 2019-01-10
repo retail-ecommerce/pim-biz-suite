@@ -38,7 +38,7 @@ class BrandModalTable extends PureComponent {
           dataSource={data}
           columns={displayColumns}
           size="small"
-          scroll={{ x: 1530 }}
+          scroll={{ x: 1665 }}
         />
       </div>
     )

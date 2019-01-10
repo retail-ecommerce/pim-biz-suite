@@ -72,6 +72,7 @@ const displayColumns = [
   { title: 'Brand Name', debugtype: 'string', dataIndex: 'brandName', width: '14',render: (text, record)=>renderTextCell(text,record) },
   { title: 'Logo', dataIndex: 'logo', render: (text, record) => renderImageCell(text,record,'Logo') },
   { title: 'Remark', debugtype: 'string', dataIndex: 'remark', width: '88',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'Platform', dataIndex: 'platform', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
@@ -80,6 +81,7 @@ const fieldLabels = {
   brandName: 'Brand Name',
   logo: 'Logo',
   remark: 'Remark',
+  platform: 'Platform',
 
 }
 

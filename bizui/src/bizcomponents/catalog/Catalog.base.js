@@ -73,6 +73,7 @@ const displayColumns = [
   { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '9',render: (text, record)=>renderTextCell(text,record) },
   { title: 'Seller Id', debugtype: 'string', dataIndex: 'sellerId', width: '12',render: (text, record)=>renderTextCell(text,record) },
   { title: 'Site', dataIndex: 'site', render: (text, record) => renderReferenceCell(text, record)},
+  { title: 'Platform', dataIndex: 'platform', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
@@ -81,6 +82,7 @@ const fieldLabels = {
   name: 'Name',
   sellerId: 'Seller Id',
   site: 'Site',
+  platform: 'Platform',
 
 }
 

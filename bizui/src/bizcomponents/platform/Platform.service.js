@@ -43,10 +43,60 @@ const removeSiteList = (targetObjectId, parameters) => {
 }
 
 
+
+const addCatalog = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addCatalog/platformId/name/sellerId/siteId/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateCatalog = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateCatalogProperties/platformId/id/name/sellerId/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeCatalogList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeCatalogList/platformId/catalogIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addBrand = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addBrand/platformId/brandName/logo/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateBrand = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateBrandProperties/platformId/id/brandName/logo/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeBrandList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeBrandList/platformId/brandIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const PlatformService = { view,
   load,
   addSite,
+  addCatalog,
+  addBrand,
   updateSite,
-  removeSiteList }
+  updateCatalog,
+  updateBrand,
+  removeSiteList,
+  removeCatalogList,
+  removeBrandList }
 export default PlatformService
 

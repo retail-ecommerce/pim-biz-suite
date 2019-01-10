@@ -73,6 +73,8 @@ class PlatformAssociateForm extends Component {
     const { convertedImagesValues } = this.state
     const {PlatformService} = GlobalComponents
  const {SiteModalTable} = GlobalComponents;
+ const {CatalogModalTable} = GlobalComponents;
+ const {BrandModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -185,6 +187,8 @@ class PlatformAssociateForm extends Component {
         </Card>
         
 	<SiteModalTable data={data.siteList} owner={owner} />
+	<CatalogModalTable data={data.catalogList} owner={owner} />
+	<BrandModalTable data={data.brandList} owner={owner} />
         
         
         

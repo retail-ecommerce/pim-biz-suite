@@ -9,6 +9,8 @@ import moment from 'moment'
 const menuData = {menuName:"Platform", menuFor: "platform",
   		subItems: [
   {name: 'siteList', displayName:'Site', icon:'sitemap',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'catalogList', displayName:'Catalog', icon:'at',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'brandList', displayName:'Brand', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }

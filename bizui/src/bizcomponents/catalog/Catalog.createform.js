@@ -20,6 +20,7 @@ const testValues = {
   name: 'Cloth',
   sellerId: 'SC000001',
   siteId: 'S000001',
+  platformId: 'P000001',
 }
 */
 
@@ -254,6 +255,23 @@ class CatalogCreateForm extends Component {
                     disabled={!availableForEdit('site')}
                     targetType={"site"} 
                     requestFunction={CatalogService.requestCandidateSite}/>
+                  
+                 
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.platform} {...formItemLayout}>
+                  {getFieldDecorator('platformId', {
+                  	initialValue: tryinit('platform'),
+                    rules: [{ required: true, message: '请输入Platform' }],
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('platform')}
+                    targetType={"platform"} 
+                    requestFunction={CatalogService.requestCandidatePlatform}/>
                   
                  
                   )}

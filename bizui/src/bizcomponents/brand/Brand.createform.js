@@ -18,6 +18,7 @@ const testValues = {};
 /*
 const testValues = {
   brandName: 'Telsa Auto',
+  platformId: 'P000001',
   remark: 'The brand a great that has Roadester, Model S and Model X, Model 3 is in development',
 }
 */
@@ -261,6 +262,31 @@ class BrandCreateForm extends Component {
         </Card>
 
 
+
+        <Card title="关联" className={styles.card} bordered={false}>
+          <Form >
+            <Row gutter={16}>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.platform} {...formItemLayout}>
+                  {getFieldDecorator('platformId', {
+                  	initialValue: tryinit('platform'),
+                    rules: [{ required: true, message: '请输入Platform' }],
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('platform')}
+                    targetType={"platform"} 
+                    requestFunction={BrandService.requestCandidatePlatform}/>
+                  
+                 
+                  )}
+                </Form.Item>
+              </Col>
+
+            </Row>
+          </Form>  
+        </Card>
 
         <FooterToolbar>
           {getErrorInfo()}

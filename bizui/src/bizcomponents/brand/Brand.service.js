@@ -18,6 +18,22 @@ const load = (targetObjectId, parameters) => {
 
 
 
+const requestCandidatePlatform = (ownerClass, id, filterKey, pageNo) => {
+ 
+  const url = `${PREFIX}brandManager/requestCandidatePlatform/ownerClass/id/filterKey/pageNo/`
+  const requestParameters = {id, ownerClass,filterKey, pageNo}
+  return postForm({url,requestParameters})
+}	
+
+const transferToAnotherPlatform = (id, parameters) => {
+  //const parametersExpr = joinParameters(parameters)
+  const url = `${PREFIX}brandManager/transferToAnotherPlatform/id/anotherPlatformId/`
+  const requestParameters = {id, ...parameters}
+  return postForm({url,requestParameters})
+}
+
+
+
 
 
 
@@ -47,6 +63,8 @@ const BrandService = { view,
   load,
   addProduct,
   updateProduct,
-  removeProductList }
+  removeProductList,
+  requestCandidatePlatform,
+  transferToAnotherPlatform }
 export default BrandService
 

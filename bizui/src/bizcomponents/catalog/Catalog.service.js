@@ -34,6 +34,22 @@ const transferToAnotherSite = (id, parameters) => {
 
 
 
+const requestCandidatePlatform = (ownerClass, id, filterKey, pageNo) => {
+ 
+  const url = `${PREFIX}catalogManager/requestCandidatePlatform/ownerClass/id/filterKey/pageNo/`
+  const requestParameters = {id, ownerClass,filterKey, pageNo}
+  return postForm({url,requestParameters})
+}	
+
+const transferToAnotherPlatform = (id, parameters) => {
+  //const parametersExpr = joinParameters(parameters)
+  const url = `${PREFIX}catalogManager/transferToAnotherPlatform/id/anotherPlatformId/`
+  const requestParameters = {id, ...parameters}
+  return postForm({url,requestParameters})
+}
+
+
+
 
 
 
@@ -90,6 +106,8 @@ const CatalogService = { view,
   removeLevelOneCategoryList,
   removeProductList,
   requestCandidateSite,
-  transferToAnotherSite }
+  requestCandidatePlatform,
+  transferToAnotherSite,
+  transferToAnotherPlatform }
 export default CatalogService
 

@@ -182,6 +182,162 @@ export default {
 
     },
 
+
+
+
+    *addCatalog({ payload }, { call, put }) {
+      const {PlatformService} = GlobalComponents;
+
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.addCatalog, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+      yield put({ type: 'updateState', payload: newPlayload })
+      // yield put(routerRedux.push(`/platform/${id}/list/${role}CreateForm'))
+      notification.success({
+        message: '执行成功',
+        description: '执行成功',
+      })
+      if (continueNext) {
+        return
+      }
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/platform/${id}/list/\CatalogList/Catalog列表`, state: newState }
+      yield put(routerRedux.push(location))
+    },
+    *updateCatalog({ payload }, { call, put }) {
+      const {PlatformService} = GlobalComponents;      
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.updateCatalog, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const partialList = true
+      
+      const newPlayload = { ...payload, ...data, selectedRows, currentUpdateIndex,partialList }
+      yield put({ type: 'updateState', payload: newPlayload })
+      notification.success({
+        message: '执行成功',
+        description: '执行成功',
+      })
+      
+      if (continueNext) {
+        return
+      }
+      const location = { pathname: `/platform/${id}/list/\CatalogList/Catalog列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+    },
+    *gotoNextCatalogUpdateRow({ payload }, { call, put }) {
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      const newPlayload = { ...payload, selectedRows, currentUpdateIndex }
+      yield put({ type: 'updateState', payload: newPlayload })
+    },
+    *removeCatalogList({ payload }, { call, put }) {
+      const {PlatformService} = GlobalComponents; 
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.removeCatalogList, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+
+      yield put({ type: 'updateState', payload: newPlayload })
+        
+     
+      notification.success({
+        message: '执行成功',
+        description: '执行成功',
+      })
+
+    },
+
+
+
+
+    *addBrand({ payload }, { call, put }) {
+      const {PlatformService} = GlobalComponents;
+
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.addBrand, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+      yield put({ type: 'updateState', payload: newPlayload })
+      // yield put(routerRedux.push(`/platform/${id}/list/${role}CreateForm'))
+      notification.success({
+        message: '执行成功',
+        description: '执行成功',
+      })
+      if (continueNext) {
+        return
+      }
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/platform/${id}/list/\BrandList/Brand列表`, state: newState }
+      yield put(routerRedux.push(location))
+    },
+    *updateBrand({ payload }, { call, put }) {
+      const {PlatformService} = GlobalComponents;      
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.updateBrand, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const partialList = true
+      
+      const newPlayload = { ...payload, ...data, selectedRows, currentUpdateIndex,partialList }
+      yield put({ type: 'updateState', payload: newPlayload })
+      notification.success({
+        message: '执行成功',
+        description: '执行成功',
+      })
+      
+      if (continueNext) {
+        return
+      }
+      const location = { pathname: `/platform/${id}/list/\BrandList/Brand列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+    },
+    *gotoNextBrandUpdateRow({ payload }, { call, put }) {
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      const newPlayload = { ...payload, selectedRows, currentUpdateIndex }
+      yield put({ type: 'updateState', payload: newPlayload })
+    },
+    *removeBrandList({ payload }, { call, put }) {
+      const {PlatformService} = GlobalComponents; 
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.removeBrandList, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+
+      yield put({ type: 'updateState', payload: newPlayload })
+        
+     
+      notification.success({
+        message: '执行成功',
+        description: '执行成功',
+      })
+
+    },
+
   },
   
   reducers: {
