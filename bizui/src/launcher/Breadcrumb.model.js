@@ -6,6 +6,7 @@ import { sessionObject } from '../utils/utils';
 import defaultLocaleName from './Launcher.locale'
 const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
 
+const userContext = {}
 
 let currentLocation = '';
 
