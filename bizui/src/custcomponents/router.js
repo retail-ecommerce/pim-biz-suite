@@ -34,7 +34,7 @@ function RouterConfig({ history }) {
 
 
   return (
-    <LocaleProvider locale={zhCN}>
+    <LocaleProvider locale={enUS}>
       <Router history={history}>
         <Switch>
          <Route path="/home" component={Launcher} />
