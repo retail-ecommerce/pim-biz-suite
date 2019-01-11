@@ -232,7 +232,7 @@ class NormalForgetPassword extends Component {
                 )}
             </FormItem>
             <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
-                        {launcherLocaleName(userContext,"Changepassword")}
+                        {launcherLocaleName(userContext,"ChangePassword")}
                     </Button>
                     <Link to="/" style={{float: 'right'}}>{launcherLocaleName(userContext,"ReturnToHome")}</Link>
             </Form>)

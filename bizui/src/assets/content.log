@@ -97,7 +97,7 @@ const login=(username, password)=>{
 }
 
 
-const changePassword=({currentPassword,newPassword})=>{
+const ChangePassword=({currentPassword,newPassword})=>{
     return get({
         url: PREFIX+`secUserManager/changeCurUserPassword/${currentPassword}/${newPassword}/`
 
@@ -128,7 +128,7 @@ const gotoApp=(appId)=>{
     });
 }
 
-const LauncherService={login,gotoApp,logout,checkOtherLogin,changePassword};
+const LauncherService={login,gotoApp,logout,checkOtherLogin,ChangePassword};
 export default LauncherService;
 
 
@@ -154,10 +154,10 @@ const launcherLocaleName=defaultLocaleName //you can define your version here to
 
 const { setupModel, hasError, handleClientError, handleServerError, keepValueWithKeySuffix } = modeltool
 
-const changePassword = (targetComponent) => {
+const ChangePassword = (targetComponent) => {
 
   const { hideModal } = targetComponent.props
-  console.log("trying to change password", changePassword)
+  console.log("trying to change password", ChangePassword)
   console.log("see to hideModal", hideModal)
 
   targetComponent.props.form.validateFields((err, values) => {
@@ -173,7 +173,7 @@ const changePassword = (targetComponent) => {
         return
       }
 
-      const future = LauncherService.changePassword(values)
+      const future = LauncherService.ChangePassword(values)
       future.then(result => {
         console.log("the result is ", result)
         if (result == "OK") {
@@ -229,7 +229,7 @@ class ChangePasswordModel extends Component {
     return (<Modal
       title={launcherLocaleName(userContext,"ChangePassword")}
       visible={visible}
-      onOk={() => changePassword(this)}
+      onOk={() => ChangePassword(this)}
       onCancel={(event) => hideModal(event)}
       width={620}
       style={{ top: 40 }}
@@ -869,7 +869,7 @@ class NormalForgetPassword extends Component {
             </FormItem>
             <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
                         
-{launcherLocaleName(userContext,"Changepassword")}
+{launcherLocaleName(userContext,"ChangePassword")}
                     </Button>
                     <Link to="/" style={{float: 'right'}}><{launcherLocaleName(userContext,"ReturnToHome")}</Link>
             </Form>)

@@ -9,20 +9,20 @@ const launcherLocaleName=defaultLocaleName //you can define your version here to
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-const CHANGEPASSWORD="changepassword"
+const ChangePassword="ChangePassword"
 
 class TopMenu extends React.Component {
   state = {
     currentKey: 'app5',
-    changePasswordVisible: false
+    ChangePasswordVisible: false
   }
   handleClick = (e) => {
     console.log('click ', e);
   
 
-    if(e.key&&e.key==CHANGEPASSWORD){
+    if(e.key&&e.key==ChangePassword){
       console.log("trying to change password")
-      this.setState({currentKey:CHANGEPASSWORD,changePasswordVisible:!this.state.changePasswordVisible})
+      this.setState({currentKey:ChangePassword,ChangePasswordVisible:!this.state.ChangePasswordVisible})
       
       return
     }
@@ -49,7 +49,7 @@ class TopMenu extends React.Component {
   hideModal=(event)=>{
     console.log("hide modal called", event)
    
-    this.setState({changePasswordVisible:false})
+    this.setState({ChangePasswordVisible:false})
     
     
   }
@@ -71,7 +71,7 @@ class TopMenu extends React.Component {
         <Menu.Item key="logout" style={{float:"right"}}>
         <Icon type="logout" />{launcherLocaleName(userContext,"Exit")}
         </Menu.Item>
-        <Menu.Item key={CHANGEPASSWORD} style={{float:"right"}}>
+        <Menu.Item key={ChangePassword} style={{float:"right"}}>
         <Icon type="lock" />{launcherLocaleName(userContext,"ChangePassword")}
 
        
@@ -81,7 +81,7 @@ class TopMenu extends React.Component {
 
 
 
-      </Menu> <ChangePasswordModel visible={this.state.changePasswordVisible} hideModal={(event)=>this.hideModal(event)}/></div>
+      </Menu> <ChangePasswordModel visible={this.state.ChangePasswordVisible} hideModal={(event)=>this.hideModal(event)}/></div>
 
     );
   }

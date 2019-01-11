@@ -19,10 +19,10 @@ const launcherLocaleName=defaultLocaleName //you can define your version here to
 
 const { setupModel, hasError, handleClientError, handleServerError, keepValueWithKeySuffix } = modeltool
 
-const changePassword = (targetComponent) => {
+const ChangePassword = (targetComponent) => {
 
   const { hideModal } = targetComponent.props
-  console.log("trying to change password", changePassword)
+  console.log("trying to change password", ChangePassword)
   console.log("see to hideModal", hideModal)
 
   targetComponent.props.form.validateFields((err, values) => {
@@ -38,7 +38,7 @@ const changePassword = (targetComponent) => {
         return
       }
 
-      const future = LauncherService.changePassword(values)
+      const future = LauncherService.ChangePassword(values)
       future.then(result => {
         console.log("the result is ", result)
         if (result == "OK") {
@@ -94,7 +94,7 @@ class ChangePasswordModel extends Component {
     return (<Modal
       title={launcherLocaleName(userContext,"ChangePassword")}
       visible={visible}
-      onOk={() => changePassword(this)}
+      onOk={() => ChangePassword(this)}
       onCancel={(event) => hideModal(event)}
       width={620}
       style={{ top: 40 }}
