@@ -3,6 +3,9 @@ import key from 'keymaster';
 import { sessionObject } from '../utils/utils';
 
 // console.log("element", )
+import defaultLocaleName from './Launcher.locale'
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
+
 
 let currentLocation = '';
 
