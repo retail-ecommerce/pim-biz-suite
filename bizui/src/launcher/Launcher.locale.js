@@ -2,6 +2,9 @@
 const launcherEnUS={}
 const launcherZhCN={}
 
+
+launcherZhCN.Exit="退出"
+launcherEnUS.Exit="Exit"
 launcherZhCN.Password="密码"
 launcherEnUS.Password="Password"
 launcherZhCN.Platform="平台"
@@ -35,7 +38,7 @@ launcherEnUS.Success="Success"
 launcherZhCN.MoreFeatures="更多特性"
 launcherEnUS.MoreFeatures="More Features"
 launcherZhCN.ChangePassword="更新密码"
-launcherEnUS.ChangePassword="Change Password"
+launcherEnUS.x="Change Password"
 launcherZhCN.SignInError="登录出错"
 launcherEnUS.SignInError="Sign In Error"
 launcherZhCN.ThisPhoneNumber="该手机号"

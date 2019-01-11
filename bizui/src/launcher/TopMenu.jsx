@@ -3,6 +3,8 @@ import React from 'react';
 
 import { Link } from 'react-router';
 import ChangePasswordModel from './ChangePassword.modal'
+import defaultLocaleName from './Launcher.locale'
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -55,7 +57,7 @@ class TopMenu extends React.Component {
 
   render() {
 
-
+    const userContext = this.props.launcher.data
 
     return (
       <div>
@@ -67,10 +69,10 @@ class TopMenu extends React.Component {
       >
       
         <Menu.Item key="logout" style={{float:"right"}}>
-        <Icon type="logout" />退出
+        <Icon type="logout" />{launcherLocaleName(userContext,"Exit")}
         </Menu.Item>
         <Menu.Item key={CHANGEPASSWORD} style={{float:"right"}}>
-        <Icon type="lock" />更改密码
+        <Icon type="lock" />{launcherLocaleName(userContext,"ChangePassword")}
 
        
         </Menu.Item>
