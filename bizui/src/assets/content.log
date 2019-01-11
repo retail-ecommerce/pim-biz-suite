@@ -1,0 +1,1581 @@
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/Breadcrumb.model.js
+import { routerRedux } from 'dva/router';
+import key from 'keymaster';
+import { sessionObject } from '../utils/utils';
+
+// console.log("element", )
+
+let currentLocation = '';
+
+const hasLinkInArray = (breadcrumbArray, link) => {
+  const result = breadcrumbArray.filter(item => item.link == link);
+
+  return result.length > 0;
+};
+
+export default {
+  namespace: 'breadcrumb',
+
+  state: { currentApp: 'app1', app1: [{ name: launcherLocaleName(userContext,"Platform"), link: '/' }], menuData: {}, returnURL: null },
+
+  subscriptions: {},
+  effects: {},
+  reducers: {
+    updateState(state, action) {
+      return { ...state, ...action.payload };
+    },
+    gotoLink(state, action) {
+      const targetApp = sessionObject('targetApp');
+      const currentBreadcrumb = sessionObject(targetApp.id);
+
+      //const appdata=state[state.currentApp];
+      if (!currentBreadcrumb) {
+        return state;
+      }
+      const link = action.payload.link;
+      let returnURL = state.returnURL;
+      if (link && link.indexOf('/list/') > 0 && link.indexOf('/cache') < 0) {
+        returnURL = link + '/cache';
+      }
+
+      const name = action.payload.displayName;
+
+      const index = currentBreadcrumb.findIndex(item => item.link == link);
+      console.log('index', index);
+      if (index < 0) {
+        currentBreadcrumb.push({ name, link });
+        sessionObject(targetApp.id, currentBreadcrumb);
+        return { ...state, returnURL };
+      }
+
+      const newBreadcrumb = currentBreadcrumb.slice(0, index + 1);
+      sessionObject(targetApp.id, newBreadcrumb);
+      return { ...state, returnURL };
+    },
+    selectApp(state, action) {
+      console.log(action);
+      //const targetAppExpr = sessionStorage.getItem('targetApp');
+      const targetApp = action.payload.targetApp;
+      const menuData = action.payload.menuData;
+      const location = action.payload.location.pathname;
+
+      if (!targetApp) {
+        return state;
+      }
+
+      const currentBreadcrumb = sessionObject(targetApp.id) || [];
+
+      //this is a new app
+      sessionObject('targetApp', targetApp);
+      sessionObject('menuData', menuData);
+
+      const name = targetApp.title;
+      const link = location;
+      const currentAppKey = targetApp.id;
+      const index = currentBreadcrumb.findIndex(item => item.link == link);
+      if (index < 0) {
+        currentBreadcrumb.push({ name, link });
+        sessionObject(currentAppKey, currentBreadcrumb);
+      }
+
+      return { ...state, targetApp, menuData };
+    },
+  },
+};
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/Launcher.service.js
+import { get, postForm,PREFIX,joinParameters,joinPostParameters } from '../axios/tools'
+
+
+const login=(username, password)=>{
+    return get({
+        url: PREFIX+`secUserManager/login/${username}/${password}/`
+
+    });
+}
+
+
+const changePassword=({currentPassword,newPassword})=>{
+    return get({
+        url: PREFIX+`secUserManager/changeCurUserPassword/${currentPassword}/${newPassword}/`
+
+    });
+}
+
+
+const checkOtherLogin=()=>{
+
+    return get({
+        url: PREFIX+`secUserManager/checkOtherLogin/`
+
+    });
+
+}
+
+const logout=(username, password)=>{
+    return get({
+        url: PREFIX+`secUserManager/showlogin/`
+
+    });
+}
+
+const gotoApp=(appId)=>{
+    return get({
+        url: PREFIX+`secUserManager/selectApp/${appId}/`
+
+    });
+}
+
+const LauncherService={login,gotoApp,logout,checkOtherLogin,changePassword};
+export default LauncherService;
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/ChangePassword.modal.js
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Alert } from 'antd';
+
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link, Route, Redirect, Switch } from 'dva/router'
+import LauncherService from './Launcher.service'
+import { notification } from 'antd'
+import { Layout } from 'antd';
+import styles from './LoginForm.less'
+import Result from '../components/Result'
+import { Component } from 'react';
+import modeltool from '../utils/modeltool'
+
+import defaultLocaleName from './Launcher.locale'
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
+
+
+
+const { setupModel, hasError, handleClientError, handleServerError, keepValueWithKeySuffix } = modeltool
+
+const changePassword = (targetComponent) => {
+
+  const { hideModal } = targetComponent.props
+  console.log("trying to change password", changePassword)
+  console.log("see to hideModal", hideModal)
+
+  targetComponent.props.form.validateFields((err, values) => {
+    if (!err) {
+      console.log('Received values of form: ', values);
+
+      if (values.confirmPassword != values.newPassword) {
+
+        notification.error({
+          message: launcherLocaleName(userContext,"InputError"),
+          description: launcherLocaleName(userContext,"Passwordsdonotmatch"),
+        })
+        return
+      }
+
+      const future = LauncherService.changePassword(values)
+      future.then(result => {
+        console.log("the result is ", result)
+        if (result == "OK") {
+
+          hideModal()
+          notification.success({
+            message: launcherLocaleName(userContext,"Success"),
+            description: launcherLocaleName(userContext,"UseYourNewPasswordtoSignIn"),
+          })
+        }
+        if (hasError(result)) {
+          handleServerError(result)
+          return
+        }
+
+
+
+      })
+
+      //dispatch({type:"launcher/login", payload:{...values} });
+    }
+  });
+
+}
+
+
+
+
+
+const formItemLayout = {
+  labelCol: { span: 10 },
+  wrapperCol: { span: 14 },
+}
+
+
+class ChangePasswordModel extends Component {
+
+
+
+
+
+  render() {
+
+    if (!this.props.launcher) {
+      return null
+    }
+    const userContext = this.props.launcher.data
+    const { getFieldDecorator } = this.props.form
+
+    const { visible, hideModal } = this.props
+
+
+    return (<Modal
+      title={launcherLocaleName(userContext,"ChangePassword")}
+      visible={visible}
+      onOk={() => changePassword(this)}
+      onCancel={(event) => hideModal(event)}
+      width={620}
+      style={{ top: 40 }}
+    >
+      <Form >
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Col lg={24} md={24} sm={24}>
+            <Form.Item label={{launcherLocaleName(userContext,"OldPassword")}} {...formItemLayout}>
+              {getFieldDecorator('currentPassword', {
+
+                rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputOldPass") }],
+              })(
+                <Input placeholder={launcherLocaleName(userContext,"PleaseInputYourPassword")} type="password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} />
+
+              )}
+            </Form.Item>
+            <Form.Item label={{launcherLocaleName(userContext,"NewPassword")}} {...formItemLayout}>
+              {getFieldDecorator('newPassword', {
+
+                rules: [{ required: true, message: launcherLocaleName(userContext,"InputNewPassword") }],
+              })(
+                <Input placeholder={launcherLocaleName(userContext,"PleaseInputYourPassword")} type="password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} />
+
+              )}
+            </Form.Item>
+            <Form.Item label={{launcherLocaleName(userContext,"PleaseInputPassAgain")}} {...formItemLayout}>
+              {getFieldDecorator('confirmPassword', {
+
+                rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputNewPass") }],
+              })(
+                <Input placeholder={launcherLocaleName(userContext,"PleaseInputYourPassword")} type="password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} />
+
+              )}
+            </Form.Item>
+          </Col>
+
+
+        </Row>
+      </Form>
+
+
+    </Modal>)
+
+  }
+
+
+}
+
+
+const ChangePasswordModelForm = Form.create()(ChangePasswordModel);
+
+const mapStateToProps = state => {
+  return state;
+};
+const mapDispatchToProps = dispatch => ({
+  receiveData: bindActionCreators({}, dispatch)
+});
+
+//export default connect(mapStateToProps, mapDispatchToProps)(UserSkillBizApp);
+export default connect(mapStateToProps)(ChangePasswordModelForm);
+
+
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/index.js
+
+import React, { Component } from 'react';
+import dva, { connect } from 'dva';
+import { Router, Route } from 'dva/router';
+
+import LauncherModel from './Launcher.model'
+import LauncherRouter from './Launcher.router'
+import CommunityModel from '../bizcomponents/community/Community.model'
+import UserDomainModel from '../bizcomponents/userdomain/UserDomain.model'
+import CommunityUserModel from '../bizcomponents/communityuser/CommunityUser.model'
+
+const createLauncherApp =()=>
+{
+    const app = dva();
+    app.model(LauncherModel);
+    app.model(UserDomainModel);
+    app.model(CommunityModel);
+    app.model(CommunityUserModel);
+    
+    
+    app.router(({history}) => <LauncherRouter />);
+    return app;
+}
+
+export default createLauncherApp;
+
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/HomeScreen.js
+import FontAwesome from 'react-fontawesome';
+import { Row, Col, Card, Table, Popconfirm, Button } from 'antd';
+
+import React from 'react';
+
+import TopMenu from './TopMenu';
+import classNames from 'classnames';
+//import BizRouter from './BizRouter'
+
+import defaultLocaleName from './Launcher.locale'
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import styles from './HomeScreen.less';
+
+import { Layout } from 'antd';
+
+const { Content, Footer } = Layout;
+
+class HomeScreen extends React.Component {
+  gotoApp = (e, app) => {
+    console.log('click ', app.id);
+    const dispatch = this.props.dispatch;
+    dispatch({ type: 'launcher/gotoApp', payload: { app } });
+  };
+
+  appList = () => {
+    return (
+      <div>
+        <FontAwesome name="user" />
+      </div>
+    );
+  };
+
+  lowercaseFirst = stringExpr => {
+    if (typeof stringExpr != 'string') {
+      throw 'parameter stringExpr is not a string';
+    }
+    //let stringExpr="";
+    if (stringExpr.length <= 0) {
+      return '';
+    }
+    if (stringExpr.length == 1) {
+      return stringExpr.substring(0, 1);
+    }
+    return stringExpr.substring(0, 1).toLowerCase() + stringExpr.substring(1);
+  };
+
+  calcLink = link => {
+    let theCamelForm = this.lowercaseFirst(link);
+    console.log('processing: ' + theCamelForm);
+    return theCamelForm + 'App/dash';
+    //return '/login';
+  };
+
+  render() {
+    
+    if(!this.props.launcher){
+      return
+    }
+    
+    const appList = this.props.launcher.data.userAppList;
+    const calcLink = this.calcLink;
+    
+
+    const { systemName } = this.props.launcher;
+    const userContext = this.props.launcher.data
+    const styleList = 'icon-effect-1 icon-effect-1a icon-item';
+    var effectClasses = classNames({
+      styleList,
+    });
+
+    // console.log(styleList);
+
+    return (
+      <div className={'wrapper'}>
+        <Row key="1">
+          <Col className="gutter-row" span={24}>
+            <span className="logo" />
+            <TopMenu {...this.props} />
+          </Col>
+        </Row>
+        <Row key="2">
+          <Col className="gutter-row heading" span={24}>
+            <h1>{systemName}</h1>
+            <div className="desc" />
+            <a href="#more" className="btn">
+              
+{launcherLocaleName(userContext,"MoreFeatures")}
+            </a>
+          </Col>
+        </Row>
+        <Row key="3" className="icon-item-list" justify="center" align="center" id="more">
+          {appList.map((app, i) => (
+            <Col
+              className={styleList}
+              key={i}
+              span={6}
+              style={{ textAlign: 'center' }}
+              onClick={e => this.gotoApp(e, app)}
+            >
+              <div className="icon-item-box">
+                <FontAwesome name={app.appIcon} style={{ color: 'brown' }} className={'icon'} />
+                <p>{app.title}</p>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return state;
+};
+const mapDispatchToProps = dispatch => ({
+  receiveData: bindActionCreators({}, dispatch),
+});
+
+//export default connect(mapStateToProps, mapDispatchToProps)(UserSkillBizApp);
+export default connect(mapStateToProps)(HomeScreen);
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/Launcher.model.js
+
+import { routerRedux } from 'dva/router'
+import key from 'keymaster'
+import { notification } from 'antd'
+import LauncherService from './Launcher.service'
+import GlobalComponents from '../custcomponents'
+import SystemConfig  from '../axios/config'
+import defaultLocaleName from './Launcher.locale'
+let currentLocation = ''
+
+
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
+
+
+const showLoginError=()=>{
+
+  notification.warn({
+    message: launcherLocaleName(null,"SignInError"),
+    description: launcherLocaleName(null,"PleaseSignInAgain")
+  }) 
+
+}
+
+
+export default {
+
+  namespace: 'launcher',
+
+  state: { loggedIn: false, name: 'Philip', systemName: SystemConfig.SYSTEM_LOCAL_NAME },
+
+
+  subscriptions: {
+    keyboard({ dispatch }) {
+      key('escape', () => {
+        if (currentLocation === '/home') {
+          return
+        }
+
+        const newlocation = { pathname: '/home' }
+
+        dispatch(routerRedux.push(newlocation))
+      })
+    },
+    timer({ dispatch }){
+
+      setInterval(()=>{
+
+        //dispatch({type:"showlog"})
+
+      }, 3000);
+    },
+    setup({ history }) {
+      history.listen((location) => {
+        currentLocation = location.pathname
+        const { pathname } = location
+        // const match = pathToRegexp('/communityApp/:tail').exec(path)
+        if (!pathname === ('/') || !pathname.startsWith('/home')) {
+          return
+          // dispatch action with userId
+        }
+        console.log('launcher ==============>', location)
+        // updateState
+        // console.log(1, loggedIn)
+        // dispatch({type:"showlogin"})
+      })
+    },
+  },
+  effects: {
+    *showlog({ payload }, { call, put,select }){
+      const loggedIn = yield select(state => state.launcher.loggedIn)
+      if(!loggedIn){
+        return
+      }
+
+      const data = yield call(LauncherService.checkOtherLogin)
+      if(data=="OK"){
+        //donothing
+        return
+      }
+      if(data=="PROCEED"){
+        //donothing
+        return
+      }
+      notification.warn({
+        message: launcherLocaleName(userContext,"Warning"),
+        description: data
+      }) 
+
+    },
+    *login({ payload }, { call, put }) {
+      const {calcLocationPath,calcMenuData} = GlobalComponents
+      const data = yield call(LauncherService.login, payload.username, payload.password)
+      console.log('data.........................', data)
+      if (!data) {
+        showLoginError()
+        return
+      }
+      if (!data.class) {
+        showLoginError()
+        return
+      }
+      if (data.class.indexOf('LoginForm') > 0) {
+        yield put({ type: 'showlogin', payload: { data } })
+        showLoginError()
+        return
+      }
+      if (data.class.indexOf('SecUser') > 0) {
+        yield put({ type: 'showhome', payload: { data } })
+        return
+      }
+      const locationPath = calcLocationPath(data.class, data.id, 'dashboard')
+      const location = { pathname: `/${locationPath}`, state: data }
+      yield put(routerRedux.push(location))
+    },
+    *gotoApp({ payload }, { call, put }) {
+      // console.log("gotoApp has been called", payload)
+      const {calcLocationPath,calcMenuData} = GlobalComponents
+      const data = yield call(LauncherService.gotoApp, payload.app.id)
+      const locationPath = calcLocationPath(data.class, data.id, 'dashboard')
+      const location = { pathname: `/${locationPath}`, state: data }
+      const targetApp=payload.app;
+      console.log('location', location)
+      const menuData = calcMenuData(data.class);
+      yield put({ type: 'breadcrumb/selectApp', payload: { targetApp,location, menuData} })
+      
+      yield put(routerRedux.push(location))
+      // yield put({type:"showApp",payload:{data}})
+    },
+    *signOut({ payload }, { call, put }) {
+      // console.log("gotoApp has been called", payload)
+      const data = yield call(LauncherService.logout)
+     
+      yield put({ type: 'logout', payload: { data} })
+      const location = { pathname: `/home`, state: data }
+      yield put(routerRedux.push(location))
+     
+      // yield put({type:"showApp",payload:{data}})
+    },
+  },
+  reducers: {
+    updateState(state, action) {
+      return { ...state, ...action.payload }
+    },
+    showlogin(state) {
+      return { ...state, loggedIn: false }
+    },
+    showhome(state, action) {
+      const { data } = action.payload
+      return { ...state, loggedIn: true, data }
+    },
+    logout(state) {
+      return { ...state, loggedIn: false }
+    },
+    showApp(state, action) {
+      const { data } = action.payload
+      const clazz = data.class
+
+      presentApp(clazz, data)
+      return { ...state, loggedIn: true, clazz, data }
+    },
+  },
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/ForgetPasswordForm.js
+import React, { Component } from 'react';
+import { Form, Icon, Input, Button, Checkbox,Alert,message } from 'antd';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link, Route, Redirect, Switch } from 'dva/router'
+import LauncherService from './Launcher.service'
+import { notification } from 'antd'
+import { Layout } from 'antd';
+import styles  from './LoginForm.less'
+import Result from '../components/Result'
+
+import defaultLocaleName from './Launcher.locale'
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
+
+const { Content, Footer } = Layout;
+
+const FormItem = Form.Item;
+
+const FormItemLayout = {
+    labelCol: { span: 0 },
+    wrapperCol: { span: 24 },
+  }
+
+class NormalForgetPassword extends Component {
+
+    state = {
+        currentStep: 'start', //start, inputvcode, changepass
+        currentValues: {},
+      };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                const dispatch = this.props.dispatch;
+                dispatch({type:"launcher/login", payload:{...values} });
+            }
+        });
+
+
+
+    };
+
+    getNextStep(currentStep){
+
+        if(currentStep === "start"){
+            return "inputvcode"
+        }
+        if(currentStep === "inputvcode"){
+            return "changepass"
+        }
+        if(currentStep === "changepass"){
+            return "finish"
+        }
+    }
+
+
+    executeAction(currentStep,currentValues){
+       
+        if (!this.props.launcher) {
+            return null
+          }
+          const userContext = this.props.launcher.data
+
+        if(currentStep=="start"){
+            const future = LauncherService.getVerificationCode(currentValues.mobile)
+            future.then(result => {
+                console.log("the result is ",result)
+                if(result=="USER_NOT_FOUNT"||result=="USER_NOT_FOUNT"){
+                    notification.error({
+                        message: `${launcherLocaleName(userContext,"ThisPhoneNumber")}${currentValues.mobile},{launcherLocaleName(userContext,"CouldNotFindUser")}, `{launcherLocaleName(userContext,"PleaseContractAdmin")}`,
+                        description: `${launcherLocaleName(userContext,"ThisPhoneNumber")}${currentValues.mobile},{launcherLocaleName(userContext,"CouldNotFindUser")}, `{launcherLocaleName(userContext,"PleaseContractAdmin")}`,
+                      });
+                    return
+
+                }
+                const nextStep = this.getNextStep(currentStep)
+                this.setState({currentValues,currentStep:nextStep})
+            })
+        }
+        if(currentStep=="inputvcode"){
+           
+            const nextStep = this.getNextStep(currentStep)
+            this.setState({currentValues,currentStep:nextStep})
+        }
+        if(currentStep=="changepass"){
+            const mobile = currentValues.mobile
+            const verificationCode = currentValues.verificationCode
+            const password = currentValues.password
+            const confirmPassword = currentValues.confirmPassword
+            
+            if(password!=confirmPassword){
+                notification.error({
+                    message: launcherLocaleName(userContext,"PasswordsDontMatch"),
+                    description: launcherLocaleName(userContext,"Passworddoesnotmatch"),
+                  });
+                return
+            }
+
+
+            const future = LauncherService.forgetPasswordWithConfirm(mobile,verificationCode,password,confirmPassword)
+            future.then(result => {
+                console.log("the result is ",result)
+
+                if(result=="VERIFIICATION_CODE_NOT_MATCH"){
+                    notification.error({
+                        message: launcherLocaleName(userContext,"VerificationCodeError"),
+                        description: launcherLocaleName(userContext,"VerificationCodeError"),
+                      })
+                      return
+                }
+
+                const nextStep = this.getNextStep(currentStep)
+                this.setState({currentValues,currentStep:nextStep})
+            })
+        }
+        
+     
+    }
+    //console.log(future);
+
+   
+
+
+    gotoNextStep = (e) => {
+        e.preventDefault();
+        
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                const dispatch = this.props.dispatch;
+                const oldValues = this.state.currentValues
+                const currentValues={...oldValues,...values}
+                const currentStep = this.state.currentStep
+                this.executeAction(currentStep,currentValues)
+
+                //dispatch({type:"launcher/login", payload:{...values} });
+            }
+        });
+
+
+
+    };
+
+
+    inputMobileForm = () => {
+        if (!this.props.launcher) {
+            return null
+        }
+        const userContext = this.props.launcher.data
+        const { getFieldDecorator } = this.props.form;
+        return (<Form onSubmit={this.gotoNextStep} >
+            <FormItem  {...FormItemLayout}>
+                {getFieldDecorator('mobile', {
+                    rules: [{ required: true, message: launcherLocaleName(userContext,"InputPhoneNumber") }],
+                })(
+                    <Input prefix={<Icon type="user" style={{ fontSize: 20 }} />} placeholder={launcherLocaleName(userContext,"MobilePhone")} />
+                )}
+               
+            </FormItem>
+            <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+                    
+{launcherLocaleName(userContext,"NextStep")}
+                    
+                </Button><Link to="/" style={{float: 'right'}}><{launcherLocaleName(userContext,"ReturnToHome")}</Link>
+        </Form>)
+    }
+
+    inputVerficationCodeForm = () => {
+
+        if (!this.props.launcher) {
+            return null
+        }
+        const userContext = this.props.launcher.data
+        const { getFieldDecorator } = this.props.form;
+        return ( <Form onSubmit={this.gotoNextStep} >
+            <FormItem  {...FormItemLayout}>
+               {getFieldDecorator('verificationCode', {
+                   rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputVerificationCode") }],
+               })(
+                   <Input prefix={<Icon type="lock" style={{ fontSize: 20 }} />}  placeholder={launcherLocaleName(userContext,"VerificationCode")} />
+               )}
+           </FormItem> 
+                   <FormItem>
+                   <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+                       
+{launcherLocaleName(userContext,"NextStep")}
+                       
+                   </Button>
+                   </FormItem> <FormItem>
+                   <Link to="/" style={{float: 'right'}}><{launcherLocaleName(userContext,"ReturnToHome")}</Link> </FormItem>
+                   
+                   </Form>)
+
+    }
+
+    successForm = () => {
+        if (!this.props.launcher) {
+            return null
+        }
+        const userContext = this.props.launcher.data
+
+        return (<Result
+        type="success"
+        title={launcherLocaleName(userContext,"ChangedSuccess")}
+        description={<Link to="/" style={{float: 'right'}}><{launcherLocaleName(userContext,"ReturnToHome")}</Link>}
+       
+        style={{ marginTop: 48, marginBottom: 16 }}
+      />)
+
+    }
+    inputPasswordForm = () => {
+        if (!this.props.launcher) {
+            return null
+        }
+        const userContext = this.props.launcher.data
+        const { getFieldDecorator } = this.props.form;
+        return ( <Form onSubmit={this.gotoNextStep} >
+            <FormItem  {...FormItemLayout}>
+                {getFieldDecorator('password', {
+                    rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputYourPassword") }],
+                })(
+                    <Input prefix={<Icon type="lock" style={{ fontSize: 20 }} />}  type="password" placeholder={launcherLocaleName(userContext,"Password")} />
+                )}
+            </FormItem> 
+            <FormItem   {...FormItemLayout}>
+                {getFieldDecorator('confirmPassword', {
+                    rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputNewPass") }],
+                })(
+                    <Input prefix={<Icon type="lock" style={{ fontSize: 20 }} />}  type="password" placeholder={launcherLocaleName(userContext,"PleaseInputPass")} />
+                )}
+            </FormItem>
+            <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+                        
+{launcherLocaleName(userContext,"Changepassword")}
+                    </Button>
+                    <Link to="/" style={{float: 'right'}}><{launcherLocaleName(userContext,"ReturnToHome")}</Link>
+            </Form>)
+
+    }
+
+
+
+    showForm = () =>{
+
+       
+        const {currentStep} = this.state
+
+        if(currentStep === "start"){
+            return this.inputMobileForm()
+        }
+
+        if(currentStep === "inputvcode"){
+            return this.inputVerficationCodeForm()
+        }
+
+        if(currentStep === "changepass"){
+            return this.inputPasswordForm()
+        }
+
+        return this.successForm()
+
+
+    }
+
+
+    render() {
+       
+        if(!this.props.launcher){
+            return null
+        }
+
+        if (!this.props.launcher) {
+            return null
+        }
+        const userContext = this.props.launcher.data
+
+
+        //console.log("what the type",getFieldDecorator );
+        return (
+           
+    <div className={styles.login}>
+                <div className={styles.loginForm} >
+                    <div className={styles.loginLogo}>
+                        <span><{launcherLocaleName(userContext,"ForgetPassword")}</span>
+                    </div>
+                   
+                    {this.showForm()}
+
+            </div></div>
+        );
+    }
+}
+
+const ForgetPasswordForm = Form.create()(NormalForgetPassword);
+
+const mapStateToProps = state => {   
+    return state;
+};
+const mapDispatchToProps = dispatch => ({
+    receiveData: bindActionCreators({}, dispatch)
+});
+
+//export default connect(mapStateToProps, mapDispatchToProps)(UserSkillBizApp);
+export default connect(mapStateToProps)(ForgetPasswordForm);
+
+
+
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/LoginForm.js
+import React, { Component } from 'react';
+import { Form, Icon, Input, Button, Checkbox,Alert,message } from 'antd';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { Link, Route, Redirect, Switch } from 'dva/router'
+
+import { Layout } from 'antd';
+import styles  from './LoginForm.less'
+const { Content, Footer } = Layout;
+import defaultLocaleName from './Launcher.locale'
+const launcherLocaleName=defaultLocaleName //you can define your version here to replace default
+
+const FormItem = Form.Item;
+
+class NormalLoginForm extends Component {
+    handleSubmit = (e) => {
+        e.preventDefault();
+        
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                const dispatch = this.props.dispatch;
+                const username = values.username;
+                const password = values.password;
+                
+                dispatch({type:"launcher/login", payload:{...values} });
+            }
+        });
+
+
+
+    };
+    render() {
+        const { getFieldDecorator } = this.props.form;
+
+        if(!this.props.launcher){
+            return null
+        }
+        const userContext = this.props.launcher.data
+        const { systemName }=this.props.launcher;
+        const {data} = this.props.launcher
+        if(!systemName){
+            return null
+        }
+        //console.log("what the type",getFieldDecorator );
+        return (
+           
+    <div className={styles.login}>
+                <div className={styles.loginForm} >
+                    <div className={styles.loginLogo}>
+                        <span>{systemName}</span>
+                    </div>
+                   
+            <Form onSubmit={this.handleSubmit} >
+                <FormItem>
+                    {getFieldDecorator('username', {
+                        rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputUsername") }],
+                    })(
+                        <Input prefix={<Icon type="user" />} placeholder={launcherLocaleName(userContext,"Username")} />
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('password', {
+                        rules: [{ required: true, message: launcherLocaleName(userContext,"PleaseInputYourPassword") }],
+                    })(
+                        <Input prefix={<Icon type="lock" />} type="password" placeholder={launcherLocaleName(userContext,"Password")} />
+                    )}
+                </FormItem>
+                <FormItem>
+                <Link className="login-form-forgot" to="/forgetpass" style={{float: 'right'}}>{launcherLocaleName(userContext,"ForgetPassword")}</Link>
+                   
+                    <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '60%'}}>
+                    {launcherLocaleName(userContext,"LogIn")}
+                    </Button>
+                    
+                </FormItem>
+            </Form>
+            </div></div>
+        );
+    }
+}
+
+const LoginForm = Form.create()(NormalLoginForm);
+
+const mapStateToProps = state => {   
+    return state;
+};
+const mapDispatchToProps = dispatch => ({
+    receiveData: bindActionCreators({}, dispatch)
+});
+
+//export default connect(mapStateToProps, mapDispatchToProps)(UserSkillBizApp);
+export default connect(mapStateToProps)(LoginForm);
+
+
+
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/Launcher.js
+import FontAwesome from 'react-fontawesome';
+import { Row, Col, Card, Table, Popconfirm, Button } from 'antd';
+
+import React from 'react';
+import { Link } from 'react-router';
+import TopMenu from './TopMenu';
+
+//import BizRouter from './BizRouter'
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Layout } from 'antd';
+
+
+import HomeScreen from './HomeScreen.js'
+import LoginForm from './LoginForm.js'
+import  './LoginForm.less'
+const { Content, Footer } = Layout;
+
+class Launcher extends React.Component {
+
+    
+    
+
+    render() {
+        const state = this.props.launcher;
+
+        console.log(this.props);
+        console.log("state is",state)
+
+        if(state&&state.loggedIn){
+
+            return (<Layout style={ {height:'100%'}}>
+                    <Content style={ {overflow: 'initial', height:'100%'}}>
+                    <HomeScreen/>
+                    </Content>
+                
+              </Layout>);
+        }
+
+        return (<Layout style={ {height:'100%'}}>
+                    <Content style={{ textAlign: "center",overflow: 'initial', height:'100%' }}>
+                    <LoginForm/>
+                    </Content>
+                
+              </Layout>
+        )
+
+    }
+}
+
+
+const mapStateToProps = state => {   
+    return state;
+};
+const mapDispatchToProps = dispatch => ({
+    receiveData: bindActionCreators({}, dispatch)
+});
+
+//export default connect(mapStateToProps, mapDispatchToProps)(UserSkillBizApp);
+export default connect(mapStateToProps)(Launcher);
+
+
+
+/Users/Philip/githome/pim-biz-suite/bizui/src/launcher/Launcher.router.js
+import React, { Component } from 'react';
+import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
+import Launcher from './Launcher.js'
+import HomeScreen from './HomeScreen.js'
+import LoginForm from './LoginForm.js'
+import Page from './Page'
+import CommunityAppInfo from '../bizcomponents/community'
+import CommunityBizApp from '../bizcomponents/community/Community.app.js'
+import CommunityDashboard from '../bizcomponents/community/Community.dashboard.js'
+
+import InvitationCodeBizApp from '../bizcomponents/invitationcode/InvitationCode.app.js'
+import InvitationCodeDashboard from '../bizcomponents/invitationcode/InvitationCode.dashboard.js'
+
+import HomePageBizApp from '../bizcomponents/homepage/HomePage.app.js'
+import HomePageDashboard from '../bizcomponents/homepage/HomePage.dashboard.js'
+
+import SlideBizApp from '../bizcomponents/slide/Slide.app.js'
+import SlideDashboard from '../bizcomponents/slide/Slide.dashboard.js'
+
+import EncyclopediaItemBizApp from '../bizcomponents/encyclopediaitem/EncyclopediaItem.app.js'
+import EncyclopediaItemDashboard from '../bizcomponents/encyclopediaitem/EncyclopediaItem.dashboard.js'
+
+import TaskPageBizApp from '../bizcomponents/taskpage/TaskPage.app.js'
+import TaskPageDashboard from '../bizcomponents/taskpage/TaskPage.dashboard.js'
+
+import TaskFilterBizApp from '../bizcomponents/taskfilter/TaskFilter.app.js'
+import TaskFilterDashboard from '../bizcomponents/taskfilter/TaskFilter.dashboard.js'
+
+import CommunityUserBizApp from '../bizcomponents/communityuser/CommunityUser.app.js'
+import CommunityUserDashboard from '../bizcomponents/communityuser/CommunityUser.dashboard.js'
+
+import PatientInfoBizApp from '../bizcomponents/patientinfo/PatientInfo.app.js'
+import PatientInfoDashboard from '../bizcomponents/patientinfo/PatientInfo.dashboard.js'
+
+import UserSkillBizApp from '../bizcomponents/userskill/UserSkill.app.js'
+import UserSkillDashboard from '../bizcomponents/userskill/UserSkill.dashboard.js'
+
+import MessageFilterBizApp from '../bizcomponents/messagefilter/MessageFilter.app.js'
+import MessageFilterDashboard from '../bizcomponents/messagefilter/MessageFilter.dashboard.js'
+
+import UserMessageBizApp from '../bizcomponents/usermessage/UserMessage.app.js'
+import UserMessageDashboard from '../bizcomponents/usermessage/UserMessage.dashboard.js'
+
+import TaskBizApp from '../bizcomponents/task/Task.app.js'
+import TaskDashboard from '../bizcomponents/task/Task.dashboard.js'
+
+import TaskAssigmentBizApp from '../bizcomponents/taskassigment/TaskAssigment.app.js'
+import TaskAssigmentDashboard from '../bizcomponents/taskassigment/TaskAssigment.dashboard.js'
+
+import TaskHidingBizApp from '../bizcomponents/taskhiding/TaskHiding.app.js'
+import TaskHidingDashboard from '../bizcomponents/taskhiding/TaskHiding.dashboard.js'
+
+import TaskResolvingBizApp from '../bizcomponents/taskresolving/TaskResolving.app.js'
+import TaskResolvingDashboard from '../bizcomponents/taskresolving/TaskResolving.dashboard.js'
+
+import TaskRewardBizApp from '../bizcomponents/taskreward/TaskReward.app.js'
+import TaskRewardDashboard from '../bizcomponents/taskreward/TaskReward.dashboard.js'
+
+import TaskLikeBizApp from '../bizcomponents/tasklike/TaskLike.app.js'
+import TaskLikeDashboard from '../bizcomponents/tasklike/TaskLike.dashboard.js'
+
+import TaskReplyBizApp from '../bizcomponents/taskreply/TaskReply.app.js'
+import TaskReplyDashboard from '../bizcomponents/taskreply/TaskReply.dashboard.js'
+
+import TaskBestAnswerSettingBizApp from '../bizcomponents/taskbestanswersetting/TaskBestAnswerSetting.app.js'
+import TaskBestAnswerSettingDashboard from '../bizcomponents/taskbestanswersetting/TaskBestAnswerSetting.dashboard.js'
+
+import TaskReplyLikeBizApp from '../bizcomponents/taskreplylike/TaskReplyLike.app.js'
+import TaskReplyLikeDashboard from '../bizcomponents/taskreplylike/TaskReplyLike.dashboard.js'
+
+import GroupPageBizApp from '../bizcomponents/grouppage/GroupPage.app.js'
+import GroupPageDashboard from '../bizcomponents/grouppage/GroupPage.dashboard.js'
+
+import GroupFilterBizApp from '../bizcomponents/groupfilter/GroupFilter.app.js'
+import GroupFilterDashboard from '../bizcomponents/groupfilter/GroupFilter.dashboard.js'
+
+import ThreadBizApp from '../bizcomponents/thread/Thread.app.js'
+import ThreadDashboard from '../bizcomponents/thread/Thread.dashboard.js'
+
+import ThreadHidingBizApp from '../bizcomponents/threadhiding/ThreadHiding.app.js'
+import ThreadHidingDashboard from '../bizcomponents/threadhiding/ThreadHiding.dashboard.js'
+
+import ThreadReplyBizApp from '../bizcomponents/threadreply/ThreadReply.app.js'
+import ThreadReplyDashboard from '../bizcomponents/threadreply/ThreadReply.dashboard.js'
+
+import ThreadApprovalBizApp from '../bizcomponents/threadapproval/ThreadApproval.app.js'
+import ThreadApprovalDashboard from '../bizcomponents/threadapproval/ThreadApproval.dashboard.js'
+
+import ThreadCompletionBizApp from '../bizcomponents/threadcompletion/ThreadCompletion.app.js'
+import ThreadCompletionDashboard from '../bizcomponents/threadcompletion/ThreadCompletion.dashboard.js'
+
+import ThreadCancelingBizApp from '../bizcomponents/threadcanceling/ThreadCanceling.app.js'
+import ThreadCancelingDashboard from '../bizcomponents/threadcanceling/ThreadCanceling.dashboard.js'
+
+import ThreadRegistrationBizApp from '../bizcomponents/threadregistration/ThreadRegistration.app.js'
+import ThreadRegistrationDashboard from '../bizcomponents/threadregistration/ThreadRegistration.dashboard.js'
+
+import ThreadLikeBizApp from '../bizcomponents/threadlike/ThreadLike.app.js'
+import ThreadLikeDashboard from '../bizcomponents/threadlike/ThreadLike.dashboard.js'
+
+import ThreadReplyLikeBizApp from '../bizcomponents/threadreplylike/ThreadReplyLike.app.js'
+import ThreadReplyLikeDashboard from '../bizcomponents/threadreplylike/ThreadReplyLike.dashboard.js'
+
+import FanBizApp from '../bizcomponents/fan/Fan.app.js'
+import FanDashboard from '../bizcomponents/fan/Fan.dashboard.js'
+
+import FollowBizApp from '../bizcomponents/follow/Follow.app.js'
+import FollowDashboard from '../bizcomponents/follow/Follow.dashboard.js'
+
+import BonusPointBizApp from '../bizcomponents/bonuspoint/BonusPoint.app.js'
+import BonusPointDashboard from '../bizcomponents/bonuspoint/BonusPoint.dashboard.js'
+
+import ExperiencePointBizApp from '../bizcomponents/experiencepoint/ExperiencePoint.app.js'
+import ExperiencePointDashboard from '../bizcomponents/experiencepoint/ExperiencePoint.dashboard.js'
+
+import UserDomainBizApp from '../bizcomponents/userdomain/UserDomain.app.js'
+import UserDomainDashboard from '../bizcomponents/userdomain/UserDomain.dashboard.js'
+
+import SecUserBizApp from '../bizcomponents/secuser/SecUser.app.js'
+import SecUserDashboard from '../bizcomponents/secuser/SecUser.dashboard.js'
+
+import SecUserBlockingBizApp from '../bizcomponents/secuserblocking/SecUserBlocking.app.js'
+import SecUserBlockingDashboard from '../bizcomponents/secuserblocking/SecUserBlocking.dashboard.js'
+
+import UserAppBizApp from '../bizcomponents/userapp/UserApp.app.js'
+import UserAppDashboard from '../bizcomponents/userapp/UserApp.dashboard.js'
+
+import ObjectAccessBizApp from '../bizcomponents/objectaccess/ObjectAccess.app.js'
+import ObjectAccessDashboard from '../bizcomponents/objectaccess/ObjectAccess.dashboard.js'
+
+import LoginHistoryBizApp from '../bizcomponents/loginhistory/LoginHistory.app.js'
+import LoginHistoryDashboard from '../bizcomponents/loginhistory/LoginHistory.dashboard.js'
+
+
+
+export default class LauncherRouter extends Component {
+   
+    render() {
+        //console.log(JSON.stringify(this.props));
+        return (
+            <Router history={hashHistory}>
+                <Route path={'/'} component={Page}>
+                    <IndexRedirect to="home" />
+                    <Route path={'home'} component={Launcher}/>
+                    
+                
+                    <Route path={'communityApp'} component={CommunityBizApp}>
+                      <Route path={'dash/:communityId'} component={CommunityDashboard}/>
+                      <Route path={'list/:communityId'} component={CommunityDashboard}/>
+                    
+                     </Route>
+   
+              
+                 <Route path={'invitationCodeApp'} component={InvitationCodeBizApp}>
+                    <Route path={'dash'} component={InvitationCodeDashboard}/>
+                    <Route path={'list'} component={InvitationCodeDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'homePageApp'} component={HomePageBizApp}>
+                    <Route path={'dash'} component={HomePageDashboard}/>
+                    <Route path={'list'} component={HomePageDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'slideApp'} component={SlideBizApp}>
+                    <Route path={'dash'} component={SlideDashboard}/>
+                    <Route path={'list'} component={SlideDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'encyclopediaItemApp'} component={EncyclopediaItemBizApp}>
+                    <Route path={'dash'} component={EncyclopediaItemDashboard}/>
+                    <Route path={'list'} component={EncyclopediaItemDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskPageApp'} component={TaskPageBizApp}>
+                    <Route path={'dash'} component={TaskPageDashboard}/>
+                    <Route path={'list'} component={TaskPageDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskFilterApp'} component={TaskFilterBizApp}>
+                    <Route path={'dash'} component={TaskFilterDashboard}/>
+                    <Route path={'list'} component={TaskFilterDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'communityUserApp'} component={CommunityUserBizApp}>
+                    <Route path={'dash'} component={CommunityUserDashboard}/>
+                    <Route path={'list'} component={CommunityUserDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'patientInfoApp'} component={PatientInfoBizApp}>
+                    <Route path={'dash'} component={PatientInfoDashboard}/>
+                    <Route path={'list'} component={PatientInfoDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'userSkillApp'} component={UserSkillBizApp}>
+                    <Route path={'dash'} component={UserSkillDashboard}/>
+                    <Route path={'list'} component={UserSkillDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'messageFilterApp'} component={MessageFilterBizApp}>
+                    <Route path={'dash'} component={MessageFilterDashboard}/>
+                    <Route path={'list'} component={MessageFilterDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'userMessageApp'} component={UserMessageBizApp}>
+                    <Route path={'dash'} component={UserMessageDashboard}/>
+                    <Route path={'list'} component={UserMessageDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskApp'} component={TaskBizApp}>
+                    <Route path={'dash'} component={TaskDashboard}/>
+                    <Route path={'list'} component={TaskDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskAssigmentApp'} component={TaskAssigmentBizApp}>
+                    <Route path={'dash'} component={TaskAssigmentDashboard}/>
+                    <Route path={'list'} component={TaskAssigmentDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskHidingApp'} component={TaskHidingBizApp}>
+                    <Route path={'dash'} component={TaskHidingDashboard}/>
+                    <Route path={'list'} component={TaskHidingDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskResolvingApp'} component={TaskResolvingBizApp}>
+                    <Route path={'dash'} component={TaskResolvingDashboard}/>
+                    <Route path={'list'} component={TaskResolvingDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskRewardApp'} component={TaskRewardBizApp}>
+                    <Route path={'dash'} component={TaskRewardDashboard}/>
+                    <Route path={'list'} component={TaskRewardDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskLikeApp'} component={TaskLikeBizApp}>
+                    <Route path={'dash'} component={TaskLikeDashboard}/>
+                    <Route path={'list'} component={TaskLikeDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskReplyApp'} component={TaskReplyBizApp}>
+                    <Route path={'dash'} component={TaskReplyDashboard}/>
+                    <Route path={'list'} component={TaskReplyDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskBestAnswerSettingApp'} component={TaskBestAnswerSettingBizApp}>
+                    <Route path={'dash'} component={TaskBestAnswerSettingDashboard}/>
+                    <Route path={'list'} component={TaskBestAnswerSettingDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'taskReplyLikeApp'} component={TaskReplyLikeBizApp}>
+                    <Route path={'dash'} component={TaskReplyLikeDashboard}/>
+                    <Route path={'list'} component={TaskReplyLikeDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'groupPageApp'} component={GroupPageBizApp}>
+                    <Route path={'dash'} component={GroupPageDashboard}/>
+                    <Route path={'list'} component={GroupPageDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'groupFilterApp'} component={GroupFilterBizApp}>
+                    <Route path={'dash'} component={GroupFilterDashboard}/>
+                    <Route path={'list'} component={GroupFilterDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadApp'} component={ThreadBizApp}>
+                    <Route path={'dash'} component={ThreadDashboard}/>
+                    <Route path={'list'} component={ThreadDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadHidingApp'} component={ThreadHidingBizApp}>
+                    <Route path={'dash'} component={ThreadHidingDashboard}/>
+                    <Route path={'list'} component={ThreadHidingDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadReplyApp'} component={ThreadReplyBizApp}>
+                    <Route path={'dash'} component={ThreadReplyDashboard}/>
+                    <Route path={'list'} component={ThreadReplyDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadApprovalApp'} component={ThreadApprovalBizApp}>
+                    <Route path={'dash'} component={ThreadApprovalDashboard}/>
+                    <Route path={'list'} component={ThreadApprovalDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadCompletionApp'} component={ThreadCompletionBizApp}>
+                    <Route path={'dash'} component={ThreadCompletionDashboard}/>
+                    <Route path={'list'} component={ThreadCompletionDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadCancelingApp'} component={ThreadCancelingBizApp}>
+                    <Route path={'dash'} component={ThreadCancelingDashboard}/>
+                    <Route path={'list'} component={ThreadCancelingDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadRegistrationApp'} component={ThreadRegistrationBizApp}>
+                    <Route path={'dash'} component={ThreadRegistrationDashboard}/>
+                    <Route path={'list'} component={ThreadRegistrationDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadLikeApp'} component={ThreadLikeBizApp}>
+                    <Route path={'dash'} component={ThreadLikeDashboard}/>
+                    <Route path={'list'} component={ThreadLikeDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'threadReplyLikeApp'} component={ThreadReplyLikeBizApp}>
+                    <Route path={'dash'} component={ThreadReplyLikeDashboard}/>
+                    <Route path={'list'} component={ThreadReplyLikeDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'fanApp'} component={FanBizApp}>
+                    <Route path={'dash'} component={FanDashboard}/>
+                    <Route path={'list'} component={FanDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'followApp'} component={FollowBizApp}>
+                    <Route path={'dash'} component={FollowDashboard}/>
+                    <Route path={'list'} component={FollowDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'bonusPointApp'} component={BonusPointBizApp}>
+                    <Route path={'dash'} component={BonusPointDashboard}/>
+                    <Route path={'list'} component={BonusPointDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'experiencePointApp'} component={ExperiencePointBizApp}>
+                    <Route path={'dash'} component={ExperiencePointDashboard}/>
+                    <Route path={'list'} component={ExperiencePointDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'userDomainApp'} component={UserDomainBizApp}>
+                    <Route path={'dash'} component={UserDomainDashboard}/>
+                    <Route path={'list'} component={UserDomainDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'secUserApp'} component={SecUserBizApp}>
+                    <Route path={'dash'} component={SecUserDashboard}/>
+                    <Route path={'list'} component={SecUserDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'secUserBlockingApp'} component={SecUserBlockingBizApp}>
+                    <Route path={'dash'} component={SecUserBlockingDashboard}/>
+                    <Route path={'list'} component={SecUserBlockingDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'userAppApp'} component={UserAppBizApp}>
+                    <Route path={'dash'} component={UserAppDashboard}/>
+                    <Route path={'list'} component={UserAppDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'objectAccessApp'} component={ObjectAccessBizApp}>
+                    <Route path={'dash'} component={ObjectAccessDashboard}/>
+                    <Route path={'list'} component={ObjectAccessDashboard}/>
+                    
+                  </Route>
+   
+              
+                 <Route path={'loginHistoryApp'} component={LoginHistoryBizApp}>
+                    <Route path={'dash'} component={LoginHistoryDashboard}/>
+                    <Route path={'list'} component={LoginHistoryDashboard}/>
+                    
+                  </Route>
+                
+                </Route>   
+                   
+            </Router>
+        );
+    }
+}
+
+/*
+
+
+export default class LauncherRouter extends Component {
+   
+    render() {
+        console.log(JSON.stringify(this.props));
+        return (
+            <Router history={hashHistory}>
+                <Route path={'/'} component={Launcher}>
+                    <Route path={'/login'} component={LoginForm}/> 
+                    <Route path={'/home'} component={HomeScreen}/>                    
+                </Route>        
+            </Router>
+        );
+    }
+}
+
+
+
+*/
