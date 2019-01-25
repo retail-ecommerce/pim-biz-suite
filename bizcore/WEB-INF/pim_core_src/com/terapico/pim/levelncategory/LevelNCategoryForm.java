@@ -221,6 +221,20 @@ public class LevelNCategoryForm extends BaseForm {
 		return lastUpdateTimeFieldForProduct("lastUpdateTime","");
 	}
 
+
+	public LevelNCategoryForm platformIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm platformIdFieldForProduct(String initValue){
+		return platformIdFieldForProduct("platformId",initValue);
+	}
+	public LevelNCategoryForm platformIdFieldForProduct(){
+		return platformIdFieldForProduct("platformId","");
+	}
+
 	
 
 	

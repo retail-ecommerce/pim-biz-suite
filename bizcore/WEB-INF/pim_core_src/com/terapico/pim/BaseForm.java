@@ -547,6 +547,19 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField platformIdFromProduct(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("product.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
+		return field;
+	}
+
 	protected FormField idFromSku(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("Id");

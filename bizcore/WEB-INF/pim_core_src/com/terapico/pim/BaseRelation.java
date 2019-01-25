@@ -127,7 +127,7 @@ public class BaseRelation{
 		String [] brandRelatedObjectNames = {"platform:Platform"};
 		addRelationIndex("Brand",brandRelatedObjectNames);
 
-		String [] productRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog"};
+		String [] productRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog","platform:Platform"};
 		addRelationIndex("Product",productRelatedObjectNames);
 
 		String [] skuRelatedObjectNames = {"product:Product"};
@@ -193,6 +193,7 @@ public class BaseRelation{
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"parentCategory");
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"brand");
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"catalog");
+		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Sku"                                   ,TRUST_CHAIN_READ,"product");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");

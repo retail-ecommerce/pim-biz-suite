@@ -275,9 +275,10 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		return checkOptions(options,CatalogTokens.LEVEL_ONE_CATEGORY_LIST);
  	}
  	protected boolean isAnalyzeLevelOneCategoryListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,CatalogTokens.LEVEL_ONE_CATEGORY_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,CatalogTokens.LEVEL_ONE_CATEGORY_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveLevelOneCategoryListEnabled(Map<String,Object> options){
 		return checkOptions(options, CatalogTokens.LEVEL_ONE_CATEGORY_LIST);
 		
@@ -289,9 +290,10 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		return checkOptions(options,CatalogTokens.PRODUCT_LIST);
  	}
  	protected boolean isAnalyzeProductListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,CatalogTokens.PRODUCT_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,CatalogTokens.PRODUCT_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveProductListEnabled(Map<String,Object> options){
 		return checkOptions(options, CatalogTokens.PRODUCT_LIST);
 		
@@ -337,7 +339,7 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 	 		extractLevelOneCategoryList(catalog, loadOptions);
  		}	
  		if(isAnalyzeLevelOneCategoryListEnabled(loadOptions)){
-	 		// analyzeLevelOneCategoryList(catalog, loadOptions);
+	 		analyzeLevelOneCategoryList(catalog, loadOptions);
  		}
  		
 		
@@ -345,7 +347,7 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 	 		extractProductList(catalog, loadOptions);
  		}	
  		if(isAnalyzeProductListEnabled(loadOptions)){
-	 		// analyzeProductList(catalog, loadOptions);
+	 		analyzeProductList(catalog, loadOptions);
  		}
  		
 		
@@ -974,6 +976,50 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		MultipleAccessKey key = new MultipleAccessKey();
 		key.put(Product.CATALOG_PROPERTY, catalogId);
 		key.put(Product.BRAND_PROPERTY, brandId);
+		
+		int count = getProductDAO().countProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with platform in Product
+	public Catalog planToRemoveProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.CATALOG_PROPERTY, catalog.getId());
+		key.put(Product.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return catalog;
+		}
+		if(externalProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(Product product: externalProductList){
+			product.clearPlatform();
+			product.clearCatalog();
+			
+		}
+		
+		
+		SmartList<Product> productList = catalog.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return catalog;
+	}
+	
+	public int countProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.CATALOG_PROPERTY, catalogId);
+		key.put(Product.PLATFORM_PROPERTY, platformId);
 		
 		int count = getProductDAO().countProductWithKey(key, options);
 		return count;

@@ -65,6 +65,10 @@ public interface CatalogDAO{
 	public Catalog planToRemoveProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception;
 	public int countProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception;
 	
+	//disconnect Catalog with platform in Product
+	public Catalog planToRemoveProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception;
+	public int countProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<Catalog> queryList(String sql, Object ... parmeters);
  

@@ -99,16 +99,17 @@ export default class OSSPictureEdit extends React.Component {
     reader.readAsDataURL(file);
     console.log('The file is', file);
     const { buttonTitle, handleChange, handlePreview } = this.props;
+    const { fileList,titleSuffix,successMessage,failedMessage } = this.props;
     reader.onloadend = () => {
       uploadToOss(this, OSS_IMAGE_FILE_PATH, file).then(data => {
         console.log('data from server', data);
-        
+        const message = successMessage||"Success"
         notification.success({
-          message: `上传成功`,
-          description: `上传成功`,
+          message: message,
+          description: message,
         })
         
-
+        
         const fileList = [
           {
             uid: file.uid,
@@ -169,12 +170,12 @@ export default class OSSPictureEdit extends React.Component {
 
   render() {
     const { previewVisible, previewImage } = this.state;
-    const { fileList } = this.props;
+    const { fileList,titleSuffix,successMessage,failedMessage } = this.props;
     const { buttonTitle, handleChange, handlePreview } = this.props;
     //const {fileList} = this.state;
     const internalFileList = fileList ? fileList : [];
     console.log('file list in render', fileList);
-    const suffix = ' | 图片预览';
+    const suffix = titleSuffix || ' | 图片预览';
     const modalTitle = buttonTitle ? buttonTitle + suffix : suffix;
 
     const uploadButton = (

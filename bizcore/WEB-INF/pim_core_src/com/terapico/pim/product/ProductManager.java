@@ -12,7 +12,7 @@ public interface ProductManager{
 
 		
 
-	public Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark) throws Exception;	
+	public Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark, String platformId) throws Exception;	
 	public Product updateProduct(PimUserContext userContext,String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Product loadProduct(PimUserContext userContext, String productId, String [] tokensExpr) throws Exception;
 	public Product internalSaveProduct(PimUserContext userContext, Product product) throws Exception;
@@ -21,6 +21,7 @@ public interface ProductManager{
 	public Product transferToAnotherParentCategory(PimUserContext userContext, String productId, String anotherParentCategoryId)  throws Exception;
  	public Product transferToAnotherBrand(PimUserContext userContext, String productId, String anotherBrandId)  throws Exception;
  	public Product transferToAnotherCatalog(PimUserContext userContext, String productId, String anotherCatalogId)  throws Exception;
+ 	public Product transferToAnotherPlatform(PimUserContext userContext, String productId, String anotherPlatformId)  throws Exception;
  
 
 	public void delete(PimUserContext userContext, String productId, int version) throws Exception;

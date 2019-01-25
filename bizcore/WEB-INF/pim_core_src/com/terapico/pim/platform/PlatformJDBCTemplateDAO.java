@@ -19,9 +19,11 @@ import com.terapico.pim.PimUserContext;
 
 
 import com.terapico.pim.site.Site;
+import com.terapico.pim.product.Product;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
 
+import com.terapico.pim.product.ProductDAO;
 import com.terapico.pim.site.SiteDAO;
 import com.terapico.pim.catalog.CatalogDAO;
 import com.terapico.pim.brand.BrandDAO;
@@ -92,6 +94,25 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
  	
 			
 		
+	
+  	private  ProductDAO  productDAO;
+ 	public void setProductDAO(ProductDAO pProductDAO){
+ 	
+ 		if(pProductDAO == null){
+ 			throw new IllegalStateException("Do not try to set productDAO to null.");
+ 		}
+	 	this.productDAO = pProductDAO;
+ 	}
+ 	public ProductDAO getProductDAO(){
+ 		if(this.productDAO == null){
+ 			throw new IllegalStateException("The productDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.productDAO;
+ 	}	
+ 	
+			
+		
 
 	
 	/*
@@ -153,6 +174,13 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
  		
  		if(isSaveBrandListEnabled(options)){
  			for(Brand item: newPlatform.getBrandList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveProductListEnabled(options)){
+ 			for(Product item: newPlatform.getProductList()){
  				item.setVersion(0);
  			}
  		}
@@ -253,9 +281,10 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
  		return checkOptions(options,PlatformTokens.SITE_LIST);
  	}
  	protected boolean isAnalyzeSiteListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,PlatformTokens.SITE_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.SITE_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveSiteListEnabled(Map<String,Object> options){
 		return checkOptions(options, PlatformTokens.SITE_LIST);
 		
@@ -267,9 +296,10 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
  		return checkOptions(options,PlatformTokens.CATALOG_LIST);
  	}
  	protected boolean isAnalyzeCatalogListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,PlatformTokens.CATALOG_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.CATALOG_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveCatalogListEnabled(Map<String,Object> options){
 		return checkOptions(options, PlatformTokens.CATALOG_LIST);
 		
@@ -281,11 +311,27 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
  		return checkOptions(options,PlatformTokens.BRAND_LIST);
  	}
  	protected boolean isAnalyzeBrandListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,PlatformTokens.BRAND_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.BRAND_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveBrandListEnabled(Map<String,Object> options){
 		return checkOptions(options, PlatformTokens.BRAND_LIST);
+		
+ 	}
+ 	
+		
+	
+	protected boolean isExtractProductListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,PlatformTokens.PRODUCT_LIST);
+ 	}
+ 	protected boolean isAnalyzeProductListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.PRODUCT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveProductListEnabled(Map<String,Object> options){
+		return checkOptions(options, PlatformTokens.PRODUCT_LIST);
 		
  	}
  	
@@ -321,7 +367,7 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 	 		extractSiteList(platform, loadOptions);
  		}	
  		if(isAnalyzeSiteListEnabled(loadOptions)){
-	 		// analyzeSiteList(platform, loadOptions);
+	 		analyzeSiteList(platform, loadOptions);
  		}
  		
 		
@@ -329,7 +375,7 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 	 		extractCatalogList(platform, loadOptions);
  		}	
  		if(isAnalyzeCatalogListEnabled(loadOptions)){
-	 		// analyzeCatalogList(platform, loadOptions);
+	 		analyzeCatalogList(platform, loadOptions);
  		}
  		
 		
@@ -337,7 +383,15 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 	 		extractBrandList(platform, loadOptions);
  		}	
  		if(isAnalyzeBrandListEnabled(loadOptions)){
-	 		// analyzeBrandList(platform, loadOptions);
+	 		analyzeBrandList(platform, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractProductListEnabled(loadOptions)){
+	 		extractProductList(platform, loadOptions);
+ 		}	
+ 		if(isAnalyzeProductListEnabled(loadOptions)){
+	 		analyzeProductList(platform, loadOptions);
  		}
  		
 		
@@ -489,6 +543,56 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 		SmartList<Brand> brandList = platform.getBrandList();
 		if(brandList != null){
 			getBrandDAO().analyzeBrandByPlatform(brandList, platform.getId(), options);
+			
+		}
+		
+		return platform;
+	
+	}	
+	
+		
+	protected void enhanceProductList(SmartList<Product> productList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Platform extractProductList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Product> productList = getProductDAO().findProductByPlatform(platform.getId(),options);
+		if(productList != null){
+			enhanceProductList(productList,options);
+			platform.setProductList(productList);
+		}
+		
+		return platform;
+	
+	}	
+	
+	protected Platform analyzeProductList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Product> productList = platform.getProductList();
+		if(productList != null){
+			getProductDAO().analyzeProductByPlatform(productList, platform.getId(), options);
 			
 		}
 		
@@ -690,6 +794,13 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 	 		
  		}		
 		
+		if(isSaveProductListEnabled(options)){
+	 		saveProductList(platform, options);
+	 		//removeProductList(platform, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		return platform;
 		
 	}
@@ -872,6 +983,166 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 	}
 
 
+	public Platform planToRemoveProductList(Platform platform, String productIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platform.getId());
+		key.put(Product.ID_PROPERTY, productIds);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return platform;
+		}
+		if(externalProductList.isEmpty()){
+			return platform;
+		}
+		
+		for(Product product: externalProductList){
+
+			product.clearFromAll();
+		}
+		
+		
+		SmartList<Product> productList = platform.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return platform;	
+	
+	}
+
+
+	//disconnect Platform with parent_category in Product
+	public Platform planToRemoveProductListWithParentCategory(Platform platform, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platform.getId());
+		key.put(Product.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return platform;
+		}
+		if(externalProductList.isEmpty()){
+			return platform;
+		}
+		
+		for(Product product: externalProductList){
+			product.clearParentCategory();
+			product.clearPlatform();
+			
+		}
+		
+		
+		SmartList<Product> productList = platform.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return platform;
+	}
+	
+	public int countProductListWithParentCategory(String platformId, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platformId);
+		key.put(Product.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		int count = getProductDAO().countProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Platform with brand in Product
+	public Platform planToRemoveProductListWithBrand(Platform platform, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platform.getId());
+		key.put(Product.BRAND_PROPERTY, brandId);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return platform;
+		}
+		if(externalProductList.isEmpty()){
+			return platform;
+		}
+		
+		for(Product product: externalProductList){
+			product.clearBrand();
+			product.clearPlatform();
+			
+		}
+		
+		
+		SmartList<Product> productList = platform.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return platform;
+	}
+	
+	public int countProductListWithBrand(String platformId, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platformId);
+		key.put(Product.BRAND_PROPERTY, brandId);
+		
+		int count = getProductDAO().countProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Platform with catalog in Product
+	public Platform planToRemoveProductListWithCatalog(Platform platform, String catalogId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platform.getId());
+		key.put(Product.CATALOG_PROPERTY, catalogId);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return platform;
+		}
+		if(externalProductList.isEmpty()){
+			return platform;
+		}
+		
+		for(Product product: externalProductList){
+			product.clearCatalog();
+			product.clearPlatform();
+			
+		}
+		
+		
+		SmartList<Product> productList = platform.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return platform;
+	}
+	
+	public int countProductListWithCatalog(String platformId, String catalogId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PLATFORM_PROPERTY, platformId);
+		key.put(Product.CATALOG_PROPERTY, catalogId);
+		
+		int count = getProductDAO().countProductWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Platform saveSiteList(Platform platform, Map<String,Object> options){
@@ -1072,12 +1343,79 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 	
 	
 		
+	protected Platform saveProductList(Platform platform, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<Product> productList = platform.getProductList();
+		if(productList == null){
+			//null list means nothing
+			return platform;
+		}
+		SmartList<Product> mergedUpdateProductList = new SmartList<Product>();
+		
+		
+		mergedUpdateProductList.addAll(productList); 
+		if(productList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateProductList.addAll(productList.getToRemoveList());
+			productList.removeAll(productList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getProductDAO().saveProductList(mergedUpdateProductList,options);
+		
+		if(productList.getToRemoveList() != null){
+			productList.removeAll(productList.getToRemoveList());
+		}
+		
+		
+		return platform;
+	
+	}
+	
+	protected Platform removeProductList(Platform platform, Map<String,Object> options){
+	
+	
+		SmartList<Product> productList = platform.getProductList();
+		if(productList == null){
+			return platform;
+		}	
+	
+		SmartList<Product> toRemoveProductList = productList.getToRemoveList();
+		
+		if(toRemoveProductList == null){
+			return platform;
+		}
+		if(toRemoveProductList.isEmpty()){
+			return platform;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getProductDAO().removeProductList(toRemoveProductList,options);
+		
+		return platform;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
 
 	public Platform present(Platform platform,Map<String, Object> options){
 	
 		presentSiteList(platform,options);
 		presentCatalogList(platform,options);
 		presentBrandList(platform,options);
+		presentProductList(platform,options);
 
 		return platform;
 	
@@ -1143,6 +1481,26 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
 		return platform;
 	}			
 		
+	//Using java8 feature to reduce the code significantly
+ 	protected Platform presentProductList(
+			Platform platform,
+			Map<String, Object> options) {
+
+		SmartList<Product> productList = platform.getProductList();		
+				SmartList<Product> newList= presentSubList(platform.getId(),
+				productList,
+				options,
+				getProductDAO()::countProductByPlatform,
+				getProductDAO()::findProductByPlatform
+				);
+
+		
+		platform.setProductList(newList);
+		
+
+		return platform;
+	}			
+		
 
 	
     public SmartList<Platform> requestCandidatePlatformForSite(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
@@ -1158,6 +1516,12 @@ public class PlatformJDBCTemplateDAO extends PimNamingServiceDAO implements Plat
     }
 		
     public SmartList<Platform> requestCandidatePlatformForBrand(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());
+    }
+		
+    public SmartList<Platform> requestCandidatePlatformForProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
 		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());

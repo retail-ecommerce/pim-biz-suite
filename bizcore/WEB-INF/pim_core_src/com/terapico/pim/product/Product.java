@@ -15,6 +15,7 @@ import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.sku.Sku;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.platform.Platform;
 
 @JsonSerialize(using = ProductSerializer.class)
 public class Product extends BaseEntity implements  java.io.Serializable{
@@ -28,6 +29,7 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 	public static final String CATALOG_PROPERTY               = "catalog"           ;
 	public static final String REMARK_PROPERTY                = "remark"            ;
 	public static final String LAST_UPDATE_TIME_PROPERTY      = "lastUpdateTime"    ;
+	public static final String PLATFORM_PROPERTY              = "platform"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
 	public static final String SKU_LIST                                 = "skuList"           ;
@@ -59,6 +61,7 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 	protected		Catalog             	mCatalog            ;
 	protected		String              	mRemark             ;
 	protected		DateTime            	mLastUpdateTime     ;
+	protected		Platform            	mPlatform           ;
 	protected		int                 	mVersion            ;
 	
 	
@@ -73,11 +76,12 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 		setParentCategory( null );
 		setBrand( null );
 		setCatalog( null );
+		setPlatform( null );
 
 		this.changed = true;
 	}
 	
-	public 	Product(String name, LevelNCategory parentCategory, Brand brand, String origin, Catalog catalog, String remark, DateTime lastUpdateTime)
+	public 	Product(String name, LevelNCategory parentCategory, Brand brand, String origin, Catalog catalog, String remark, DateTime lastUpdateTime, Platform platform)
 	{
 		setName(name);
 		setParentCategory(parentCategory);
@@ -86,6 +90,7 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 		setCatalog(catalog);
 		setRemark(remark);
 		setLastUpdateTime(lastUpdateTime);
+		setPlatform(platform);
 
 		this.mSkuList = new SmartList<Sku>();	
 	}
@@ -295,6 +300,24 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 	}
 	
 	
+	public void setPlatform(Platform platform){
+		this.mPlatform = platform;;
+	}
+	public Platform getPlatform(){
+		return this.mPlatform;
+	}
+	public Product updatePlatform(Platform platform){
+		this.mPlatform = platform;;
+		this.changed = true;
+		return this;
+	}
+	
+	
+	public void clearPlatform(){
+		setPlatform ( null );
+		this.changed = true;
+	}
+	
 	public void setVersion(int version){
 		this.mVersion = version;;
 	}
@@ -412,6 +435,7 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 		addToEntityList(this, entityList, getParentCategory(), internalType);
 		addToEntityList(this, entityList, getBrand(), internalType);
 		addToEntityList(this, entityList, getCatalog(), internalType);
+		addToEntityList(this, entityList, getPlatform(), internalType);
 
 		
 	}
@@ -445,6 +469,7 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, CATALOG_PROPERTY, getCatalog());
 		appendKeyValuePair(result, REMARK_PROPERTY, getRemark());
 		appendKeyValuePair(result, LAST_UPDATE_TIME_PROPERTY, getLastUpdateTime());
+		appendKeyValuePair(result, PLATFORM_PROPERTY, getPlatform());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 		appendKeyValuePair(result, SKU_LIST, getSkuList());
 		if(!getSkuList().isEmpty()){
@@ -473,6 +498,7 @@ public class Product extends BaseEntity implements  java.io.Serializable{
 			dest.setCatalog(getCatalog());
 			dest.setRemark(getRemark());
 			dest.setLastUpdateTime(getLastUpdateTime());
+			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
 			dest.setSkuList(getSkuList());
 
@@ -499,6 +525,9 @@ public class Product extends BaseEntity implements  java.io.Serializable{
  		}
 		stringBuilder.append("\tremark='"+getRemark()+"';");
 		stringBuilder.append("\tlastUpdateTime='"+getLastUpdateTime()+"';");
+		if(getPlatform() != null ){
+ 			stringBuilder.append("\tplatform='Platform("+getPlatform().getId()+")';");
+ 		}
 		stringBuilder.append("\tversion='"+getVersion()+"';");
 		stringBuilder.append("}");
 

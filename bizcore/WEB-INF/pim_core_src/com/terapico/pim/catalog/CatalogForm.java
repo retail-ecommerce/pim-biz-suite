@@ -375,6 +375,20 @@ public class CatalogForm extends BaseForm {
 		return lastUpdateTimeFieldForProduct("lastUpdateTime","");
 	}
 
+
+	public CatalogForm platformIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public CatalogForm platformIdFieldForProduct(String initValue){
+		return platformIdFieldForProduct("platformId",initValue);
+	}
+	public CatalogForm platformIdFieldForProduct(){
+		return platformIdFieldForProduct("platformId","");
+	}
+
 	
 
 	

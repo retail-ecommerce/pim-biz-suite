@@ -7,6 +7,7 @@ import com.terapico.pim.BaseEntity;
 import com.terapico.pim.SmartList;
 import com.terapico.pim.MultipleAccessKey;
 import com.terapico.pim.PimUserContext;
+import com.terapico.pim.product.ProductDAO;
 import com.terapico.pim.site.SiteDAO;
 import com.terapico.pim.catalog.CatalogDAO;
 import com.terapico.pim.brand.BrandDAO;
@@ -46,12 +47,16 @@ public interface PlatformDAO{
 		
 	public BrandDAO getBrandDAO();
 		
+	public ProductDAO getProductDAO();
+		
 	
  	public SmartList<Platform> requestCandidatePlatformForSite(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<Platform> requestCandidatePlatformForCatalog(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<Platform> requestCandidatePlatformForBrand(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Platform> requestCandidatePlatformForProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
 	
 	public Platform planToRemoveSiteList(Platform platform, String siteIds[], Map<String,Object> options)throws Exception;
@@ -71,6 +76,21 @@ public interface PlatformDAO{
 	public Platform planToRemoveBrandList(Platform platform, String brandIds[], Map<String,Object> options)throws Exception;
 
 
+	public Platform planToRemoveProductList(Platform platform, String productIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Platform with parent_category in Product
+	public Platform planToRemoveProductListWithParentCategory(Platform platform, String parentCategoryId, Map<String,Object> options)throws Exception;
+	public int countProductListWithParentCategory(String platformId, String parentCategoryId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Platform with brand in Product
+	public Platform planToRemoveProductListWithBrand(Platform platform, String brandId, Map<String,Object> options)throws Exception;
+	public int countProductListWithBrand(String platformId, String brandId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Platform with catalog in Product
+	public Platform planToRemoveProductListWithCatalog(Platform platform, String catalogId, Map<String,Object> options)throws Exception;
+	public int countProductListWithCatalog(String platformId, String catalogId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<Platform> queryList(String sql, Object ... parmeters);
 }

@@ -24,10 +24,12 @@ import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.sku.Sku;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.levelncategory.CandidateLevelNCategory;
 import com.terapico.pim.catalog.CandidateCatalog;
 import com.terapico.pim.brand.CandidateBrand;
+import com.terapico.pim.platform.CandidatePlatform;
 
 import com.terapico.pim.product.Product;
 
@@ -157,6 +159,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		addAction(userContext, product, tokens,"product.transfer_to_parent_category","transferToAnotherParentCategory","transferToAnotherParentCategory/"+product.getId()+"/","main","primary");
 		addAction(userContext, product, tokens,"product.transfer_to_brand","transferToAnotherBrand","transferToAnotherBrand/"+product.getId()+"/","main","primary");
 		addAction(userContext, product, tokens,"product.transfer_to_catalog","transferToAnotherCatalog","transferToAnotherCatalog/"+product.getId()+"/","main","primary");
+		addAction(userContext, product, tokens,"product.transfer_to_platform","transferToAnotherPlatform","transferToAnotherPlatform/"+product.getId()+"/","main","primary");
 		addAction(userContext, product, tokens,"product.addSku","addSku","addSku/"+product.getId()+"/","skuList","primary");
 		addAction(userContext, product, tokens,"product.removeSku","removeSku","removeSku/"+product.getId()+"/","skuList","primary");
 		addAction(userContext, product, tokens,"product.updateSku","updateSku","updateSku/"+product.getId()+"/","skuList","primary");
@@ -173,7 +176,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
  	
 
 
-	public Product createProduct(PimUserContext userContext,String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark) throws Exception
+	public Product createProduct(PimUserContext userContext,String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark, String platformId) throws Exception
 	{
 		
 		
@@ -208,6 +211,11 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		
 		product.setRemark(remark);
 		product.setLastUpdateTime(userContext.now());
+			
+		Platform platform = loadPlatform(userContext, platformId,emptyOptions());
+		product.setPlatform(platform);
+		
+		
 
 		product = saveProduct(userContext, product, emptyOptions());
 		
@@ -246,7 +254,9 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		
 		if(Product.REMARK_PROPERTY.equals(property)){
 			userContext.getChecker().checkRemarkOfProduct(parseString(newValueExpr));
-		}
+		}		
+
+		
 	
 		userContext.getChecker().throwExceptionIfHasErrors(ProductManagerException.class);
 	
@@ -499,6 +509,55 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		return result;
 	}
  	
+ 	protected void checkParamsForTransferingAnotherPlatform(PimUserContext userContext, String productId, String anotherPlatformId) throws Exception
+ 	{
+ 		
+ 		userContext.getChecker().checkIdOfProduct(productId);
+ 		userContext.getChecker().checkIdOfPlatform(anotherPlatformId);//check for optional reference
+ 		userContext.getChecker().throwExceptionIfHasErrors(ProductManagerException.class);
+ 		
+ 	}
+ 	public Product transferToAnotherPlatform(PimUserContext userContext, String productId, String anotherPlatformId) throws Exception
+ 	{
+ 		checkParamsForTransferingAnotherPlatform(userContext, productId,anotherPlatformId);
+ 
+		Product product = loadProduct(userContext, productId, allTokens());	
+		synchronized(product){
+			//will be good when the product loaded from this JVM process cache.
+			//also good when there is a ram based DAO implementation
+			Platform platform = loadPlatform(userContext, anotherPlatformId, emptyOptions());		
+			product.updatePlatform(platform);		
+			product = saveProduct(userContext, product, emptyOptions());
+			
+			return present(userContext,product, allTokens());
+			
+		}
+
+ 	}
+ 	
+	 	
+ 	
+ 	
+	public CandidatePlatform requestCandidatePlatform(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
+
+		CandidatePlatform result = new CandidatePlatform();
+		result.setOwnerClass(ownerClass);
+		result.setOwnerId(id);
+		result.setFilterKey(filterKey==null?"":filterKey.trim());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName("name");
+		
+		pageNo = Math.max(1, pageNo);
+		int pageSize = 20;
+		//requestCandidateProductForSkuAsOwner
+		SmartList<Platform> candidateList = userContext.getDAOGroup().getPlatformDAO().requestCandidatePlatformForProduct(userContext,ownerClass, id, filterKey, pageNo, pageSize);
+		result.setCandidates(candidateList);
+		int totalCount = candidateList.getTotalCount();
+		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
+		return result;
+	}
+ 	
  //--------------------------------------------------------------
 	
 	 	
@@ -526,6 +585,16 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
  	{
 		
  		return userContext.getDAOGroup().getBrandDAO().load(newBrandId, options);
+ 	}
+ 	
+ 	
+ 	
+	
+	 	
+ 	protected Platform loadPlatform(PimUserContext userContext, String newPlatformId, Map<String,Object> options) throws Exception
+ 	{
+		
+ 		return userContext.getDAOGroup().getPlatformDAO().load(newPlatformId, options);
  	}
  	
  	

@@ -57,6 +57,16 @@ public interface PlatformManager{
 
 	*/
 
+	//public  ProductManager getProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
+	public  Platform removeProduct(PimUserContext userContext, String platformId, String productId, int productVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateProduct(PimUserContext userContext, String platformId, String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
 
 
 }

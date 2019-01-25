@@ -22,11 +22,13 @@ import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.sku.Sku;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.levelncategory.LevelNCategoryDAO;
 import com.terapico.pim.catalog.CatalogDAO;
 import com.terapico.pim.sku.SkuDAO;
 import com.terapico.pim.brand.BrandDAO;
+import com.terapico.pim.platform.PlatformDAO;
 
 
 
@@ -59,6 +61,15 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  	}
  	public BrandDAO getBrandDAO(){
 	 	return this.brandDAO;
+ 	}
+ 
+ 	
+ 	private  PlatformDAO  platformDAO;
+ 	public void setPlatformDAO(PlatformDAO platformDAO){
+	 	this.platformDAO = platformDAO;
+ 	}
+ 	public PlatformDAO getPlatformDAO(){
+	 	return this.platformDAO;
  	}
 
 
@@ -265,6 +276,20 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  	
 
  	
+  
+
+ 	protected boolean isExtractPlatformEnabled(Map<String,Object> options){
+ 		
+	 	return checkOptions(options, ProductTokens.PLATFORM);
+ 	}
+
+ 	protected boolean isSavePlatformEnabled(Map<String,Object> options){
+	 	
+ 		return checkOptions(options, ProductTokens.PLATFORM);
+ 	}
+ 	
+
+ 	
  
 		
 	
@@ -272,9 +297,10 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		return checkOptions(options,ProductTokens.SKU_LIST);
  	}
  	protected boolean isAnalyzeSkuListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,ProductTokens.SKU_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,ProductTokens.SKU_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveSkuListEnabled(Map<String,Object> options){
 		return checkOptions(options, ProductTokens.SKU_LIST);
 		
@@ -318,13 +344,17 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		if(isExtractCatalogEnabled(loadOptions)){
 	 		extractCatalog(product, loadOptions);
  		}
+  	
+ 		if(isExtractPlatformEnabled(loadOptions)){
+	 		extractPlatform(product, loadOptions);
+ 		}
  
 		
 		if(isExtractSkuListEnabled(loadOptions)){
 	 		extractSkuList(product, loadOptions);
  		}	
  		if(isAnalyzeSkuListEnabled(loadOptions)){
-	 		// analyzeSkuList(product, loadOptions);
+	 		analyzeSkuList(product, loadOptions);
  		}
  		
 		
@@ -386,6 +416,26 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
 		Catalog catalog = getCatalogDAO().load(catalogId,options);
 		if(catalog != null){
 			product.setCatalog(catalog);
+		}
+		
+ 		
+ 		return product;
+ 	}
+ 		
+  
+
+ 	protected Product extractPlatform(Product product, Map<String,Object> options) throws Exception{
+
+		if(product.getPlatform() == null){
+			return product;
+		}
+		String platformId = product.getPlatform().getId();
+		if( platformId == null){
+			return product;
+		}
+		Platform platform = getPlatformDAO().load(platformId,options);
+		if(platform != null){
+			product.setPlatform(platform);
 		}
 		
  		
@@ -595,6 +645,56 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
 		return countWithIds(ProductTable.COLUMN_CATALOG, ids, options);
 	}
  	
+  	
+ 	public SmartList<Product> findProductByPlatform(String platformId,Map<String,Object> options){
+ 	
+  		SmartList<Product> resultList = queryWith(ProductTable.COLUMN_PLATFORM, platformId, options, getProductMapper());
+		// analyzeProductByPlatform(resultList, platformId, options);
+		return resultList;
+ 	}
+ 	 
+ 
+ 	public SmartList<Product> findProductByPlatform(String platformId, int start, int count,Map<String,Object> options){
+ 		
+ 		SmartList<Product> resultList =  queryWithRange(ProductTable.COLUMN_PLATFORM, platformId, options, getProductMapper(), start, count);
+ 		//analyzeProductByPlatform(resultList, platformId, options);
+ 		return resultList;
+ 		
+ 	}
+ 	public void analyzeProductByPlatform(SmartList<Product> resultList, String platformId, Map<String,Object> options){
+		if(resultList==null){
+			return;//do nothing when the list is null.
+		}
+		
+ 		MultipleAccessKey filterKey = new MultipleAccessKey();
+ 		filterKey.put(Product.PLATFORM_PROPERTY, platformId);
+ 		Map<String,Object> emptyOptions = new HashMap<String,Object>();
+ 		
+ 		StatsInfo info = new StatsInfo();
+ 		
+ 
+		StatsItem lastUpdateTimeStatsItem = new StatsItem();
+		//Product.LAST_UPDATE_TIME_PROPERTY
+		lastUpdateTimeStatsItem.setDisplayName("Product");
+		lastUpdateTimeStatsItem.setInternalName(formatKeyForDateLine(Product.LAST_UPDATE_TIME_PROPERTY));
+		lastUpdateTimeStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Product.LAST_UPDATE_TIME_PROPERTY),filterKey,emptyOptions));
+		info.addItem(lastUpdateTimeStatsItem);
+ 				
+ 		resultList.setStatsInfo(info);
+
+ 	
+ 		
+ 	}
+ 	@Override
+ 	public int countProductByPlatform(String platformId,Map<String,Object> options){
+
+ 		return countWith(ProductTable.COLUMN_PLATFORM, platformId, options);
+ 	}
+ 	@Override
+	public Map<String, Integer> countProductByPlatformIds(String[] ids, Map<String, Object> options) {
+		return countWithIds(ProductTable.COLUMN_PLATFORM, ids, options);
+	}
+ 	
  	
 		
 		
@@ -737,7 +837,7 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		return prepareProductCreateParameters(product);
  	}
  	protected Object[] prepareProductUpdateParameters(Product product){
- 		Object[] parameters = new Object[10];
+ 		Object[] parameters = new Object[11];
  
  		parameters[0] = product.getName(); 	
  		if(product.getParentCategory() != null){
@@ -754,15 +854,19 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		}
  
  		parameters[5] = product.getRemark();
- 		parameters[6] = product.getLastUpdateTime();		
- 		parameters[7] = product.nextVersion();
- 		parameters[8] = product.getId();
- 		parameters[9] = product.getVersion();
+ 		parameters[6] = product.getLastUpdateTime(); 	
+ 		if(product.getPlatform() != null){
+ 			parameters[7] = product.getPlatform().getId();
+ 		}
+ 		
+ 		parameters[8] = product.nextVersion();
+ 		parameters[9] = product.getId();
+ 		parameters[10] = product.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareProductCreateParameters(Product product){
-		Object[] parameters = new Object[8];
+		Object[] parameters = new Object[9];
 		String newProductId=getNextId();
 		product.setId(newProductId);
 		parameters[0] =  product.getId();
@@ -785,7 +889,12 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		}
  		
  		parameters[6] = product.getRemark();
- 		parameters[7] = product.getLastUpdateTime();		
+ 		parameters[7] = product.getLastUpdateTime(); 	
+ 		if(product.getPlatform() != null){
+ 			parameters[8] = product.getPlatform().getId();
+ 		
+ 		}
+ 				
  				
  		return parameters;
  	}
@@ -804,6 +913,10 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
   	
  		if(isSaveCatalogEnabled(options)){
 	 		saveCatalog(product, options);
+ 		}
+  	
+ 		if(isSavePlatformEnabled(options)){
+	 		savePlatform(product, options);
  		}
  
 		
@@ -864,6 +977,23 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		}
  		
  		getCatalogDAO().save(product.getCatalog(),options);
+ 		return product;
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	 
+	
+  
+ 
+ 	protected Product savePlatform(Product product, Map<String,Object> options){
+ 		//Call inject DAO to execute this method
+ 		if(product.getPlatform() == null){
+ 			return product;//do nothing when it is null
+ 		}
+ 		
+ 		getPlatformDAO().save(product.getPlatform(),options);
  		return product;
  		
  	}

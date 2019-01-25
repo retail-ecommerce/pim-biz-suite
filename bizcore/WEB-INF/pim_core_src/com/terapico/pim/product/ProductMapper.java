@@ -8,6 +8,7 @@ import com.terapico.pim.BaseRowMapper;
 import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.platform.Platform;
 
 public class ProductMapper extends BaseRowMapper<Product>{
 	
@@ -22,6 +23,7 @@ public class ProductMapper extends BaseRowMapper<Product>{
  		setCatalog(product, rs, rowNumber); 		
  		setRemark(product, rs, rowNumber); 		
  		setLastUpdateTime(product, rs, rowNumber); 		
+ 		setPlatform(product, rs, rowNumber); 		
  		setVersion(product, rs, rowNumber);
 
 		return product;
@@ -144,7 +146,25 @@ public class ProductMapper extends BaseRowMapper<Product>{
 		
 		product.setLastUpdateTime(convertToDateTime(lastUpdateTime));
 	}
-		
+		 		
+ 	protected void setPlatform(Product product, ResultSet rs, int rowNumber) throws SQLException{
+ 		String platformId = rs.getString(ProductTable.COLUMN_PLATFORM);
+ 		if( platformId == null){
+ 			return;
+ 		}
+ 		if( platformId.isEmpty()){
+ 			return;
+ 		}
+ 		Platform platform = product.getPlatform();
+ 		if( platform != null ){
+ 			//if the root object 'product' already have the property, just set the id for it;
+ 			platform.setId(platformId);
+ 			
+ 			return;
+ 		}
+ 		product.setPlatform(createEmptyPlatform(platformId));
+ 	}
+ 	
 	protected void setVersion(Product product, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
@@ -178,6 +198,13 @@ public class ProductMapper extends BaseRowMapper<Product>{
  		catalog.setId(catalogId);
  		catalog.setVersion(Integer.MAX_VALUE);
  		return catalog;
+ 	}
+ 	
+ 	protected Platform  createEmptyPlatform(String platformId){
+ 		Platform platform = new Platform();
+ 		platform.setId(platformId);
+ 		platform.setVersion(Integer.MAX_VALUE);
+ 		return platform;
  	}
  	
 }

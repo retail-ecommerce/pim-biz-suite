@@ -65,7 +65,8 @@ public class PlatformTokens extends CommonTokens{
 		return start()
 			.withSiteList()
 			.withCatalogList()
-			.withBrandList();
+			.withBrandList()
+			.withProductList();
 	
 	}
 	public static PlatformTokens withoutListsTokens(){
@@ -270,12 +271,75 @@ public class PlatformTokens extends CommonTokens{
 	
 	
 		
+	protected static final String PRODUCT_LIST = "productList";
+	public String getProductList(){
+		return PRODUCT_LIST;
+	}
+	public PlatformTokens withProductList(){		
+		addSimpleOptions(PRODUCT_LIST);
+		return this;
+	}
+	public PlatformTokens analyzeProductList(){		
+		addSimpleOptions(PRODUCT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeProductListEnabled(){		
+		
+		return checkOptions(this.options(), PRODUCT_LIST+".anaylze");
+	}
+	public PlatformTokens extractMoreFromProductList(String idsSeperatedWithComma){		
+		addSimpleOptions(PRODUCT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int productListSortCounter = 0;
+	public PlatformTokens sortProductListWith(String field, String descOrAsc){		
+		addSortMoreOptions(PRODUCT_LIST,productListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int productListSearchCounter = 0;
+	public PlatformTokens searchProductListWith(String field, String verb, String value){		
+		addSearchMoreOptions(PRODUCT_LIST,productListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public PlatformTokens searchAllTextOfProductList(String verb, String value){	
+		String field = "id|name|origin|remark";
+		addSearchMoreOptions(PRODUCT_LIST,productListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public PlatformTokens rowsPerPageOfProductList(int rowsPerPage){		
+		addSimpleOptions(PRODUCT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public PlatformTokens currentPageNumberOfProductList(int currentPageNumber){		
+		addSimpleOptions(PRODUCT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public PlatformTokens retainColumnsOfProductList(String[] columns){		
+		addSimpleOptions(PRODUCT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public PlatformTokens excludeColumnsOfProductList(String[] columns){		
+		addSimpleOptions(PRODUCT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  PlatformTokens searchEntireObjectText(String verb, String value){
 		
 		searchAllTextOfSiteList(verb, value);	
 		searchAllTextOfCatalogList(verb, value);	
 		searchAllTextOfBrandList(verb, value);	
+		searchAllTextOfProductList(verb, value);	
 		return this;
 	}
 }

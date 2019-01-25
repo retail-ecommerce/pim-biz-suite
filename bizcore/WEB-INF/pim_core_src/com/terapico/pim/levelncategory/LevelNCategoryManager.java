@@ -28,9 +28,9 @@ public interface LevelNCategoryManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  ProductManager getProductManager(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
+	//public  ProductManager getProductManager(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark, String platformId ,String [] tokensExpr)  throws Exception;
 	
-	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
+	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark, String platformId , String [] tokensExpr)  throws Exception;
 	public  LevelNCategory removeProduct(PimUserContext userContext, String levelNCategoryId, String productId, int productVersion,String [] tokensExpr)  throws Exception;
 	public  LevelNCategory updateProduct(PimUserContext userContext, String levelNCategoryId, String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

@@ -56,6 +56,10 @@ public interface BrandDAO{
 	public Brand planToRemoveProductListWithCatalog(Brand brand, String catalogId, Map<String,Object> options)throws Exception;
 	public int countProductListWithCatalog(String brandId, String catalogId, Map<String,Object> options)throws Exception;
 	
+	//disconnect Brand with platform in Product
+	public Brand planToRemoveProductListWithPlatform(Brand brand, String platformId, Map<String,Object> options)throws Exception;
+	public int countProductListWithPlatform(String brandId, String platformId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<Brand> queryList(String sql, Object ... parmeters);
  

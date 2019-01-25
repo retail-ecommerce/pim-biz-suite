@@ -291,6 +291,132 @@ public class PlatformForm extends BaseForm {
 		return platformIdFieldForBrand("platformId","");
 	}
 
+
+	public PlatformForm productIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  idFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm productIdFieldForProduct(String initValue){
+		return productIdFieldForProduct("productId",initValue);
+	}
+	public PlatformForm productIdFieldForProduct(){
+		return productIdFieldForProduct("productId","");
+	}
+
+
+	public PlatformForm nameFieldForProduct(String parameterName, String initValue){
+		FormField field =  nameFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm nameFieldForProduct(String initValue){
+		return nameFieldForProduct("name",initValue);
+	}
+	public PlatformForm nameFieldForProduct(){
+		return nameFieldForProduct("name","");
+	}
+
+
+	public PlatformForm parentCategoryIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  parentCategoryIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm parentCategoryIdFieldForProduct(String initValue){
+		return parentCategoryIdFieldForProduct("parentCategoryId",initValue);
+	}
+	public PlatformForm parentCategoryIdFieldForProduct(){
+		return parentCategoryIdFieldForProduct("parentCategoryId","");
+	}
+
+
+	public PlatformForm brandIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  brandIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm brandIdFieldForProduct(String initValue){
+		return brandIdFieldForProduct("brandId",initValue);
+	}
+	public PlatformForm brandIdFieldForProduct(){
+		return brandIdFieldForProduct("brandId","");
+	}
+
+
+	public PlatformForm originFieldForProduct(String parameterName, String initValue){
+		FormField field =  originFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm originFieldForProduct(String initValue){
+		return originFieldForProduct("origin",initValue);
+	}
+	public PlatformForm originFieldForProduct(){
+		return originFieldForProduct("origin","");
+	}
+
+
+	public PlatformForm catalogIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  catalogIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm catalogIdFieldForProduct(String initValue){
+		return catalogIdFieldForProduct("catalogId",initValue);
+	}
+	public PlatformForm catalogIdFieldForProduct(){
+		return catalogIdFieldForProduct("catalogId","");
+	}
+
+
+	public PlatformForm remarkFieldForProduct(String parameterName, String initValue){
+		FormField field =  remarkFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm remarkFieldForProduct(String initValue){
+		return remarkFieldForProduct("remark",initValue);
+	}
+	public PlatformForm remarkFieldForProduct(){
+		return remarkFieldForProduct("remark","");
+	}
+
+
+	public PlatformForm lastUpdateTimeFieldForProduct(String parameterName, String initValue){
+		FormField field =  lastUpdateTimeFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm lastUpdateTimeFieldForProduct(String initValue){
+		return lastUpdateTimeFieldForProduct("lastUpdateTime",initValue);
+	}
+	public PlatformForm lastUpdateTimeFieldForProduct(){
+		return lastUpdateTimeFieldForProduct("lastUpdateTime","");
+	}
+
+
+	public PlatformForm platformIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForProduct(String initValue){
+		return platformIdFieldForProduct("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForProduct(){
+		return platformIdFieldForProduct("platformId","");
+	}
+
 	
 
 

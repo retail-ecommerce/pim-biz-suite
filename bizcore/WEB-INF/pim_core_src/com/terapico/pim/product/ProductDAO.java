@@ -11,6 +11,7 @@ import com.terapico.pim.levelncategory.LevelNCategoryDAO;
 import com.terapico.pim.catalog.CatalogDAO;
 import com.terapico.pim.sku.SkuDAO;
 import com.terapico.pim.brand.BrandDAO;
+import com.terapico.pim.platform.PlatformDAO;
 
 
 public interface ProductDAO{
@@ -74,6 +75,14 @@ public interface ProductDAO{
  	public Map<String, Integer> countProductByCatalogIds(String[] ids, Map<String,Object> options);
  	public SmartList<Product> findProductByCatalog(String catalogId, int start, int count, Map<String,Object> options);
  	public void analyzeProductByCatalog(SmartList<Product> resultList, String catalogId, Map<String,Object> options);
+
+ 
+  
+ 	public SmartList<Product> findProductByPlatform(String platformId, Map<String,Object> options);
+ 	public int countProductByPlatform(String platformId, Map<String,Object> options);
+ 	public Map<String, Integer> countProductByPlatformIds(String[] ids, Map<String,Object> options);
+ 	public SmartList<Product> findProductByPlatform(String platformId, int start, int count, Map<String,Object> options);
+ 	public void analyzeProductByPlatform(SmartList<Product> resultList, String platformId, Map<String,Object> options);
 
  
  }

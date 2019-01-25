@@ -28,9 +28,9 @@ public interface BrandManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  ProductManager getProductManager(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
+	//public  ProductManager getProductManager(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark, String platformId ,String [] tokensExpr)  throws Exception;
 	
-	public  Brand addProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
+	public  Brand addProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark, String platformId , String [] tokensExpr)  throws Exception;
 	public  Brand removeProduct(PimUserContext userContext, String brandId, String productId, int productVersion,String [] tokensExpr)  throws Exception;
 	public  Brand updateProduct(PimUserContext userContext, String brandId, String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

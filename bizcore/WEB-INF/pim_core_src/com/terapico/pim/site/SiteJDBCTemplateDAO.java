@@ -222,9 +222,10 @@ public class SiteJDBCTemplateDAO extends PimNamingServiceDAO implements SiteDAO{
  		return checkOptions(options,SiteTokens.CATALOG_LIST);
  	}
  	protected boolean isAnalyzeCatalogListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,SiteTokens.CATALOG_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,SiteTokens.CATALOG_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveCatalogListEnabled(Map<String,Object> options){
 		return checkOptions(options, SiteTokens.CATALOG_LIST);
 		
@@ -266,7 +267,7 @@ public class SiteJDBCTemplateDAO extends PimNamingServiceDAO implements SiteDAO{
 	 		extractCatalogList(site, loadOptions);
  		}	
  		if(isAnalyzeCatalogListEnabled(loadOptions)){
-	 		// analyzeCatalogList(site, loadOptions);
+	 		analyzeCatalogList(site, loadOptions);
  		}
  		
 		

@@ -56,6 +56,10 @@ public interface LevelNCategoryDAO{
 	public LevelNCategory planToRemoveProductListWithCatalog(LevelNCategory levelNCategory, String catalogId, Map<String,Object> options)throws Exception;
 	public int countProductListWithCatalog(String levelNCategoryId, String catalogId, Map<String,Object> options)throws Exception;
 	
+	//disconnect LevelNCategory with platform in Product
+	public LevelNCategory planToRemoveProductListWithPlatform(LevelNCategory levelNCategory, String platformId, Map<String,Object> options)throws Exception;
+	public int countProductListWithPlatform(String levelNCategoryId, String platformId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<LevelNCategory> queryList(String sql, Object ... parmeters);
  

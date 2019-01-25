@@ -392,6 +392,15 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  PLATFORM_OF_PRODUCT ="product.platform";
+	public PimChecker checkPlatformIdOfProduct(String platformId)
+	{
+		
+	 	checkIdOfProduct(platformId ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  VERSION_OF_PRODUCT ="product.version";
 	public PimChecker checkVersionOfProduct(int version)
 	{

@@ -28,6 +28,7 @@ import com.terapico.pim.leveltwocategory.CandidateLevelTwoCategory;
 import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.platform.Platform;
 
 
 
@@ -459,13 +460,31 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 				return levelNCategory;
 			}
 	}
+	//disconnect LevelNCategory with platform in Product
+	protected LevelNCategory breakWithProductByPlatform(PimUserContext userContext, String levelNCategoryId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			LevelNCategory levelNCategory = loadLevelNCategory(userContext, levelNCategoryId, allTokens());
+
+			synchronized(levelNCategory){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getLevelNCategoryDAO().planToRemoveProductListWithPlatform(levelNCategory, platformId, this.emptyOptions());
+
+				levelNCategory = saveLevelNCategory(userContext, levelNCategory, tokens().withProductList().done());
+				return levelNCategory;
+			}
+	}
 	
 	
 	
 	
 	
 
-	protected void checkParamsForAddingProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark, String platformId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -483,17 +502,19 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		userContext.getChecker().checkCatalogIdOfProduct(catalogId);
 		
 		userContext.getChecker().checkRemarkOfProduct(remark);
+		
+		userContext.getChecker().checkPlatformIdOfProduct(platformId);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(LevelNCategoryManagerException.class);
 
 	
 	}
-	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark, String [] tokensExpr) throws Exception
+	public  LevelNCategory addProduct(PimUserContext userContext, String levelNCategoryId, String name, String brandId, String origin, String catalogId, String remark, String platformId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingProduct(userContext,levelNCategoryId,name, brandId, origin, catalogId, remark,tokensExpr);
+		checkParamsForAddingProduct(userContext,levelNCategoryId,name, brandId, origin, catalogId, remark, platformId,tokensExpr);
 		
-		Product product = createProduct(userContext,name, brandId, origin, catalogId, remark);
+		Product product = createProduct(userContext,name, brandId, origin, catalogId, remark, platformId);
 		
 		LevelNCategory levelNCategory = loadLevelNCategory(userContext, levelNCategoryId, allTokens());
 		synchronized(levelNCategory){ 
@@ -548,7 +569,7 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 	}
 	
 	
-	protected Product createProduct(PimUserContext userContext, String name, String brandId, String origin, String catalogId, String remark) throws Exception{
+	protected Product createProduct(PimUserContext userContext, String name, String brandId, String origin, String catalogId, String remark, String platformId) throws Exception{
 
 		Product product = new Product();
 		
@@ -562,7 +583,10 @@ public class LevelNCategoryManagerImpl extends CustomPimCheckerManager implement
 		catalog.setId(catalogId);		
 		product.setCatalog(catalog);		
 		product.setRemark(remark);		
-		product.setLastUpdateTime(userContext.now());
+		product.setLastUpdateTime(userContext.now());		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		product.setPlatform(platform);
 	
 		
 		return product;

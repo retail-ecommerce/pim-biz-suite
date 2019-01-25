@@ -91,7 +91,7 @@ class HomeScreen extends React.Component {
             </a>
           </Col>
         </Row>
-        <Row key="3" className="icon-item-list" justify="center" align="center" id="more">
+        <Row key="3" className="icon-item-list" justify="center" align="middle" id="more">
           {appList.map((app, i) => (
             <Col
               className={styleList}

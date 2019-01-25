@@ -222,9 +222,10 @@ public class LevelNCategoryJDBCTemplateDAO extends PimNamingServiceDAO implement
  		return checkOptions(options,LevelNCategoryTokens.PRODUCT_LIST);
  	}
  	protected boolean isAnalyzeProductListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,LevelNCategoryTokens.PRODUCT_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,LevelNCategoryTokens.PRODUCT_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveProductListEnabled(Map<String,Object> options){
 		return checkOptions(options, LevelNCategoryTokens.PRODUCT_LIST);
 		
@@ -266,7 +267,7 @@ public class LevelNCategoryJDBCTemplateDAO extends PimNamingServiceDAO implement
 	 		extractProductList(levelNCategory, loadOptions);
  		}	
  		if(isAnalyzeProductListEnabled(loadOptions)){
-	 		// analyzeProductList(levelNCategory, loadOptions);
+	 		analyzeProductList(levelNCategory, loadOptions);
  		}
  		
 		
@@ -706,6 +707,50 @@ public class LevelNCategoryJDBCTemplateDAO extends PimNamingServiceDAO implement
 		MultipleAccessKey key = new MultipleAccessKey();
 		key.put(Product.PARENT_CATEGORY_PROPERTY, levelNCategoryId);
 		key.put(Product.CATALOG_PROPERTY, catalogId);
+		
+		int count = getProductDAO().countProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect LevelNCategory with platform in Product
+	public LevelNCategory planToRemoveProductListWithPlatform(LevelNCategory levelNCategory, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PARENT_CATEGORY_PROPERTY, levelNCategory.getId());
+		key.put(Product.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return levelNCategory;
+		}
+		if(externalProductList.isEmpty()){
+			return levelNCategory;
+		}
+		
+		for(Product product: externalProductList){
+			product.clearPlatform();
+			product.clearParentCategory();
+			
+		}
+		
+		
+		SmartList<Product> productList = levelNCategory.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return levelNCategory;
+	}
+	
+	public int countProductListWithPlatform(String levelNCategoryId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.PARENT_CATEGORY_PROPERTY, levelNCategoryId);
+		key.put(Product.PLATFORM_PROPERTY, platformId);
 		
 		int count = getProductDAO().countProductWithKey(key, options);
 		return count;

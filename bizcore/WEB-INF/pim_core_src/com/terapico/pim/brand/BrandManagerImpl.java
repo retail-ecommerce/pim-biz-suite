@@ -28,6 +28,7 @@ import com.terapico.pim.platform.CandidatePlatform;
 import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.platform.Platform;
 
 
 
@@ -469,13 +470,31 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 				return brand;
 			}
 	}
+	//disconnect Brand with platform in Product
+	protected Brand breakWithProductByPlatform(PimUserContext userContext, String brandId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Brand brand = loadBrand(userContext, brandId, allTokens());
+
+			synchronized(brand){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getBrandDAO().planToRemoveProductListWithPlatform(brand, platformId, this.emptyOptions());
+
+				brand = saveBrand(userContext, brand, tokens().withProductList().done());
+				return brand;
+			}
+	}
 	
 	
 	
 	
 	
 
-	protected void checkParamsForAddingProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark, String platformId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -493,17 +512,19 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		userContext.getChecker().checkCatalogIdOfProduct(catalogId);
 		
 		userContext.getChecker().checkRemarkOfProduct(remark);
+		
+		userContext.getChecker().checkPlatformIdOfProduct(platformId);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(BrandManagerException.class);
 
 	
 	}
-	public  Brand addProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark, String [] tokensExpr) throws Exception
+	public  Brand addProduct(PimUserContext userContext, String brandId, String name, String parentCategoryId, String origin, String catalogId, String remark, String platformId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingProduct(userContext,brandId,name, parentCategoryId, origin, catalogId, remark,tokensExpr);
+		checkParamsForAddingProduct(userContext,brandId,name, parentCategoryId, origin, catalogId, remark, platformId,tokensExpr);
 		
-		Product product = createProduct(userContext,name, parentCategoryId, origin, catalogId, remark);
+		Product product = createProduct(userContext,name, parentCategoryId, origin, catalogId, remark, platformId);
 		
 		Brand brand = loadBrand(userContext, brandId, allTokens());
 		synchronized(brand){ 
@@ -558,7 +579,7 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 	}
 	
 	
-	protected Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String origin, String catalogId, String remark) throws Exception{
+	protected Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String origin, String catalogId, String remark, String platformId) throws Exception{
 
 		Product product = new Product();
 		
@@ -572,7 +593,10 @@ public class BrandManagerImpl extends CustomPimCheckerManager implements BrandMa
 		catalog.setId(catalogId);		
 		product.setCatalog(catalog);		
 		product.setRemark(remark);		
-		product.setLastUpdateTime(userContext.now());
+		product.setLastUpdateTime(userContext.now());		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		product.setPlatform(platform);
 	
 		
 		return product;

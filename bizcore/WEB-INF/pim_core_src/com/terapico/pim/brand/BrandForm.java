@@ -263,6 +263,20 @@ public class BrandForm extends BaseForm {
 		return lastUpdateTimeFieldForProduct("lastUpdateTime","");
 	}
 
+
+	public BrandForm platformIdFieldForProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public BrandForm platformIdFieldForProduct(String initValue){
+		return platformIdFieldForProduct("platformId",initValue);
+	}
+	public BrandForm platformIdFieldForProduct(){
+		return platformIdFieldForProduct("platformId","");
+	}
+
 	
 
 	

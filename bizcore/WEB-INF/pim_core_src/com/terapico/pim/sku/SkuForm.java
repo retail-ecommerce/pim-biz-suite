@@ -232,6 +232,20 @@ public class SkuForm extends BaseForm {
 		return lastUpdateTimeFieldOfProduct("lastUpdateTime","");
 	}
 
+
+	public SkuForm platformIdFieldOfProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromProduct(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public SkuForm platformIdFieldOfProduct(String initValue){
+		return platformIdFieldOfProduct("platformId",initValue);
+	}
+	public SkuForm platformIdFieldOfProduct(){
+		return platformIdFieldOfProduct("platformId","");
+	}
+
 	
 
 

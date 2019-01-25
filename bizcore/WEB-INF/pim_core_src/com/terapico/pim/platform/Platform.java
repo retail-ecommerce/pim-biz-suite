@@ -12,6 +12,7 @@ import com.terapico.pim.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.terapico.pim.site.Site;
+import com.terapico.pim.product.Product;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
 
@@ -28,6 +29,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	public static final String SITE_LIST                                = "siteList"          ;
 	public static final String CATALOG_LIST                             = "catalogList"       ;
 	public static final String BRAND_LIST                               = "brandList"         ;
+	public static final String PRODUCT_LIST                             = "productList"       ;
 
 	public static final String INTERNAL_TYPE="Platform";
 	public String getInternalType(){
@@ -58,6 +60,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	protected		SmartList<Site>     	mSiteList           ;
 	protected		SmartList<Catalog>  	mCatalogList        ;
 	protected		SmartList<Brand>    	mBrandList          ;
+	protected		SmartList<Product>  	mProductList        ;
 	
 		
 	public 	Platform(){
@@ -77,7 +80,8 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 
 		this.mSiteList = new SmartList<Site>();
 		this.mCatalogList = new SmartList<Catalog>();
-		this.mBrandList = new SmartList<Brand>();	
+		this.mBrandList = new SmartList<Brand>();
+		this.mProductList = new SmartList<Product>();	
 	}
 	
 	//Support for changing the property
@@ -508,6 +512,104 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	
 
 
+	public  SmartList<Product> getProductList(){
+		if(this.mProductList == null){
+			this.mProductList = new SmartList<Product>();
+			this.mProductList.setListInternalName (PRODUCT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mProductList;	
+	}
+	public  void setProductList(SmartList<Product> productList){
+		for( Product product:productList){
+			product.setPlatform(this);
+		}
+
+		this.mProductList = productList;
+		this.mProductList.setListInternalName (PRODUCT_LIST );
+		
+	}
+	
+	public  void addProduct(Product product){
+		product.setPlatform(this);
+		getProductList().add(product);
+	}
+	public  void addProductList(SmartList<Product> productList){
+		for( Product product:productList){
+			product.setPlatform(this);
+		}
+		getProductList().addAll(productList);
+	}
+	
+	public  Product removeProduct(Product productIndex){
+		
+		int index = getProductList().indexOf(productIndex);
+        if(index < 0){
+        	String message = "Product("+productIndex.getId()+") with version='"+productIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        Product product = getProductList().get(index);        
+        // product.clearPlatform(); //disconnect with Platform
+        product.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getProductList().planToRemove(product);
+        if(!result){
+        	String message = "Product("+productIndex.getId()+") with version='"+productIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return product;
+        
+	
+	}
+	//断舍离
+	public  void breakWithProduct(Product product){
+		
+		if(product == null){
+			return;
+		}
+		product.setPlatform(null);
+		//getProductList().remove();
+	
+	}
+	
+	public  boolean hasProduct(Product product){
+	
+		return getProductList().contains(product);
+  
+	}
+	
+	public void copyProductFrom(Product product) {
+
+		Product productInList = findTheProduct(product);
+		Product newProduct = new Product();
+		productInList.copyTo(newProduct);
+		newProduct.setVersion(0);//will trigger copy
+		getProductList().add(newProduct);
+		addItemToFlexiableObject(COPIED_CHILD, newProduct);
+	}
+	
+	public  Product findTheProduct(Product product){
+		
+		int index =  getProductList().indexOf(product);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "Product("+product.getId()+") with version='"+product.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getProductList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpProductList(){
+		getProductList().clear();
+	}
+	
+	
+	
+
+
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
 
@@ -520,6 +622,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		collectFromList(this, entityList, getSiteList(), internalType);
 		collectFromList(this, entityList, getCatalogList(), internalType);
 		collectFromList(this, entityList, getBrandList(), internalType);
+		collectFromList(this, entityList, getProductList(), internalType);
 
 		return entityList;
 	}
@@ -530,6 +633,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		listOfList.add( getSiteList());
 		listOfList.add( getCatalogList());
 		listOfList.add( getBrandList());
+		listOfList.add( getProductList());
 			
 
 		return listOfList;
@@ -559,6 +663,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "brandCount", getBrandList().getTotalCount());
 			appendKeyValuePair(result, "brandCurrentPageNumber", getBrandList().getCurrentPageNumber());
 		}
+		appendKeyValuePair(result, PRODUCT_LIST, getProductList());
+		if(!getProductList().isEmpty()){
+			appendKeyValuePair(result, "productCount", getProductList().getTotalCount());
+			appendKeyValuePair(result, "productCurrentPageNumber", getProductList().getCurrentPageNumber());
+		}
 
 		
 		return result;
@@ -581,6 +690,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			dest.setSiteList(getSiteList());
 			dest.setCatalogList(getCatalogList());
 			dest.setBrandList(getBrandList());
+			dest.setProductList(getProductList());
 
 		}
 		super.copyTo(baseDest);

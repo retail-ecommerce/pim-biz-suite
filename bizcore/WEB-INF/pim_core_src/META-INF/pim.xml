@@ -40,6 +40,8 @@
 		
 		<property name="brandDAO" ref="brandDAO" />
 		
+		<property name="productDAO" ref="productDAO" />
+		
 	</bean>
 	<bean id="platformDAO" parent="platformDAOBase"></bean>	
 	
@@ -95,7 +97,7 @@
 	
 	
 	<bean id="productDAOBase" class="com.terapico.pim.product.ProductJDBCTemplateDAO">
-		<property name="dataSource" ref="dataSource" /><property name="catalogDAO" ref="catalogDAO" /><property name="levelNCategoryDAO" ref="levelNCategoryDAO" /><property name="brandDAO" ref="brandDAO" />
+		<property name="dataSource" ref="dataSource" /><property name="catalogDAO" ref="catalogDAO" /><property name="levelNCategoryDAO" ref="levelNCategoryDAO" /><property name="brandDAO" ref="brandDAO" /><property name="platformDAO" ref="platformDAO" />
 		<property name="skuDAO" ref="skuDAO" />
 		
 	</bean>

@@ -222,9 +222,10 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
  		return checkOptions(options,BrandTokens.PRODUCT_LIST);
  	}
  	protected boolean isAnalyzeProductListEnabled(Map<String,Object> options){		
- 		return checkOptions(options,BrandTokens.PRODUCT_LIST+".analyze");
+ 		return true;
+ 		//return checkOptions(options,BrandTokens.PRODUCT_LIST+".analyze");
  	}
-
+	
 	protected boolean isSaveProductListEnabled(Map<String,Object> options){
 		return checkOptions(options, BrandTokens.PRODUCT_LIST);
 		
@@ -266,7 +267,7 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 	 		extractProductList(brand, loadOptions);
  		}	
  		if(isAnalyzeProductListEnabled(loadOptions)){
-	 		// analyzeProductList(brand, loadOptions);
+	 		analyzeProductList(brand, loadOptions);
  		}
  		
 		
@@ -710,6 +711,50 @@ public class BrandJDBCTemplateDAO extends PimNamingServiceDAO implements BrandDA
 		MultipleAccessKey key = new MultipleAccessKey();
 		key.put(Product.BRAND_PROPERTY, brandId);
 		key.put(Product.CATALOG_PROPERTY, catalogId);
+		
+		int count = getProductDAO().countProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Brand with platform in Product
+	public Brand planToRemoveProductListWithPlatform(Brand brand, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.BRAND_PROPERTY, brand.getId());
+		key.put(Product.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<Product> externalProductList = getProductDAO().
+				findProductWithKey(key, options);
+		if(externalProductList == null){
+			return brand;
+		}
+		if(externalProductList.isEmpty()){
+			return brand;
+		}
+		
+		for(Product product: externalProductList){
+			product.clearPlatform();
+			product.clearBrand();
+			
+		}
+		
+		
+		SmartList<Product> productList = brand.getProductList();		
+		productList.addAllToRemoveList(externalProductList);
+		return brand;
+	}
+	
+	public int countProductListWithPlatform(String brandId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Product.BRAND_PROPERTY, brandId);
+		key.put(Product.PLATFORM_PROPERTY, platformId);
 		
 		int count = getProductDAO().countProductWithKey(key, options);
 		return count;

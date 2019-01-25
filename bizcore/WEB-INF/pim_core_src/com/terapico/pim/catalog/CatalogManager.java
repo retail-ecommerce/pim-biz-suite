@@ -39,9 +39,9 @@ public interface CatalogManager{
 
 	*/
 
-	//public  ProductManager getProductManager(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String origin, String remark ,String [] tokensExpr)  throws Exception;
+	//public  ProductManager getProductManager(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String origin, String remark, String platformId ,String [] tokensExpr)  throws Exception;
 	
-	public  Catalog addProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String origin, String remark , String [] tokensExpr)  throws Exception;
+	public  Catalog addProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String origin, String remark, String platformId , String [] tokensExpr)  throws Exception;
 	public  Catalog removeProduct(PimUserContext userContext, String catalogId, String productId, int productVersion,String [] tokensExpr)  throws Exception;
 	public  Catalog updateProduct(PimUserContext userContext, String catalogId, String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

@@ -337,6 +337,14 @@ public class PimCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
+	public static final String  PLATFORM_OF_PRODUCT ="product.platform";
+	protected void checkPlatformIdOfProduct(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfProduct(userContext,platformId, messageList); 		
+		
+	}	 			
+	
 	public static final String  VERSION_OF_PRODUCT ="product.version";
 	protected void checkVersionOfProduct(PimUserContext userContext, int version, List<Message> messageList)
 	{

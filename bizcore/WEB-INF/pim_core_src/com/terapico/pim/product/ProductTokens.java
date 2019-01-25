@@ -66,6 +66,7 @@ public class ProductTokens extends CommonTokens{
 			.withParentCategory()
 			.withBrand()
 			.withCatalog()
+			.withPlatform()
 			.withSkuList();
 	
 	}
@@ -74,7 +75,8 @@ public class ProductTokens extends CommonTokens{
 		return start()
 			.withParentCategory()
 			.withBrand()
-			.withCatalog();
+			.withCatalog()
+			.withPlatform();
 	
 	}
 	
@@ -114,6 +116,16 @@ public class ProductTokens extends CommonTokens{
 	}
 	public ProductTokens withCatalog(){		
 		addSimpleOptions(CATALOG);
+		return this;
+	}
+	
+	
+	protected static final String PLATFORM = "platform";
+	public String getPlatform(){
+		return PLATFORM;
+	}
+	public ProductTokens withPlatform(){		
+		addSimpleOptions(PLATFORM);
 		return this;
 	}
 	

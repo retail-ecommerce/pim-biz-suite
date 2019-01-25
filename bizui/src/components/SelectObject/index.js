@@ -33,13 +33,14 @@ export default class SelectObject extends React.Component {
       const candidateValues = data.candidates
       if(this._isMounted){
         const value=valueOf(this.props.value,candidateValues)
+        this.setState({candidateValues,value})
         const onChange = this.props.onChange;
         if (onChange) {
-          onChange(value);
+          //onChange(value);
         }
-        this.setState({
-        candidateValues,value
-      })}
+        
+      }
+      
 
     })
 
@@ -53,7 +54,7 @@ export default class SelectObject extends React.Component {
     this.executeSearch("")
   }
   componentWillUnmount() {
-    this._isMounted = true;
+    this._isMounted = false;
   }
   componentWillReceiveProps(nextProps) {
     // Should be a controlled component.
@@ -92,6 +93,7 @@ export default class SelectObject extends React.Component {
 
     const {candidateValues,placeholder} = this.state
     const {value,disabled} = this.props
+    const userContext = null
     if(!candidateValues){
       return (<div>正在载入候选项......</div>)
     }
@@ -102,11 +104,11 @@ export default class SelectObject extends React.Component {
     return (
       <AutoComplete
               value={valueOf(value,candidateValues)}
-                    dataSource={candidateValues}
-                    onSearch={this.handleSearch}
-                    placeholder="请选择列表中或者输入搜索"
-                    disabled={disabled}
-                    onChange={(value)=>this.handleChange(value)}
+              dataSource={candidateValues}
+              onSearch={this.handleSearch}
+              placeholder="请选择列表中或者输入搜索"
+              disabled={disabled}
+              onChange={(value)=>this.handleChange(value)}
                   >
                   {candidateValues.map(item=>{
                 return (<Option key={item.id}>{`${item.id} - ${item.displayName}`}</Option>);
