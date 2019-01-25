@@ -39,7 +39,7 @@ const transferToAnotherPlatform = (id, parameters) => {
 
 
 const addProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}brandManager/addProduct/brandId/name/parentCategoryId/origin/catalogId/remark/tokensExpr/`
+  const url = `${PREFIX}brandManager/addProduct/brandId/name/parentCategoryId/origin/catalogId/remark/platformId/tokensExpr/`
   const brandId = targetObjectId
   const requestParameters = { ...parameters, brandId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

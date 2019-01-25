@@ -39,7 +39,7 @@ const transferToAnotherParentCategory = (id, parameters) => {
 
 
 const addProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}levelNCategoryManager/addProduct/levelNCategoryId/name/brandId/origin/catalogId/remark/tokensExpr/`
+  const url = `${PREFIX}levelNCategoryManager/addProduct/levelNCategoryId/name/brandId/origin/catalogId/remark/platformId/tokensExpr/`
   const levelNCategoryId = targetObjectId
   const requestParameters = { ...parameters, levelNCategoryId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190110T1504) @Tue Jan 22 16:56:08 CST 2019, 22 objects and 158 fields===========================
+=================Execute Report (Model Time 190125T1101) @Fri Jan 25 12:08:22 CST 2019, 22 objects and 159 fields===========================
 
 
 
@@ -89,6 +89,12 @@ Info: Add virtual field [products(es)] to <catalog>
 	product.catalog
 
 
+ processing: product.platform.platform
+
+Info: Add virtual field [products(es)] to <platform>
+	product.platform
+
+
  processing: sku
 
 
@@ -108,10 +114,11 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(3){
+	references field(4){
 		siteList	platform(基本信息)--platform;
 		catalogList	platform(基本信息)--platform;
 		brandList	platform(基本信息)--platform;
+		productList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
 
@@ -195,7 +202,7 @@ brand{
 } depth=1; isRoot = false
 
 product{
-	fields(9){
+	fields(10){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('Jeans'), verb: false, required: true;
 		level_n_category	parent_category('$(object)'), verb: false, required: true, referenceBy: productList;
@@ -204,6 +211,7 @@ product{
 		catalog	catalog('$(object)'), verb: false, required: true, referenceBy: productList;
 		string	remark('The brand a great that has Roadester, Model S and Model X, Model 3 is in development'), verb: false, required: true;
 		date_time_update	last_update_time('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: productList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){
@@ -234,10 +242,11 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(3){
+	references field(4){
 		siteList	platform(基本信息)--platform;
 		catalogList	platform(基本信息)--platform;
 		brandList	platform(基本信息)--platform;
+		productList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
 
@@ -321,7 +330,7 @@ brand{
 } depth=1; isRoot = false
 
 product{
-	fields(9){
+	fields(10){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('Jeans'), verb: false, required: true;
 		level_n_category	parent_category('$(object)'), verb: false, required: true, referenceBy: productList;
@@ -330,6 +339,7 @@ product{
 		catalog	catalog('$(object)'), verb: false, required: true, referenceBy: productList;
 		string	remark('The brand a great that has Roadester, Model S and Model X, Model 3 is in development'), verb: false, required: true;
 		date_time_update	last_update_time('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: productList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){

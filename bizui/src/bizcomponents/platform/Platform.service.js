@@ -87,16 +87,41 @@ const removeBrandList = (targetObjectId, parameters) => {
 }
 
 
+
+const addProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addProduct/platformId/name/parentCategoryId/brandId/origin/catalogId/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateProductProperties/platformId/id/name/origin/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeProductList/platformId/productIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const PlatformService = { view,
   load,
   addSite,
   addCatalog,
   addBrand,
+  addProduct,
   updateSite,
   updateCatalog,
   updateBrand,
+  updateProduct,
   removeSiteList,
   removeCatalogList,
-  removeBrandList }
+  removeBrandList,
+  removeProductList }
 export default PlatformService
 

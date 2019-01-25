@@ -2,7 +2,7 @@
 import ImagePreview from '../../components/ImagePreview'
 import { Link } from 'dva/router'
 import moment from 'moment'
-
+import appLocaleName from '../../common/Locale.tool'
 
 
 
@@ -11,12 +11,13 @@ const menuData = {menuName:"Platform", menuFor: "platform",
   {name: 'siteList', displayName:'Site', icon:'sitemap',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   {name: 'catalogList', displayName:'Catalog', icon:'at',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   {name: 'brandList', displayName:'Brand', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'productList', displayName:'Product', icon:'product-hunt',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
 
 const renderTextCell=(value, record)=>{
-
+	const userContext = null
 	if(!value){
 		return '';
 	}
@@ -24,7 +25,7 @@ const renderTextCell=(value, record)=>{
 		return '';
 	}
 	if(value.length>15){
-		return value.substring(0,15)+"...("+value.length+"字)"
+		return value.substring(0,15)+"...("+value.length+appLocaleName(userContext,"Chars")+")"
 	}
 	return value
 	
@@ -48,24 +49,26 @@ const renderImageCell=(value, record, title)=>{
 }
 
 const renderMoneyCell=(value, record)=>{
+	const userContext = null
 	if(!value){
-		return '空'
+		return appLocaleName(userContext,"Empty")
 	}
 	if(value == null){
-		return '空'
+		return appLocaleName(userContext,"Empty")
 	}
-	return (`￥${value.toFixed(2)}`)
+	return (`${appLocaleName(userContext,"Currency")}${value.toFixed(2)}`)
 }
 
 const renderBooleanCell=(value, record)=>{
+	const userContext = null
 
-	return  (value? '是' : '否')
+	return  (value? appLocaleName(userContext,"Yes") : appLocaleName(userContext,"No"))
 
 }
 
 const renderReferenceCell=(value, record)=>{
-
-	return (value ? value.displayName : '暂无') 
+	const userContext = null
+	return (value ? value.displayName : appLocaleName(userContext,"NotAssigned")) 
 
 }
 
@@ -86,7 +89,7 @@ const fieldLabels = {
 }
 
 
-const PlatformBase={menuData,displayColumns,fieldLabels,displayColumns}
+const PlatformBase={menuData,displayColumns,fieldLabels}
 export default PlatformBase
 
 

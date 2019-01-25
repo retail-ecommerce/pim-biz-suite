@@ -66,6 +66,22 @@ const transferToAnotherCatalog = (id, parameters) => {
 
 
 
+const requestCandidatePlatform = (ownerClass, id, filterKey, pageNo) => {
+ 
+  const url = `${PREFIX}productManager/requestCandidatePlatform/ownerClass/id/filterKey/pageNo/`
+  const requestParameters = {id, ownerClass,filterKey, pageNo}
+  return postForm({url,requestParameters})
+}	
+
+const transferToAnotherPlatform = (id, parameters) => {
+  //const parametersExpr = joinParameters(parameters)
+  const url = `${PREFIX}productManager/transferToAnotherPlatform/id/anotherPlatformId/`
+  const requestParameters = {id, ...parameters}
+  return postForm({url,requestParameters})
+}
+
+
+
 
 
 
@@ -99,8 +115,10 @@ const ProductService = { view,
   requestCandidateParentCategory,
   requestCandidateBrand,
   requestCandidateCatalog,
+  requestCandidatePlatform,
   transferToAnotherParentCategory,
   transferToAnotherBrand,
-  transferToAnotherCatalog }
+  transferToAnotherCatalog,
+  transferToAnotherPlatform }
 export default ProductService
 

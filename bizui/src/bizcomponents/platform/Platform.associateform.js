@@ -9,7 +9,7 @@ import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
 import PlatformBase from './Platform.base'
 import SelectObject from '../../components/SelectObject'
-
+import appLocaleName from '../../common/Locale.tool'
 
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -72,9 +72,12 @@ class PlatformAssociateForm extends Component {
 	const { form, dispatch, submitting, role,data,owner,toggleAssociatePaymentVisible,visible,onCancel, onCreate } = this.props
     const { convertedImagesValues } = this.state
     const {PlatformService} = GlobalComponents
+    const userContext = null
+    
  const {SiteModalTable} = GlobalComponents;
  const {CatalogModalTable} = GlobalComponents;
  const {BrandModalTable} = GlobalComponents;
+ const {ProductModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -121,24 +124,24 @@ class PlatformAssociateForm extends Component {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
     }
-    
+   
     return (
  <Modal
-          title="创建新的支付"
+          title={appLocaleName(userContext,"CreateNew")}
           visible={visible}
           onOk={onCancel}
           onCancel={onCancel}
           width={920}
           style={{ top: 40}}
         >
-        <Card title="基础信息"  className={styles.card} style={{ backgroundColor:"#eee" }}>
+        <Card title={appLocaleName(userContext,"BasicInfo")}  className={styles.card} style={{ backgroundColor:"#eee" }}>
           <Form >
             <Row gutter={16}>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
-                    rules: [{ required: true, message: '请输入Name' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Name" />
                   )}
@@ -148,7 +151,7 @@ class PlatformAssociateForm extends Component {
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.introduction} {...formItemLayout}>
                   {getFieldDecorator('introduction', {
-                    rules: [{ required: true, message: '请输入Introduction' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Introduction" />
                   )}
@@ -158,7 +161,7 @@ class PlatformAssociateForm extends Component {
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.currentVersion} {...formItemLayout}>
                   {getFieldDecorator('currentVersion', {
-                    rules: [{ required: true, message: '请输入Current Version' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Current Version" />
                   )}
@@ -189,6 +192,7 @@ class PlatformAssociateForm extends Component {
 	<SiteModalTable data={data.siteList} owner={owner} />
 	<CatalogModalTable data={data.catalogList} owner={owner} />
 	<BrandModalTable data={data.brandList} owner={owner} />
+	<ProductModalTable data={data.productList} owner={owner} />
         
         
         

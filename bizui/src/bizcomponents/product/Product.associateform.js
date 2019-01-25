@@ -9,7 +9,7 @@ import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
 import ProductBase from './Product.base'
 import SelectObject from '../../components/SelectObject'
-
+import appLocaleName from '../../common/Locale.tool'
 
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -23,6 +23,7 @@ const testValues = {
   parentCategoryId: 'LNC000001',
   brandId: 'B000001',
   catalogId: 'C000001',
+  platformId: 'P000001',
   remark: 'The brand a great that has Roadester, Model S and Model X, Model 3 is in development',
 }
 */
@@ -75,6 +76,8 @@ class ProductAssociateForm extends Component {
 	const { form, dispatch, submitting, role,data,owner,toggleAssociatePaymentVisible,visible,onCancel, onCreate } = this.props
     const { convertedImagesValues } = this.state
     const {ProductService} = GlobalComponents
+    const userContext = null
+    
  const {SkuModalTable} = GlobalComponents;
 
 
@@ -122,24 +125,24 @@ class ProductAssociateForm extends Component {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
     }
-    
+   
     return (
  <Modal
-          title="创建新的支付"
+          title={appLocaleName(userContext,"CreateNew")}
           visible={visible}
           onOk={onCancel}
           onCancel={onCancel}
           width={920}
           style={{ top: 40}}
         >
-        <Card title="基础信息"  className={styles.card} style={{ backgroundColor:"#eee" }}>
+        <Card title={appLocaleName(userContext,"BasicInfo")}  className={styles.card} style={{ backgroundColor:"#eee" }}>
           <Form >
             <Row gutter={16}>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
-                    rules: [{ required: true, message: '请输入Name' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Name" />
                   )}
@@ -149,7 +152,7 @@ class ProductAssociateForm extends Component {
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.origin} {...formItemLayout}>
                   {getFieldDecorator('origin', {
-                    rules: [{ required: true, message: '请输入Origin' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Origin" />
                   )}
@@ -171,9 +174,9 @@ class ProductAssociateForm extends Component {
               <Col lg={24} md={24} sm={24}>
                 <Form.Item>
                   {getFieldDecorator('remark', {
-                    rules: [{ required: true, message: '请输入Remark' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <TextArea rows={4} placeholder="请输入请输入Remark" />
+                    <TextArea rows={4} placeholder={appLocaleName(userContext,"PleaseInput")} />
                   )}
                 </Form.Item>
               </Col>
@@ -191,7 +194,7 @@ class ProductAssociateForm extends Component {
                 <Form.Item label={fieldLabels.parentCategory} {...formItemLayout}>
                   {getFieldDecorator('parentCategoryId', {
                   	initialValue: tryinit('parentCategory'),
-                    rules: [{ required: true, message: '请输入Parent Category' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                 <SelectObject 
                     disabled={!availableForEdit('parentCategory')}
@@ -206,7 +209,7 @@ class ProductAssociateForm extends Component {
                 <Form.Item label={fieldLabels.brand} {...formItemLayout}>
                   {getFieldDecorator('brandId', {
                   	initialValue: tryinit('brand'),
-                    rules: [{ required: true, message: '请输入Brand' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                 <SelectObject 
                     disabled={!availableForEdit('brand')}
@@ -221,12 +224,27 @@ class ProductAssociateForm extends Component {
                 <Form.Item label={fieldLabels.catalog} {...formItemLayout}>
                   {getFieldDecorator('catalogId', {
                   	initialValue: tryinit('catalog'),
-                    rules: [{ required: true, message: '请输入Catalog' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                 <SelectObject 
                     disabled={!availableForEdit('catalog')}
                     targetType={"catalog"} 
                     requestFunction={ProductService.requestCandidateCatalog}/>
+  
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.platform} {...formItemLayout}>
+                  {getFieldDecorator('platformId', {
+                  	initialValue: tryinit('platform'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                <SelectObject 
+                    disabled={!availableForEdit('platform')}
+                    targetType={"platform"} 
+                    requestFunction={ProductService.requestCandidatePlatform}/>
   
                   )}
                 </Form.Item>

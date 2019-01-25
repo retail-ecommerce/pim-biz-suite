@@ -77,7 +77,7 @@ const removeLevelOneCategoryList = (targetObjectId, parameters) => {
 
 
 const addProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}catalogManager/addProduct/catalogId/name/parentCategoryId/brandId/origin/remark/tokensExpr/`
+  const url = `${PREFIX}catalogManager/addProduct/catalogId/name/parentCategoryId/brandId/origin/remark/platformId/tokensExpr/`
   const catalogId = targetObjectId
   const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

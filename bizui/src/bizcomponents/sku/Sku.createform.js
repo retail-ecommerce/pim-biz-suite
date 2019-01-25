@@ -9,7 +9,7 @@ import styles from './Sku.createform.less'
 import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
 import SkuBase from './Sku.base'
-
+import appLocaleName from '../../common/Locale.tool'
 const { Option } = Select
 const { RangePicker } = DatePicker
 const { TextArea } = Input
@@ -19,7 +19,7 @@ const testValues = {};
 const testValues = {
   name: 'Jeans - Large',
   size: 'Large',
-  basePrice: '83.10',
+  basePrice: '84.32',
   productId: 'P000001',
 }
 */
@@ -69,7 +69,7 @@ class SkuCreateForm extends Component {
   render() {
     const { form, dispatch, submitting, role } = this.props
     const { convertedImagesValues } = this.state
-
+	const userContext = null
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
     const {fieldLabels} = SkuBase
     const {SkuService} = GlobalComponents
@@ -118,9 +118,10 @@ class SkuCreateForm extends Component {
     
     const goback = () => {
       const { owner } = this.props
+     
       dispatch({
         type: `${owner.type}/goback`,
-        payload: { id: owner.id, type: 'sku',listName:'Sku列表' },
+        payload: { id: owner.id, type: 'sku',listName:appLocaleName(userContext,"List") },
       })
     }
     const errors = getFieldsError()
@@ -151,7 +152,7 @@ class SkuCreateForm extends Component {
       return (
         <span className={styles.errorIcon}>
           <Popover
-            title="表单校验信息"
+            title={appLocaleName(userContext,"FieldValidateInfo")}
             content={errorList}
             overlayClassName={styles.errorPopover}
             trigger="click"
@@ -195,18 +196,18 @@ class SkuCreateForm extends Component {
     }
     return (
       <PageHeaderLayout
-        title="新建一个Sku"
-        content="新建一个Sku"
+        title={appLocaleName(userContext,"CreateNew")}
+        content={appLocaleName(userContext,"CreateNew")}
         wrapperClassName={styles.advancedForm}
       >
-        <Card title="基础信息" className={styles.card} bordered={false}>
+        <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>
           <Form >
             <Row gutter={16}>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
-                    rules: [{ required: true, message: '请输入Name' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Name" />
                   )}
@@ -216,7 +217,7 @@ class SkuCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.size} {...formItemLayout}>
                   {getFieldDecorator('size', {
-                    rules: [{ required: true, message: '请输入Size' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Size" />
                   )}
@@ -226,7 +227,7 @@ class SkuCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.basePrice} {...formItemLayout}>
                   {getFieldDecorator('basePrice', {
-                    rules: [{ required: true, message: '请输入Base Price' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入Base Price" />
                   )}
@@ -240,7 +241,7 @@ class SkuCreateForm extends Component {
 
 
         
-        <Card title="设置" className={styles.card} bordered={false}>
+        <Card title={appLocaleName(userContext,"Preference")} className={styles.card} bordered={false}>
           <Form >
             <Row gutter={16}>
             
@@ -249,10 +250,10 @@ class SkuCreateForm extends Component {
                 <Form.Item label={fieldLabels.active}  {...switchFormItemLayout}>
                   {getFieldDecorator('active', {
                     initialValue: false,
-                    rules: [{ required: true, message: '请输入Active' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                     valuePropName: 'checked'
                   })(
-                    <Switch checkedChildren="是" unCheckedChildren="否"  placeholder="请输入Activebool" />
+                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
                   )}
                 </Form.Item>
               </Col>
@@ -271,7 +272,7 @@ class SkuCreateForm extends Component {
 
 
 
-        <Card title="关联" className={styles.card} bordered={false}>
+        <Card title={appLocaleName(userContext,"Associate")} className={styles.card} bordered={false}>
           <Form >
             <Row gutter={16}>
 
@@ -279,7 +280,7 @@ class SkuCreateForm extends Component {
                 <Form.Item label={fieldLabels.product} {...formItemLayout}>
                   {getFieldDecorator('productId', {
                   	initialValue: tryinit('product'),
-                    rules: [{ required: true, message: '请输入Product' }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                   
                   <SelectObject 
@@ -299,13 +300,13 @@ class SkuCreateForm extends Component {
         <FooterToolbar>
           {getErrorInfo()}
           <Button type="primary" onClick={submitCreateForm} loading={submitting} htmlType="submit">
-            提交
+            {appLocaleName(userContext,"Submit")}
           </Button>
           <Button type="primary" onClick={submitCreateFormAndContinue} loading={submitting}>
-            提交并建下一个
+            {appLocaleName(userContext,"SubmitAndContinue")}
           </Button>
           <Button type="danger" onClick={goback} loading={submitting}>
-            放弃
+            {appLocaleName(userContext,"Discard")}
           </Button>
         </FooterToolbar>
       </PageHeaderLayout>
