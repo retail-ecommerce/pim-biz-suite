@@ -107,6 +107,9 @@
 <c:if test="${param.referName ne 'brand'}">
 	<th>${userContext.localeMap['product.brand']}</th>
 </c:if>
+<c:if test="${param.referName ne 'productCoverImage'}">
+	<th>${userContext.localeMap['product.product_cover_image']}</th>
+</c:if>
 <c:if test="${param.referName ne 'origin'}">
 	<th>${userContext.localeMap['product.origin']}</th>
 </c:if>
@@ -167,7 +170,8 @@
 		</div>
 	</td>
 </c:if>
-<c:if test="${param.referName ne 'origin'}">	<td contenteditable='true' class='edit-value'  propertyToChange='origin' storedCellValue='${item.origin}' prefix='${ownerBeanName}Manager/updateProduct/${result.id}/${item.id}/'>${item.origin}</td>
+<c:if test="${param.referName ne 'productCoverImage'}">	<td contenteditable='true' class='edit-value'  propertyToChange='productCoverImage' storedCellValue='${item.productCoverImage}' prefix='${ownerBeanName}Manager/updateProduct/${result.id}/${item.id}/'>${item.productCoverImage}</td>
+</c:if><c:if test="${param.referName ne 'origin'}">	<td contenteditable='true' class='edit-value'  propertyToChange='origin' storedCellValue='${item.origin}' prefix='${ownerBeanName}Manager/updateProduct/${result.id}/${item.id}/'>${item.origin}</td>
 </c:if><c:if test="${param.referName ne 'catalog'}">
 	<td class="select_candidate_td"
 			data-candidate-method="./productManager/requestCandidateCatalog/${ownerBeanName}/${item.id}/"

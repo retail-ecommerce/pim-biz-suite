@@ -41,6 +41,10 @@
 <span >${result.name}</span>
 </div>
 <div class="col-xs-12 col-md-3 summary-section">
+<span class="summary-label">${userContext.localeMap['product.product_cover_image']}</span>
+<span >${result.productCoverImage}</span>
+</div>
+<div class="col-xs-12 col-md-3 summary-section">
 <span class="summary-label">${userContext.localeMap['product.origin']}</span>
 <span >${result.origin}</span>
 </div>

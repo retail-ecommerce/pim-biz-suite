@@ -19,6 +19,22 @@ import com.terapico.pim.product.ProductManager;
 
 import com.terapico.pim.sku.SkuManager;
 
+import com.terapico.pim.profile.ProfileManager;
+
+import com.terapico.pim.brandfilter.BrandFilterManager;
+
+import com.terapico.pim.pricefilter.PriceFilterManager;
+
+import com.terapico.pim.categoryfilter.CategoryFilterManager;
+
+import com.terapico.pim.newproduct.NewProductManager;
+
+import com.terapico.pim.editorpickproduct.EditorPickProductManager;
+
+import com.terapico.pim.topratedproduct.TopRatedProductManager;
+
+import com.terapico.pim.recommandproduct.RecommandProductManager;
+
 import com.terapico.pim.userdomain.UserDomainManager;
 
 import com.terapico.pim.userwhitelist.UserWhiteListManager;
@@ -65,6 +81,22 @@ public class ManagerGroup {
 	protected ProductManager productManager;
 
 	protected SkuManager skuManager;
+
+	protected ProfileManager profileManager;
+
+	protected BrandFilterManager brandFilterManager;
+
+	protected PriceFilterManager priceFilterManager;
+
+	protected CategoryFilterManager categoryFilterManager;
+
+	protected NewProductManager newProductManager;
+
+	protected EditorPickProductManager editorPickProductManager;
+
+	protected TopRatedProductManager topRatedProductManager;
+
+	protected RecommandProductManager recommandProductManager;
 
 	protected UserDomainManager userDomainManager;
 
@@ -163,6 +195,70 @@ public class ManagerGroup {
 	}
 	public void setSkuManager(SkuManager manager){
 		this.skuManager = manager;
+	}
+
+
+	public ProfileManager getProfileManager(){
+		return this.profileManager;
+	}
+	public void setProfileManager(ProfileManager manager){
+		this.profileManager = manager;
+	}
+
+
+	public BrandFilterManager getBrandFilterManager(){
+		return this.brandFilterManager;
+	}
+	public void setBrandFilterManager(BrandFilterManager manager){
+		this.brandFilterManager = manager;
+	}
+
+
+	public PriceFilterManager getPriceFilterManager(){
+		return this.priceFilterManager;
+	}
+	public void setPriceFilterManager(PriceFilterManager manager){
+		this.priceFilterManager = manager;
+	}
+
+
+	public CategoryFilterManager getCategoryFilterManager(){
+		return this.categoryFilterManager;
+	}
+	public void setCategoryFilterManager(CategoryFilterManager manager){
+		this.categoryFilterManager = manager;
+	}
+
+
+	public NewProductManager getNewProductManager(){
+		return this.newProductManager;
+	}
+	public void setNewProductManager(NewProductManager manager){
+		this.newProductManager = manager;
+	}
+
+
+	public EditorPickProductManager getEditorPickProductManager(){
+		return this.editorPickProductManager;
+	}
+	public void setEditorPickProductManager(EditorPickProductManager manager){
+		this.editorPickProductManager = manager;
+	}
+
+
+	public TopRatedProductManager getTopRatedProductManager(){
+		return this.topRatedProductManager;
+	}
+	public void setTopRatedProductManager(TopRatedProductManager manager){
+		this.topRatedProductManager = manager;
+	}
+
+
+	public RecommandProductManager getRecommandProductManager(){
+		return this.recommandProductManager;
+	}
+	public void setRecommandProductManager(RecommandProductManager manager){
+		this.recommandProductManager = manager;
 	}
 
 

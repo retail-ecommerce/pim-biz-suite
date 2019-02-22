@@ -28,6 +28,14 @@ public class PimNamingServiceDAO extends CommonJDBCTemplateDAO {
 		namingTableMap.put("Brand", new String[]{"brand_data","brand_name"});
 		namingTableMap.put("Product", new String[]{"product_data","name"});
 		namingTableMap.put("Sku", new String[]{"sku_data","name"});
+		namingTableMap.put("Profile", new String[]{"profile_data","name"});
+		namingTableMap.put("BrandFilter", new String[]{"brand_filter_data","name"});
+		namingTableMap.put("PriceFilter", new String[]{"price_filter_data","name"});
+		namingTableMap.put("CategoryFilter", new String[]{"category_filter_data","name"});
+		namingTableMap.put("NewProduct", new String[]{"new_product_data","name"});
+		namingTableMap.put("EditorPickProduct", new String[]{"editor_pick_product_data","name"});
+		namingTableMap.put("TopRatedProduct", new String[]{"top_rated_product_data","name"});
+		namingTableMap.put("RecommandProduct", new String[]{"recommand_product_data","name"});
 		namingTableMap.put("UserDomain", new String[]{"user_domain_data","name"});
 		namingTableMap.put("UserWhiteList", new String[]{"user_white_list_data","user_identity"});
 		namingTableMap.put("SecUser", new String[]{"sec_user_data","login"});

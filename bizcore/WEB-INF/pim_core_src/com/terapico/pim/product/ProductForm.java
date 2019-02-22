@@ -76,6 +76,20 @@ public class ProductForm extends BaseForm {
 	}
 
 
+	public ProductForm productCoverImageField(String parameterName, String initValue){
+		FormField field = productCoverImageFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProductForm productCoverImageField(String initValue){
+		return productCoverImageField("productCoverImage",initValue);
+	}
+	public ProductForm productCoverImageField(){
+		return productCoverImageField("productCoverImage","");
+	}
+
+
 	public ProductForm originField(String parameterName, String initValue){
 		FormField field = originFromProduct(parameterName, initValue);		
 		this.addFormField(field);

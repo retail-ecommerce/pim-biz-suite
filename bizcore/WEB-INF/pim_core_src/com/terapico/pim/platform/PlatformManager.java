@@ -57,11 +57,61 @@ public interface PlatformManager{
 
 	*/
 
-	//public  ProductManager getProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
+	//public  ProductManager getProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark ,String [] tokensExpr)  throws Exception;
 	
-	public  Platform addProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
+	public  Platform addProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark , String [] tokensExpr)  throws Exception;
 	public  Platform removeProduct(PimUserContext userContext, String platformId, String productId, int productVersion,String [] tokensExpr)  throws Exception;
 	public  Platform updateProduct(PimUserContext userContext, String platformId, String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  ProfileManager getProfileManager(PimUserContext userContext, String platformId, String name ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addProfile(PimUserContext userContext, String platformId, String name , String [] tokensExpr)  throws Exception;
+	public  Platform removeProfile(PimUserContext userContext, String platformId, String profileId, int profileVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateProfile(PimUserContext userContext, String platformId, String profileId, int profileVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  NewProductManager getNewProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String profileId, String remark ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addNewProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String profileId, String remark , String [] tokensExpr)  throws Exception;
+	public  Platform removeNewProduct(PimUserContext userContext, String platformId, String newProductId, int newProductVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateNewProduct(PimUserContext userContext, String platformId, String newProductId, int newProductVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  EditorPickProductManager getEditorPickProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String profileId, String remark ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addEditorPickProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String profileId, String remark , String [] tokensExpr)  throws Exception;
+	public  Platform removeEditorPickProduct(PimUserContext userContext, String platformId, String editorPickProductId, int editorPickProductVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateEditorPickProduct(PimUserContext userContext, String platformId, String editorPickProductId, int editorPickProductVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  TopRatedProductManager getTopRatedProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark, String profileId ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addTopRatedProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark, String profileId , String [] tokensExpr)  throws Exception;
+	public  Platform removeTopRatedProduct(PimUserContext userContext, String platformId, String topRatedProductId, int topRatedProductVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateTopRatedProduct(PimUserContext userContext, String platformId, String topRatedProductId, int topRatedProductVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  RecommandProductManager getRecommandProductManager(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark, String profileId ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addRecommandProduct(PimUserContext userContext, String platformId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark, String profileId , String [] tokensExpr)  throws Exception;
+	public  Platform removeRecommandProduct(PimUserContext userContext, String platformId, String recommandProductId, int recommandProductVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateRecommandProduct(PimUserContext userContext, String platformId, String recommandProductId, int recommandProductVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 
 	/*
 

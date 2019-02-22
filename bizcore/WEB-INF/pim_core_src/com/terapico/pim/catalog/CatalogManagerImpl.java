@@ -20,15 +20,20 @@ import com.terapico.pim.PimUserContext;
 import com.terapico.pim.PimCheckerManager;
 import com.terapico.pim.CustomPimCheckerManager;
 
+import com.terapico.pim.editorpickproduct.EditorPickProduct;
+import com.terapico.pim.newproduct.NewProduct;
 import com.terapico.pim.site.Site;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.levelonecategory.LevelOneCategory;
+import com.terapico.pim.topratedproduct.TopRatedProduct;
+import com.terapico.pim.recommandproduct.RecommandProduct;
 import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.site.CandidateSite;
 import com.terapico.pim.platform.CandidatePlatform;
 
 import com.terapico.pim.levelncategory.LevelNCategory;
+import com.terapico.pim.profile.Profile;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
 import com.terapico.pim.platform.Platform;
@@ -166,6 +171,22 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		addAction(userContext, catalog, tokens,"catalog.removeProduct","removeProduct","removeProduct/"+catalog.getId()+"/","productList","primary");
 		addAction(userContext, catalog, tokens,"catalog.updateProduct","updateProduct","updateProduct/"+catalog.getId()+"/","productList","primary");
 		addAction(userContext, catalog, tokens,"catalog.copyProductFrom","copyProductFrom","copyProductFrom/"+catalog.getId()+"/","productList","primary");
+		addAction(userContext, catalog, tokens,"catalog.addNewProduct","addNewProduct","addNewProduct/"+catalog.getId()+"/","newProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.removeNewProduct","removeNewProduct","removeNewProduct/"+catalog.getId()+"/","newProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.updateNewProduct","updateNewProduct","updateNewProduct/"+catalog.getId()+"/","newProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.copyNewProductFrom","copyNewProductFrom","copyNewProductFrom/"+catalog.getId()+"/","newProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.addEditorPickProduct","addEditorPickProduct","addEditorPickProduct/"+catalog.getId()+"/","editorPickProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.removeEditorPickProduct","removeEditorPickProduct","removeEditorPickProduct/"+catalog.getId()+"/","editorPickProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.updateEditorPickProduct","updateEditorPickProduct","updateEditorPickProduct/"+catalog.getId()+"/","editorPickProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.copyEditorPickProductFrom","copyEditorPickProductFrom","copyEditorPickProductFrom/"+catalog.getId()+"/","editorPickProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.addTopRatedProduct","addTopRatedProduct","addTopRatedProduct/"+catalog.getId()+"/","topRatedProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.removeTopRatedProduct","removeTopRatedProduct","removeTopRatedProduct/"+catalog.getId()+"/","topRatedProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.updateTopRatedProduct","updateTopRatedProduct","updateTopRatedProduct/"+catalog.getId()+"/","topRatedProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.copyTopRatedProductFrom","copyTopRatedProductFrom","copyTopRatedProductFrom/"+catalog.getId()+"/","topRatedProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.addRecommandProduct","addRecommandProduct","addRecommandProduct/"+catalog.getId()+"/","recommandProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.removeRecommandProduct","removeRecommandProduct","removeRecommandProduct/"+catalog.getId()+"/","recommandProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.updateRecommandProduct","updateRecommandProduct","updateRecommandProduct/"+catalog.getId()+"/","recommandProductList","primary");
+		addAction(userContext, catalog, tokens,"catalog.copyRecommandProductFrom","copyRecommandProductFrom","copyRecommandProductFrom/"+catalog.getId()+"/","recommandProductList","primary");
 	
 		
 		
@@ -338,6 +359,10 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		return tokens().allTokens()
 		.sortLevelOneCategoryListWith("id","desc")
 		.sortProductListWith("id","desc")
+		.sortNewProductListWith("id","desc")
+		.sortEditorPickProductListWith("id","desc")
+		.sortTopRatedProductListWith("id","desc")
+		.sortRecommandProductListWith("id","desc")
 		.done();
 
 	}
@@ -555,6 +580,294 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 				userContext.getDAOGroup().getCatalogDAO().planToRemoveProductListWithPlatform(catalog, platformId, this.emptyOptions());
 
 				catalog = saveCatalog(userContext, catalog, tokens().withProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with parent_category in NewProduct
+	protected Catalog breakWithNewProductByParentCategory(PimUserContext userContext, String catalogId, String parentCategoryId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveNewProductListWithParentCategory(catalog, parentCategoryId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with brand in NewProduct
+	protected Catalog breakWithNewProductByBrand(PimUserContext userContext, String catalogId, String brandId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveNewProductListWithBrand(catalog, brandId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with profile in NewProduct
+	protected Catalog breakWithNewProductByProfile(PimUserContext userContext, String catalogId, String profileId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveNewProductListWithProfile(catalog, profileId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with platform in NewProduct
+	protected Catalog breakWithNewProductByPlatform(PimUserContext userContext, String catalogId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveNewProductListWithPlatform(catalog, platformId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with parent_category in EditorPickProduct
+	protected Catalog breakWithEditorPickProductByParentCategory(PimUserContext userContext, String catalogId, String parentCategoryId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveEditorPickProductListWithParentCategory(catalog, parentCategoryId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with brand in EditorPickProduct
+	protected Catalog breakWithEditorPickProductByBrand(PimUserContext userContext, String catalogId, String brandId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveEditorPickProductListWithBrand(catalog, brandId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with profile in EditorPickProduct
+	protected Catalog breakWithEditorPickProductByProfile(PimUserContext userContext, String catalogId, String profileId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveEditorPickProductListWithProfile(catalog, profileId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with platform in EditorPickProduct
+	protected Catalog breakWithEditorPickProductByPlatform(PimUserContext userContext, String catalogId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveEditorPickProductListWithPlatform(catalog, platformId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with parent_category in TopRatedProduct
+	protected Catalog breakWithTopRatedProductByParentCategory(PimUserContext userContext, String catalogId, String parentCategoryId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveTopRatedProductListWithParentCategory(catalog, parentCategoryId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with brand in TopRatedProduct
+	protected Catalog breakWithTopRatedProductByBrand(PimUserContext userContext, String catalogId, String brandId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveTopRatedProductListWithBrand(catalog, brandId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with profile in TopRatedProduct
+	protected Catalog breakWithTopRatedProductByProfile(PimUserContext userContext, String catalogId, String profileId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveTopRatedProductListWithProfile(catalog, profileId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with platform in TopRatedProduct
+	protected Catalog breakWithTopRatedProductByPlatform(PimUserContext userContext, String catalogId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveTopRatedProductListWithPlatform(catalog, platformId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with parent_category in RecommandProduct
+	protected Catalog breakWithRecommandProductByParentCategory(PimUserContext userContext, String catalogId, String parentCategoryId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveRecommandProductListWithParentCategory(catalog, parentCategoryId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with brand in RecommandProduct
+	protected Catalog breakWithRecommandProductByBrand(PimUserContext userContext, String catalogId, String brandId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveRecommandProductListWithBrand(catalog, brandId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with profile in RecommandProduct
+	protected Catalog breakWithRecommandProductByProfile(PimUserContext userContext, String catalogId, String profileId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveRecommandProductListWithProfile(catalog, profileId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+				return catalog;
+			}
+	}
+	//disconnect Catalog with platform in RecommandProduct
+	protected Catalog breakWithRecommandProductByPlatform(PimUserContext userContext, String catalogId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+
+			synchronized(catalog){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveRecommandProductListWithPlatform(catalog, platformId, this.emptyOptions());
+
+				catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
 				return catalog;
 			}
 	}
@@ -798,7 +1111,7 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 
 
 
-	protected void checkParamsForAddingProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String origin, String remark, String platformId,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String platformId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -813,6 +1126,8 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		
 		userContext.getChecker().checkBrandIdOfProduct(brandId);
 		
+		userContext.getChecker().checkProductCoverImageOfProduct(productCoverImage);
+		
 		userContext.getChecker().checkOriginOfProduct(origin);
 		
 		userContext.getChecker().checkRemarkOfProduct(remark);
@@ -823,12 +1138,12 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 
 	
 	}
-	public  Catalog addProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String origin, String remark, String platformId, String [] tokensExpr) throws Exception
+	public  Catalog addProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String platformId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingProduct(userContext,catalogId,name, parentCategoryId, brandId, origin, remark, platformId,tokensExpr);
+		checkParamsForAddingProduct(userContext,catalogId,name, parentCategoryId, brandId, productCoverImage, origin, remark, platformId,tokensExpr);
 		
-		Product product = createProduct(userContext,name, parentCategoryId, brandId, origin, remark, platformId);
+		Product product = createProduct(userContext,name, parentCategoryId, brandId, productCoverImage, origin, remark, platformId);
 		
 		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
 		synchronized(catalog){ 
@@ -841,21 +1156,22 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 			return present(userContext,catalog, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingProductProperties(PimUserContext userContext, String catalogId,String id,String name,String origin,String remark,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingProductProperties(PimUserContext userContext, String catalogId,String id,String name,String productCoverImage,String origin,String remark,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfCatalog(catalogId);
 		userContext.getChecker().checkIdOfProduct(id);
 		
 		userContext.getChecker().checkNameOfProduct( name);
+		userContext.getChecker().checkProductCoverImageOfProduct( productCoverImage);
 		userContext.getChecker().checkOriginOfProduct( origin);
 		userContext.getChecker().checkRemarkOfProduct( remark);
 
 		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
 		
 	}
-	public  Catalog updateProductProperties(PimUserContext userContext, String catalogId, String id,String name,String origin,String remark, String [] tokensExpr) throws Exception
+	public  Catalog updateProductProperties(PimUserContext userContext, String catalogId, String id,String name,String productCoverImage,String origin,String remark, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingProductProperties(userContext,catalogId,id,name,origin,remark,tokensExpr);
+		checkParamsForUpdatingProductProperties(userContext,catalogId,id,name,productCoverImage,origin,remark,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -871,6 +1187,7 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		Product item = catalogToUpdate.getProductList().first();
 		
 		item.updateName( name );
+		item.updateProductCoverImage( productCoverImage );
 		item.updateOrigin( origin );
 		item.updateRemark( remark );
 
@@ -883,7 +1200,7 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 	}
 	
 	
-	protected Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String origin, String remark, String platformId) throws Exception{
+	protected Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String platformId) throws Exception{
 
 		Product product = new Product();
 		
@@ -895,6 +1212,7 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 		Brand  brand = new Brand();
 		brand.setId(brandId);		
 		product.setBrand(brand);		
+		product.setProductCoverImage(productCoverImage);		
 		product.setOrigin(origin);		
 		product.setRemark(remark);		
 		product.setLastUpdateTime(userContext.now());		
@@ -1016,6 +1334,10 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 			userContext.getChecker().checkNameOfProduct(parseString(newValueExpr));
 		}
 		
+		if(Product.PRODUCT_COVER_IMAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkProductCoverImageOfProduct(parseString(newValueExpr));
+		}
+		
 		if(Product.ORIGIN_PROPERTY.equals(property)){
 			userContext.getChecker().checkOriginOfProduct(parseString(newValueExpr));
 		}
@@ -1055,6 +1377,1134 @@ public class CatalogManagerImpl extends CustomPimCheckerManager implements Catal
 			product.changeProperty(property, newValueExpr);
 			product.updateLastUpdateTime(userContext.now());
 			catalog = saveCatalog(userContext, catalog, tokens().withProductList().done());
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingNewProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String profileId, String remark, String platformId,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+
+		
+		userContext.getChecker().checkNameOfNewProduct(name);
+		
+		userContext.getChecker().checkParentCategoryIdOfNewProduct(parentCategoryId);
+		
+		userContext.getChecker().checkBrandIdOfNewProduct(brandId);
+		
+		userContext.getChecker().checkProductCoverImageOfNewProduct(productCoverImage);
+		
+		userContext.getChecker().checkOriginOfNewProduct(origin);
+		
+		userContext.getChecker().checkProfileIdOfNewProduct(profileId);
+		
+		userContext.getChecker().checkRemarkOfNewProduct(remark);
+		
+		userContext.getChecker().checkPlatformIdOfNewProduct(platformId);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+
+	
+	}
+	public  Catalog addNewProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String profileId, String remark, String platformId, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingNewProduct(userContext,catalogId,name, parentCategoryId, brandId, productCoverImage, origin, profileId, remark, platformId,tokensExpr);
+		
+		NewProduct newProduct = createNewProduct(userContext,name, parentCategoryId, brandId, productCoverImage, origin, profileId, remark, platformId);
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.addNewProduct( newProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+			
+			userContext.getManagerGroup().getNewProductManager().onNewInstanceCreated(userContext, newProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingNewProductProperties(PimUserContext userContext, String catalogId,String id,String name,String productCoverImage,String origin,String remark,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfNewProduct(id);
+		
+		userContext.getChecker().checkNameOfNewProduct( name);
+		userContext.getChecker().checkProductCoverImageOfNewProduct( productCoverImage);
+		userContext.getChecker().checkOriginOfNewProduct( origin);
+		userContext.getChecker().checkRemarkOfNewProduct( remark);
+
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog updateNewProductProperties(PimUserContext userContext, String catalogId, String id,String name,String productCoverImage,String origin,String remark, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingNewProductProperties(userContext,catalogId,id,name,productCoverImage,origin,remark,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withNewProductListList()
+				.searchNewProductListWith(NewProduct.ID_PROPERTY, "is", id).done();
+		
+		Catalog catalogToUpdate = loadCatalog(userContext, catalogId, options);
+		
+		if(catalogToUpdate.getNewProductList().isEmpty()){
+			throw new CatalogManagerException("NewProduct is NOT FOUND with id: '"+id+"'");
+		}
+		
+		NewProduct item = catalogToUpdate.getNewProductList().first();
+		
+		item.updateName( name );
+		item.updateProductCoverImage( productCoverImage );
+		item.updateOrigin( origin );
+		item.updateRemark( remark );
+
+		
+		//checkParamsForAddingNewProduct(userContext,catalogId,name, code, used,tokensExpr);
+		Catalog catalog = saveCatalog(userContext, catalogToUpdate, tokens().withNewProductList().done());
+		synchronized(catalog){ 
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected NewProduct createNewProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String profileId, String remark, String platformId) throws Exception{
+
+		NewProduct newProduct = new NewProduct();
+		
+		
+		newProduct.setName(name);		
+		LevelNCategory  parentCategory = new LevelNCategory();
+		parentCategory.setId(parentCategoryId);		
+		newProduct.setParentCategory(parentCategory);		
+		Brand  brand = new Brand();
+		brand.setId(brandId);		
+		newProduct.setBrand(brand);		
+		newProduct.setProductCoverImage(productCoverImage);		
+		newProduct.setOrigin(origin);		
+		Profile  profile = new Profile();
+		profile.setId(profileId);		
+		newProduct.setProfile(profile);		
+		newProduct.setRemark(remark);		
+		newProduct.setLastUpdateTime(userContext.now());		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		newProduct.setPlatform(platform);
+	
+		
+		return newProduct;
+	
+		
+	}
+	
+	protected NewProduct createIndexedNewProduct(String id, int version){
+
+		NewProduct newProduct = new NewProduct();
+		newProduct.setId(id);
+		newProduct.setVersion(version);
+		return newProduct;			
+		
+	}
+	
+	protected void checkParamsForRemovingNewProductList(PimUserContext userContext, String catalogId, 
+			String newProductIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		for(String newProductId: newProductIds){
+			userContext.getChecker().checkIdOfNewProduct(newProductId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog removeNewProductList(PimUserContext userContext, String catalogId, 
+			String newProductIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingNewProductList(userContext, catalogId,  newProductIds, tokensExpr);
+			
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+			synchronized(catalog){ 
+				//Will be good when the catalog loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveNewProductList(catalog, newProductIds, allTokens());
+				catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+				deleteRelationListInGraph(userContext, catalog.getNewProductList());
+				return present(userContext,catalog, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingNewProduct(PimUserContext userContext, String catalogId, 
+		String newProductId, int newProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfNewProduct(newProductId);
+		userContext.getChecker().checkVersionOfNewProduct(newProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog removeNewProduct(PimUserContext userContext, String catalogId, 
+		String newProductId, int newProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingNewProduct(userContext,catalogId, newProductId, newProductVersion,tokensExpr);
+		
+		NewProduct newProduct = createIndexedNewProduct(newProductId, newProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.removeNewProduct( newProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+			deleteRelationInGraph(userContext, newProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingNewProduct(PimUserContext userContext, String catalogId, 
+		String newProductId, int newProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfNewProduct(newProductId);
+		userContext.getChecker().checkVersionOfNewProduct(newProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog copyNewProductFrom(PimUserContext userContext, String catalogId, 
+		String newProductId, int newProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingNewProduct(userContext,catalogId, newProductId, newProductVersion,tokensExpr);
+		
+		NewProduct newProduct = createIndexedNewProduct(newProductId, newProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			newProduct.updateLastUpdateTime(userContext.now());
+			
+			catalog.copyNewProductFrom( newProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+			
+			userContext.getManagerGroup().getNewProductManager().onNewInstanceCreated(userContext, (NewProduct)catalog.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingNewProduct(PimUserContext userContext, String catalogId, String newProductId, int newProductVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfNewProduct(newProductId);
+		userContext.getChecker().checkVersionOfNewProduct(newProductVersion);
+		
+
+		if(NewProduct.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfNewProduct(parseString(newValueExpr));
+		}
+		
+		if(NewProduct.PRODUCT_COVER_IMAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkProductCoverImageOfNewProduct(parseString(newValueExpr));
+		}
+		
+		if(NewProduct.ORIGIN_PROPERTY.equals(property)){
+			userContext.getChecker().checkOriginOfNewProduct(parseString(newValueExpr));
+		}
+		
+		if(NewProduct.REMARK_PROPERTY.equals(property)){
+			userContext.getChecker().checkRemarkOfNewProduct(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	
+	public  Catalog updateNewProduct(PimUserContext userContext, String catalogId, String newProductId, int newProductVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingNewProduct(userContext, catalogId, newProductId, newProductVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withNewProductList().searchNewProductListWith(NewProduct.ID_PROPERTY, "eq", newProductId).done();
+		
+		
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, loadTokens);
+		
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//catalog.removeNewProduct( newProduct );	
+			//make changes to AcceleraterAccount.
+			NewProduct newProductIndex = createIndexedNewProduct(newProductId, newProductVersion);
+		
+			NewProduct newProduct = catalog.findTheNewProduct(newProductIndex);
+			if(newProduct == null){
+				throw new CatalogManagerException(newProduct+" is NOT FOUND" );
+			}
+			
+			newProduct.changeProperty(property, newValueExpr);
+			newProduct.updateLastUpdateTime(userContext.now());
+			catalog = saveCatalog(userContext, catalog, tokens().withNewProductList().done());
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingEditorPickProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String profileId, String remark, String platformId,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+
+		
+		userContext.getChecker().checkNameOfEditorPickProduct(name);
+		
+		userContext.getChecker().checkParentCategoryIdOfEditorPickProduct(parentCategoryId);
+		
+		userContext.getChecker().checkBrandIdOfEditorPickProduct(brandId);
+		
+		userContext.getChecker().checkProductCoverImageOfEditorPickProduct(productCoverImage);
+		
+		userContext.getChecker().checkOriginOfEditorPickProduct(origin);
+		
+		userContext.getChecker().checkProfileIdOfEditorPickProduct(profileId);
+		
+		userContext.getChecker().checkRemarkOfEditorPickProduct(remark);
+		
+		userContext.getChecker().checkPlatformIdOfEditorPickProduct(platformId);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+
+	
+	}
+	public  Catalog addEditorPickProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String profileId, String remark, String platformId, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingEditorPickProduct(userContext,catalogId,name, parentCategoryId, brandId, productCoverImage, origin, profileId, remark, platformId,tokensExpr);
+		
+		EditorPickProduct editorPickProduct = createEditorPickProduct(userContext,name, parentCategoryId, brandId, productCoverImage, origin, profileId, remark, platformId);
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.addEditorPickProduct( editorPickProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+			
+			userContext.getManagerGroup().getEditorPickProductManager().onNewInstanceCreated(userContext, editorPickProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingEditorPickProductProperties(PimUserContext userContext, String catalogId,String id,String name,String productCoverImage,String origin,String remark,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfEditorPickProduct(id);
+		
+		userContext.getChecker().checkNameOfEditorPickProduct( name);
+		userContext.getChecker().checkProductCoverImageOfEditorPickProduct( productCoverImage);
+		userContext.getChecker().checkOriginOfEditorPickProduct( origin);
+		userContext.getChecker().checkRemarkOfEditorPickProduct( remark);
+
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog updateEditorPickProductProperties(PimUserContext userContext, String catalogId, String id,String name,String productCoverImage,String origin,String remark, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingEditorPickProductProperties(userContext,catalogId,id,name,productCoverImage,origin,remark,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withEditorPickProductListList()
+				.searchEditorPickProductListWith(EditorPickProduct.ID_PROPERTY, "is", id).done();
+		
+		Catalog catalogToUpdate = loadCatalog(userContext, catalogId, options);
+		
+		if(catalogToUpdate.getEditorPickProductList().isEmpty()){
+			throw new CatalogManagerException("EditorPickProduct is NOT FOUND with id: '"+id+"'");
+		}
+		
+		EditorPickProduct item = catalogToUpdate.getEditorPickProductList().first();
+		
+		item.updateName( name );
+		item.updateProductCoverImage( productCoverImage );
+		item.updateOrigin( origin );
+		item.updateRemark( remark );
+
+		
+		//checkParamsForAddingEditorPickProduct(userContext,catalogId,name, code, used,tokensExpr);
+		Catalog catalog = saveCatalog(userContext, catalogToUpdate, tokens().withEditorPickProductList().done());
+		synchronized(catalog){ 
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected EditorPickProduct createEditorPickProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String profileId, String remark, String platformId) throws Exception{
+
+		EditorPickProduct editorPickProduct = new EditorPickProduct();
+		
+		
+		editorPickProduct.setName(name);		
+		LevelNCategory  parentCategory = new LevelNCategory();
+		parentCategory.setId(parentCategoryId);		
+		editorPickProduct.setParentCategory(parentCategory);		
+		Brand  brand = new Brand();
+		brand.setId(brandId);		
+		editorPickProduct.setBrand(brand);		
+		editorPickProduct.setProductCoverImage(productCoverImage);		
+		editorPickProduct.setOrigin(origin);		
+		Profile  profile = new Profile();
+		profile.setId(profileId);		
+		editorPickProduct.setProfile(profile);		
+		editorPickProduct.setRemark(remark);		
+		editorPickProduct.setLastUpdateTime(userContext.now());		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		editorPickProduct.setPlatform(platform);
+	
+		
+		return editorPickProduct;
+	
+		
+	}
+	
+	protected EditorPickProduct createIndexedEditorPickProduct(String id, int version){
+
+		EditorPickProduct editorPickProduct = new EditorPickProduct();
+		editorPickProduct.setId(id);
+		editorPickProduct.setVersion(version);
+		return editorPickProduct;			
+		
+	}
+	
+	protected void checkParamsForRemovingEditorPickProductList(PimUserContext userContext, String catalogId, 
+			String editorPickProductIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		for(String editorPickProductId: editorPickProductIds){
+			userContext.getChecker().checkIdOfEditorPickProduct(editorPickProductId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog removeEditorPickProductList(PimUserContext userContext, String catalogId, 
+			String editorPickProductIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingEditorPickProductList(userContext, catalogId,  editorPickProductIds, tokensExpr);
+			
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+			synchronized(catalog){ 
+				//Will be good when the catalog loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveEditorPickProductList(catalog, editorPickProductIds, allTokens());
+				catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+				deleteRelationListInGraph(userContext, catalog.getEditorPickProductList());
+				return present(userContext,catalog, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingEditorPickProduct(PimUserContext userContext, String catalogId, 
+		String editorPickProductId, int editorPickProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfEditorPickProduct(editorPickProductId);
+		userContext.getChecker().checkVersionOfEditorPickProduct(editorPickProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog removeEditorPickProduct(PimUserContext userContext, String catalogId, 
+		String editorPickProductId, int editorPickProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingEditorPickProduct(userContext,catalogId, editorPickProductId, editorPickProductVersion,tokensExpr);
+		
+		EditorPickProduct editorPickProduct = createIndexedEditorPickProduct(editorPickProductId, editorPickProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.removeEditorPickProduct( editorPickProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+			deleteRelationInGraph(userContext, editorPickProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingEditorPickProduct(PimUserContext userContext, String catalogId, 
+		String editorPickProductId, int editorPickProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfEditorPickProduct(editorPickProductId);
+		userContext.getChecker().checkVersionOfEditorPickProduct(editorPickProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog copyEditorPickProductFrom(PimUserContext userContext, String catalogId, 
+		String editorPickProductId, int editorPickProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingEditorPickProduct(userContext,catalogId, editorPickProductId, editorPickProductVersion,tokensExpr);
+		
+		EditorPickProduct editorPickProduct = createIndexedEditorPickProduct(editorPickProductId, editorPickProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			editorPickProduct.updateLastUpdateTime(userContext.now());
+			
+			catalog.copyEditorPickProductFrom( editorPickProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+			
+			userContext.getManagerGroup().getEditorPickProductManager().onNewInstanceCreated(userContext, (EditorPickProduct)catalog.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingEditorPickProduct(PimUserContext userContext, String catalogId, String editorPickProductId, int editorPickProductVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfEditorPickProduct(editorPickProductId);
+		userContext.getChecker().checkVersionOfEditorPickProduct(editorPickProductVersion);
+		
+
+		if(EditorPickProduct.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfEditorPickProduct(parseString(newValueExpr));
+		}
+		
+		if(EditorPickProduct.PRODUCT_COVER_IMAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkProductCoverImageOfEditorPickProduct(parseString(newValueExpr));
+		}
+		
+		if(EditorPickProduct.ORIGIN_PROPERTY.equals(property)){
+			userContext.getChecker().checkOriginOfEditorPickProduct(parseString(newValueExpr));
+		}
+		
+		if(EditorPickProduct.REMARK_PROPERTY.equals(property)){
+			userContext.getChecker().checkRemarkOfEditorPickProduct(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	
+	public  Catalog updateEditorPickProduct(PimUserContext userContext, String catalogId, String editorPickProductId, int editorPickProductVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingEditorPickProduct(userContext, catalogId, editorPickProductId, editorPickProductVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withEditorPickProductList().searchEditorPickProductListWith(EditorPickProduct.ID_PROPERTY, "eq", editorPickProductId).done();
+		
+		
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, loadTokens);
+		
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//catalog.removeEditorPickProduct( editorPickProduct );	
+			//make changes to AcceleraterAccount.
+			EditorPickProduct editorPickProductIndex = createIndexedEditorPickProduct(editorPickProductId, editorPickProductVersion);
+		
+			EditorPickProduct editorPickProduct = catalog.findTheEditorPickProduct(editorPickProductIndex);
+			if(editorPickProduct == null){
+				throw new CatalogManagerException(editorPickProduct+" is NOT FOUND" );
+			}
+			
+			editorPickProduct.changeProperty(property, newValueExpr);
+			editorPickProduct.updateLastUpdateTime(userContext.now());
+			catalog = saveCatalog(userContext, catalog, tokens().withEditorPickProductList().done());
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingTopRatedProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String profileId, String platformId,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+
+		
+		userContext.getChecker().checkNameOfTopRatedProduct(name);
+		
+		userContext.getChecker().checkParentCategoryIdOfTopRatedProduct(parentCategoryId);
+		
+		userContext.getChecker().checkBrandIdOfTopRatedProduct(brandId);
+		
+		userContext.getChecker().checkProductCoverImageOfTopRatedProduct(productCoverImage);
+		
+		userContext.getChecker().checkOriginOfTopRatedProduct(origin);
+		
+		userContext.getChecker().checkRemarkOfTopRatedProduct(remark);
+		
+		userContext.getChecker().checkProfileIdOfTopRatedProduct(profileId);
+		
+		userContext.getChecker().checkPlatformIdOfTopRatedProduct(platformId);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+
+	
+	}
+	public  Catalog addTopRatedProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String profileId, String platformId, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingTopRatedProduct(userContext,catalogId,name, parentCategoryId, brandId, productCoverImage, origin, remark, profileId, platformId,tokensExpr);
+		
+		TopRatedProduct topRatedProduct = createTopRatedProduct(userContext,name, parentCategoryId, brandId, productCoverImage, origin, remark, profileId, platformId);
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.addTopRatedProduct( topRatedProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+			
+			userContext.getManagerGroup().getTopRatedProductManager().onNewInstanceCreated(userContext, topRatedProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingTopRatedProductProperties(PimUserContext userContext, String catalogId,String id,String name,String productCoverImage,String origin,String remark,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfTopRatedProduct(id);
+		
+		userContext.getChecker().checkNameOfTopRatedProduct( name);
+		userContext.getChecker().checkProductCoverImageOfTopRatedProduct( productCoverImage);
+		userContext.getChecker().checkOriginOfTopRatedProduct( origin);
+		userContext.getChecker().checkRemarkOfTopRatedProduct( remark);
+
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog updateTopRatedProductProperties(PimUserContext userContext, String catalogId, String id,String name,String productCoverImage,String origin,String remark, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingTopRatedProductProperties(userContext,catalogId,id,name,productCoverImage,origin,remark,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withTopRatedProductListList()
+				.searchTopRatedProductListWith(TopRatedProduct.ID_PROPERTY, "is", id).done();
+		
+		Catalog catalogToUpdate = loadCatalog(userContext, catalogId, options);
+		
+		if(catalogToUpdate.getTopRatedProductList().isEmpty()){
+			throw new CatalogManagerException("TopRatedProduct is NOT FOUND with id: '"+id+"'");
+		}
+		
+		TopRatedProduct item = catalogToUpdate.getTopRatedProductList().first();
+		
+		item.updateName( name );
+		item.updateProductCoverImage( productCoverImage );
+		item.updateOrigin( origin );
+		item.updateRemark( remark );
+
+		
+		//checkParamsForAddingTopRatedProduct(userContext,catalogId,name, code, used,tokensExpr);
+		Catalog catalog = saveCatalog(userContext, catalogToUpdate, tokens().withTopRatedProductList().done());
+		synchronized(catalog){ 
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected TopRatedProduct createTopRatedProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String profileId, String platformId) throws Exception{
+
+		TopRatedProduct topRatedProduct = new TopRatedProduct();
+		
+		
+		topRatedProduct.setName(name);		
+		LevelNCategory  parentCategory = new LevelNCategory();
+		parentCategory.setId(parentCategoryId);		
+		topRatedProduct.setParentCategory(parentCategory);		
+		Brand  brand = new Brand();
+		brand.setId(brandId);		
+		topRatedProduct.setBrand(brand);		
+		topRatedProduct.setProductCoverImage(productCoverImage);		
+		topRatedProduct.setOrigin(origin);		
+		topRatedProduct.setRemark(remark);		
+		topRatedProduct.setLastUpdateTime(userContext.now());		
+		Profile  profile = new Profile();
+		profile.setId(profileId);		
+		topRatedProduct.setProfile(profile);		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		topRatedProduct.setPlatform(platform);
+	
+		
+		return topRatedProduct;
+	
+		
+	}
+	
+	protected TopRatedProduct createIndexedTopRatedProduct(String id, int version){
+
+		TopRatedProduct topRatedProduct = new TopRatedProduct();
+		topRatedProduct.setId(id);
+		topRatedProduct.setVersion(version);
+		return topRatedProduct;			
+		
+	}
+	
+	protected void checkParamsForRemovingTopRatedProductList(PimUserContext userContext, String catalogId, 
+			String topRatedProductIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		for(String topRatedProductId: topRatedProductIds){
+			userContext.getChecker().checkIdOfTopRatedProduct(topRatedProductId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog removeTopRatedProductList(PimUserContext userContext, String catalogId, 
+			String topRatedProductIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingTopRatedProductList(userContext, catalogId,  topRatedProductIds, tokensExpr);
+			
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+			synchronized(catalog){ 
+				//Will be good when the catalog loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveTopRatedProductList(catalog, topRatedProductIds, allTokens());
+				catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+				deleteRelationListInGraph(userContext, catalog.getTopRatedProductList());
+				return present(userContext,catalog, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingTopRatedProduct(PimUserContext userContext, String catalogId, 
+		String topRatedProductId, int topRatedProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfTopRatedProduct(topRatedProductId);
+		userContext.getChecker().checkVersionOfTopRatedProduct(topRatedProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog removeTopRatedProduct(PimUserContext userContext, String catalogId, 
+		String topRatedProductId, int topRatedProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingTopRatedProduct(userContext,catalogId, topRatedProductId, topRatedProductVersion,tokensExpr);
+		
+		TopRatedProduct topRatedProduct = createIndexedTopRatedProduct(topRatedProductId, topRatedProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.removeTopRatedProduct( topRatedProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+			deleteRelationInGraph(userContext, topRatedProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingTopRatedProduct(PimUserContext userContext, String catalogId, 
+		String topRatedProductId, int topRatedProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfTopRatedProduct(topRatedProductId);
+		userContext.getChecker().checkVersionOfTopRatedProduct(topRatedProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog copyTopRatedProductFrom(PimUserContext userContext, String catalogId, 
+		String topRatedProductId, int topRatedProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingTopRatedProduct(userContext,catalogId, topRatedProductId, topRatedProductVersion,tokensExpr);
+		
+		TopRatedProduct topRatedProduct = createIndexedTopRatedProduct(topRatedProductId, topRatedProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			topRatedProduct.updateLastUpdateTime(userContext.now());
+			
+			catalog.copyTopRatedProductFrom( topRatedProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+			
+			userContext.getManagerGroup().getTopRatedProductManager().onNewInstanceCreated(userContext, (TopRatedProduct)catalog.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingTopRatedProduct(PimUserContext userContext, String catalogId, String topRatedProductId, int topRatedProductVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfTopRatedProduct(topRatedProductId);
+		userContext.getChecker().checkVersionOfTopRatedProduct(topRatedProductVersion);
+		
+
+		if(TopRatedProduct.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfTopRatedProduct(parseString(newValueExpr));
+		}
+		
+		if(TopRatedProduct.PRODUCT_COVER_IMAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkProductCoverImageOfTopRatedProduct(parseString(newValueExpr));
+		}
+		
+		if(TopRatedProduct.ORIGIN_PROPERTY.equals(property)){
+			userContext.getChecker().checkOriginOfTopRatedProduct(parseString(newValueExpr));
+		}
+		
+		if(TopRatedProduct.REMARK_PROPERTY.equals(property)){
+			userContext.getChecker().checkRemarkOfTopRatedProduct(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	
+	public  Catalog updateTopRatedProduct(PimUserContext userContext, String catalogId, String topRatedProductId, int topRatedProductVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingTopRatedProduct(userContext, catalogId, topRatedProductId, topRatedProductVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withTopRatedProductList().searchTopRatedProductListWith(TopRatedProduct.ID_PROPERTY, "eq", topRatedProductId).done();
+		
+		
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, loadTokens);
+		
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//catalog.removeTopRatedProduct( topRatedProduct );	
+			//make changes to AcceleraterAccount.
+			TopRatedProduct topRatedProductIndex = createIndexedTopRatedProduct(topRatedProductId, topRatedProductVersion);
+		
+			TopRatedProduct topRatedProduct = catalog.findTheTopRatedProduct(topRatedProductIndex);
+			if(topRatedProduct == null){
+				throw new CatalogManagerException(topRatedProduct+" is NOT FOUND" );
+			}
+			
+			topRatedProduct.changeProperty(property, newValueExpr);
+			topRatedProduct.updateLastUpdateTime(userContext.now());
+			catalog = saveCatalog(userContext, catalog, tokens().withTopRatedProductList().done());
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingRecommandProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String profileId, String platformId,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+
+		
+		userContext.getChecker().checkNameOfRecommandProduct(name);
+		
+		userContext.getChecker().checkParentCategoryIdOfRecommandProduct(parentCategoryId);
+		
+		userContext.getChecker().checkBrandIdOfRecommandProduct(brandId);
+		
+		userContext.getChecker().checkProductCoverImageOfRecommandProduct(productCoverImage);
+		
+		userContext.getChecker().checkOriginOfRecommandProduct(origin);
+		
+		userContext.getChecker().checkRemarkOfRecommandProduct(remark);
+		
+		userContext.getChecker().checkProfileIdOfRecommandProduct(profileId);
+		
+		userContext.getChecker().checkPlatformIdOfRecommandProduct(platformId);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+
+	
+	}
+	public  Catalog addRecommandProduct(PimUserContext userContext, String catalogId, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String profileId, String platformId, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingRecommandProduct(userContext,catalogId,name, parentCategoryId, brandId, productCoverImage, origin, remark, profileId, platformId,tokensExpr);
+		
+		RecommandProduct recommandProduct = createRecommandProduct(userContext,name, parentCategoryId, brandId, productCoverImage, origin, remark, profileId, platformId);
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.addRecommandProduct( recommandProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+			
+			userContext.getManagerGroup().getRecommandProductManager().onNewInstanceCreated(userContext, recommandProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingRecommandProductProperties(PimUserContext userContext, String catalogId,String id,String name,String productCoverImage,String origin,String remark,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfRecommandProduct(id);
+		
+		userContext.getChecker().checkNameOfRecommandProduct( name);
+		userContext.getChecker().checkProductCoverImageOfRecommandProduct( productCoverImage);
+		userContext.getChecker().checkOriginOfRecommandProduct( origin);
+		userContext.getChecker().checkRemarkOfRecommandProduct( remark);
+
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog updateRecommandProductProperties(PimUserContext userContext, String catalogId, String id,String name,String productCoverImage,String origin,String remark, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingRecommandProductProperties(userContext,catalogId,id,name,productCoverImage,origin,remark,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withRecommandProductListList()
+				.searchRecommandProductListWith(RecommandProduct.ID_PROPERTY, "is", id).done();
+		
+		Catalog catalogToUpdate = loadCatalog(userContext, catalogId, options);
+		
+		if(catalogToUpdate.getRecommandProductList().isEmpty()){
+			throw new CatalogManagerException("RecommandProduct is NOT FOUND with id: '"+id+"'");
+		}
+		
+		RecommandProduct item = catalogToUpdate.getRecommandProductList().first();
+		
+		item.updateName( name );
+		item.updateProductCoverImage( productCoverImage );
+		item.updateOrigin( origin );
+		item.updateRemark( remark );
+
+		
+		//checkParamsForAddingRecommandProduct(userContext,catalogId,name, code, used,tokensExpr);
+		Catalog catalog = saveCatalog(userContext, catalogToUpdate, tokens().withRecommandProductList().done());
+		synchronized(catalog){ 
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected RecommandProduct createRecommandProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String remark, String profileId, String platformId) throws Exception{
+
+		RecommandProduct recommandProduct = new RecommandProduct();
+		
+		
+		recommandProduct.setName(name);		
+		LevelNCategory  parentCategory = new LevelNCategory();
+		parentCategory.setId(parentCategoryId);		
+		recommandProduct.setParentCategory(parentCategory);		
+		Brand  brand = new Brand();
+		brand.setId(brandId);		
+		recommandProduct.setBrand(brand);		
+		recommandProduct.setProductCoverImage(productCoverImage);		
+		recommandProduct.setOrigin(origin);		
+		recommandProduct.setRemark(remark);		
+		recommandProduct.setLastUpdateTime(userContext.now());		
+		Profile  profile = new Profile();
+		profile.setId(profileId);		
+		recommandProduct.setProfile(profile);		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		recommandProduct.setPlatform(platform);
+	
+		
+		return recommandProduct;
+	
+		
+	}
+	
+	protected RecommandProduct createIndexedRecommandProduct(String id, int version){
+
+		RecommandProduct recommandProduct = new RecommandProduct();
+		recommandProduct.setId(id);
+		recommandProduct.setVersion(version);
+		return recommandProduct;			
+		
+	}
+	
+	protected void checkParamsForRemovingRecommandProductList(PimUserContext userContext, String catalogId, 
+			String recommandProductIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		for(String recommandProductId: recommandProductIds){
+			userContext.getChecker().checkIdOfRecommandProduct(recommandProductId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+		
+	}
+	public  Catalog removeRecommandProductList(PimUserContext userContext, String catalogId, 
+			String recommandProductIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingRecommandProductList(userContext, catalogId,  recommandProductIds, tokensExpr);
+			
+			
+			Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+			synchronized(catalog){ 
+				//Will be good when the catalog loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getCatalogDAO().planToRemoveRecommandProductList(catalog, recommandProductIds, allTokens());
+				catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+				deleteRelationListInGraph(userContext, catalog.getRecommandProductList());
+				return present(userContext,catalog, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingRecommandProduct(PimUserContext userContext, String catalogId, 
+		String recommandProductId, int recommandProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfRecommandProduct(recommandProductId);
+		userContext.getChecker().checkVersionOfRecommandProduct(recommandProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog removeRecommandProduct(PimUserContext userContext, String catalogId, 
+		String recommandProductId, int recommandProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingRecommandProduct(userContext,catalogId, recommandProductId, recommandProductVersion,tokensExpr);
+		
+		RecommandProduct recommandProduct = createIndexedRecommandProduct(recommandProductId, recommandProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			catalog.removeRecommandProduct( recommandProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+			deleteRelationInGraph(userContext, recommandProduct);
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingRecommandProduct(PimUserContext userContext, String catalogId, 
+		String recommandProductId, int recommandProductVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfCatalog( catalogId);
+		userContext.getChecker().checkIdOfRecommandProduct(recommandProductId);
+		userContext.getChecker().checkVersionOfRecommandProduct(recommandProductVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	public  Catalog copyRecommandProductFrom(PimUserContext userContext, String catalogId, 
+		String recommandProductId, int recommandProductVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingRecommandProduct(userContext,catalogId, recommandProductId, recommandProductVersion,tokensExpr);
+		
+		RecommandProduct recommandProduct = createIndexedRecommandProduct(recommandProductId, recommandProductVersion);
+		Catalog catalog = loadCatalog(userContext, catalogId, allTokens());
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			recommandProduct.updateLastUpdateTime(userContext.now());
+			
+			catalog.copyRecommandProductFrom( recommandProduct );		
+			catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
+			
+			userContext.getManagerGroup().getRecommandProductManager().onNewInstanceCreated(userContext, (RecommandProduct)catalog.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,catalog, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingRecommandProduct(PimUserContext userContext, String catalogId, String recommandProductId, int recommandProductVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfCatalog(catalogId);
+		userContext.getChecker().checkIdOfRecommandProduct(recommandProductId);
+		userContext.getChecker().checkVersionOfRecommandProduct(recommandProductVersion);
+		
+
+		if(RecommandProduct.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfRecommandProduct(parseString(newValueExpr));
+		}
+		
+		if(RecommandProduct.PRODUCT_COVER_IMAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkProductCoverImageOfRecommandProduct(parseString(newValueExpr));
+		}
+		
+		if(RecommandProduct.ORIGIN_PROPERTY.equals(property)){
+			userContext.getChecker().checkOriginOfRecommandProduct(parseString(newValueExpr));
+		}
+		
+		if(RecommandProduct.REMARK_PROPERTY.equals(property)){
+			userContext.getChecker().checkRemarkOfRecommandProduct(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(CatalogManagerException.class);
+	
+	}
+	
+	public  Catalog updateRecommandProduct(PimUserContext userContext, String catalogId, String recommandProductId, int recommandProductVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingRecommandProduct(userContext, catalogId, recommandProductId, recommandProductVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withRecommandProductList().searchRecommandProductListWith(RecommandProduct.ID_PROPERTY, "eq", recommandProductId).done();
+		
+		
+		
+		Catalog catalog = loadCatalog(userContext, catalogId, loadTokens);
+		
+		synchronized(catalog){ 
+			//Will be good when the catalog loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//catalog.removeRecommandProduct( recommandProduct );	
+			//make changes to AcceleraterAccount.
+			RecommandProduct recommandProductIndex = createIndexedRecommandProduct(recommandProductId, recommandProductVersion);
+		
+			RecommandProduct recommandProduct = catalog.findTheRecommandProduct(recommandProductIndex);
+			if(recommandProduct == null){
+				throw new CatalogManagerException(recommandProduct+" is NOT FOUND" );
+			}
+			
+			recommandProduct.changeProperty(property, newValueExpr);
+			recommandProduct.updateLastUpdateTime(userContext.now());
+			catalog = saveCatalog(userContext, catalog, tokens().withRecommandProductList().done());
 			return present(userContext,catalog, mergedAllTokens(tokensExpr));
 		}
 

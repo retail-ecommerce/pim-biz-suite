@@ -42,6 +42,16 @@
 		
 		<property name="productDAO" ref="productDAO" />
 		
+		<property name="profileDAO" ref="profileDAO" />
+		
+		<property name="newProductDAO" ref="newProductDAO" />
+		
+		<property name="editorPickProductDAO" ref="editorPickProductDAO" />
+		
+		<property name="topRatedProductDAO" ref="topRatedProductDAO" />
+		
+		<property name="recommandProductDAO" ref="recommandProductDAO" />
+		
 	</bean>
 	<bean id="platformDAO" parent="platformDAOBase"></bean>	
 	
@@ -59,6 +69,14 @@
 		<property name="levelOneCategoryDAO" ref="levelOneCategoryDAO" />
 		
 		<property name="productDAO" ref="productDAO" />
+		
+		<property name="newProductDAO" ref="newProductDAO" />
+		
+		<property name="editorPickProductDAO" ref="editorPickProductDAO" />
+		
+		<property name="topRatedProductDAO" ref="topRatedProductDAO" />
+		
+		<property name="recommandProductDAO" ref="recommandProductDAO" />
 		
 	</bean>
 	<bean id="catalogDAO" parent="catalogDAOBase"></bean>	
@@ -84,6 +102,14 @@
 		<property name="dataSource" ref="dataSource" /><property name="levelTwoCategoryDAO" ref="levelTwoCategoryDAO" />
 		<property name="productDAO" ref="productDAO" />
 		
+		<property name="newProductDAO" ref="newProductDAO" />
+		
+		<property name="editorPickProductDAO" ref="editorPickProductDAO" />
+		
+		<property name="topRatedProductDAO" ref="topRatedProductDAO" />
+		
+		<property name="recommandProductDAO" ref="recommandProductDAO" />
+		
 	</bean>
 	<bean id="levelNCategoryDAO" parent="levelNCategoryDAOBase"></bean>	
 	
@@ -91,6 +117,14 @@
 	<bean id="brandDAOBase" class="com.terapico.pim.brand.BrandJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="platformDAO" ref="platformDAO" />
 		<property name="productDAO" ref="productDAO" />
+		
+		<property name="newProductDAO" ref="newProductDAO" />
+		
+		<property name="editorPickProductDAO" ref="editorPickProductDAO" />
+		
+		<property name="topRatedProductDAO" ref="topRatedProductDAO" />
+		
+		<property name="recommandProductDAO" ref="recommandProductDAO" />
 		
 	</bean>
 	<bean id="brandDAO" parent="brandDAOBase"></bean>	
@@ -108,6 +142,68 @@
 		<property name="dataSource" ref="dataSource" /><property name="productDAO" ref="productDAO" />
 	</bean>
 	<bean id="skuDAO" parent="skuDAOBase"></bean>	
+	
+	
+	<bean id="profileDAOBase" class="com.terapico.pim.profile.ProfileJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="platformDAO" ref="platformDAO" />
+		<property name="brandFilterDAO" ref="brandFilterDAO" />
+		
+		<property name="priceFilterDAO" ref="priceFilterDAO" />
+		
+		<property name="categoryFilterDAO" ref="categoryFilterDAO" />
+		
+		<property name="newProductDAO" ref="newProductDAO" />
+		
+		<property name="editorPickProductDAO" ref="editorPickProductDAO" />
+		
+		<property name="topRatedProductDAO" ref="topRatedProductDAO" />
+		
+		<property name="recommandProductDAO" ref="recommandProductDAO" />
+		
+	</bean>
+	<bean id="profileDAO" parent="profileDAOBase"></bean>	
+	
+	
+	<bean id="brandFilterDAOBase" class="com.terapico.pim.brandfilter.BrandFilterJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" />
+	</bean>
+	<bean id="brandFilterDAO" parent="brandFilterDAOBase"></bean>	
+	
+	
+	<bean id="priceFilterDAOBase" class="com.terapico.pim.pricefilter.PriceFilterJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" />
+	</bean>
+	<bean id="priceFilterDAO" parent="priceFilterDAOBase"></bean>	
+	
+	
+	<bean id="categoryFilterDAOBase" class="com.terapico.pim.categoryfilter.CategoryFilterJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" />
+	</bean>
+	<bean id="categoryFilterDAO" parent="categoryFilterDAOBase"></bean>	
+	
+	
+	<bean id="newProductDAOBase" class="com.terapico.pim.newproduct.NewProductJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="catalogDAO" ref="catalogDAO" /><property name="levelNCategoryDAO" ref="levelNCategoryDAO" /><property name="profileDAO" ref="profileDAO" /><property name="brandDAO" ref="brandDAO" /><property name="platformDAO" ref="platformDAO" />
+	</bean>
+	<bean id="newProductDAO" parent="newProductDAOBase"></bean>	
+	
+	
+	<bean id="editorPickProductDAOBase" class="com.terapico.pim.editorpickproduct.EditorPickProductJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="catalogDAO" ref="catalogDAO" /><property name="levelNCategoryDAO" ref="levelNCategoryDAO" /><property name="profileDAO" ref="profileDAO" /><property name="brandDAO" ref="brandDAO" /><property name="platformDAO" ref="platformDAO" />
+	</bean>
+	<bean id="editorPickProductDAO" parent="editorPickProductDAOBase"></bean>	
+	
+	
+	<bean id="topRatedProductDAOBase" class="com.terapico.pim.topratedproduct.TopRatedProductJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="catalogDAO" ref="catalogDAO" /><property name="levelNCategoryDAO" ref="levelNCategoryDAO" /><property name="profileDAO" ref="profileDAO" /><property name="brandDAO" ref="brandDAO" /><property name="platformDAO" ref="platformDAO" />
+	</bean>
+	<bean id="topRatedProductDAO" parent="topRatedProductDAOBase"></bean>	
+	
+	
+	<bean id="recommandProductDAOBase" class="com.terapico.pim.recommandproduct.RecommandProductJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="catalogDAO" ref="catalogDAO" /><property name="levelNCategoryDAO" ref="levelNCategoryDAO" /><property name="profileDAO" ref="profileDAO" /><property name="brandDAO" ref="brandDAO" /><property name="platformDAO" ref="platformDAO" />
+	</bean>
+	<bean id="recommandProductDAO" parent="recommandProductDAOBase"></bean>	
 	
 	
 	<bean id="userDomainDAOBase" class="com.terapico.pim.userdomain.UserDomainJDBCTemplateDAO">
@@ -221,6 +317,14 @@
 		<property name="brandDAO" ref="brandDAO"/>
 		<property name="productDAO" ref="productDAO"/>
 		<property name="skuDAO" ref="skuDAO"/>
+		<property name="profileDAO" ref="profileDAO"/>
+		<property name="brandFilterDAO" ref="brandFilterDAO"/>
+		<property name="priceFilterDAO" ref="priceFilterDAO"/>
+		<property name="categoryFilterDAO" ref="categoryFilterDAO"/>
+		<property name="newProductDAO" ref="newProductDAO"/>
+		<property name="editorPickProductDAO" ref="editorPickProductDAO"/>
+		<property name="topRatedProductDAO" ref="topRatedProductDAO"/>
+		<property name="recommandProductDAO" ref="recommandProductDAO"/>
 		<property name="userDomainDAO" ref="userDomainDAO"/>
 		<property name="userWhiteListDAO" ref="userWhiteListDAO"/>
 		<property name="secUserDAO" ref="secUserDAO"/>

@@ -365,6 +365,15 @@ public class PimChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  PRODUCT_COVER_IMAGE_OF_PRODUCT ="product.product_cover_image";
+	public PimChecker checkProductCoverImageOfProduct(String productCoverImage)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  ORIGIN_OF_PRODUCT ="product.origin";
 	public PimChecker checkOriginOfProduct(String origin)
 	{
@@ -469,6 +478,582 @@ public class PimChecker extends BaseChecker{
 	{
 		
 	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_SKU ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_PROFILE ="profile.id";
+	public PimChecker checkIdOfProfile(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PROFILE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_PROFILE ="profile.name";
+	public PimChecker checkNameOfProfile(String name)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_PROFILE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_PROFILE ="profile.platform";
+	public PimChecker checkPlatformIdOfProfile(String platformId)
+	{
+		
+	 	checkIdOfProfile(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_PROFILE ="profile.version";
+	public PimChecker checkVersionOfProfile(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PROFILE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_BRAND_FILTER ="brand_filter.id";
+	public PimChecker checkIdOfBrandFilter(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_BRAND_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_BRAND_FILTER ="brand_filter.name";
+	public PimChecker checkNameOfBrandFilter(String name)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_BRAND_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  INTERNAL_ID_OF_BRAND_FILTER ="brand_filter.internal_id";
+	public PimChecker checkInternalIdOfBrandFilter(String internalId)
+	{
+		
+	 	checkStringLengthRange(internalId,2, 28,INTERNAL_ID_OF_BRAND_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_BRAND_FILTER ="brand_filter.profile";
+	public PimChecker checkProfileIdOfBrandFilter(String profileId)
+	{
+		
+	 	checkIdOfBrandFilter(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_BRAND_FILTER ="brand_filter.version";
+	public PimChecker checkVersionOfBrandFilter(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_BRAND_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_PRICE_FILTER ="price_filter.id";
+	public PimChecker checkIdOfPriceFilter(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PRICE_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_PRICE_FILTER ="price_filter.name";
+	public PimChecker checkNameOfPriceFilter(String name)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_PRICE_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRICE_START_OF_PRICE_FILTER ="price_filter.price_start";
+	public PimChecker checkPriceStartOfPriceFilter(BigDecimal priceStart)
+	{
+		
+	 	checkBigDecimalRange(priceStart,0, 1.99,PRICE_START_OF_PRICE_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRICE_END_OF_PRICE_FILTER ="price_filter.price_end";
+	public PimChecker checkPriceEndOfPriceFilter(BigDecimal priceEnd)
+	{
+		
+	 	checkBigDecimalRange(priceEnd,0, 1000000.99,PRICE_END_OF_PRICE_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_PRICE_FILTER ="price_filter.profile";
+	public PimChecker checkProfileIdOfPriceFilter(String profileId)
+	{
+		
+	 	checkIdOfPriceFilter(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_PRICE_FILTER ="price_filter.version";
+	public PimChecker checkVersionOfPriceFilter(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PRICE_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_CATEGORY_FILTER ="category_filter.id";
+	public PimChecker checkIdOfCategoryFilter(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_CATEGORY_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_CATEGORY_FILTER ="category_filter.name";
+	public PimChecker checkNameOfCategoryFilter(String name)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_CATEGORY_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  INTERNAL_ID_OF_CATEGORY_FILTER ="category_filter.internal_id";
+	public PimChecker checkInternalIdOfCategoryFilter(String internalId)
+	{
+		
+	 	checkStringLengthRange(internalId,3, 32,INTERNAL_ID_OF_CATEGORY_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_CATEGORY_FILTER ="category_filter.profile";
+	public PimChecker checkProfileIdOfCategoryFilter(String profileId)
+	{
+		
+	 	checkIdOfCategoryFilter(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_CATEGORY_FILTER ="category_filter.version";
+	public PimChecker checkVersionOfCategoryFilter(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_CATEGORY_FILTER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_NEW_PRODUCT ="new_product.id";
+	public PimChecker checkIdOfNewProduct(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_NEW_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_NEW_PRODUCT ="new_product.name";
+	public PimChecker checkNameOfNewProduct(String name)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_NEW_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PARENT_CATEGORY_OF_NEW_PRODUCT ="new_product.parent_category";
+	public PimChecker checkParentCategoryIdOfNewProduct(String parentCategoryId)
+	{
+		
+	 	checkIdOfNewProduct(parentCategoryId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  BRAND_OF_NEW_PRODUCT ="new_product.brand";
+	public PimChecker checkBrandIdOfNewProduct(String brandId)
+	{
+		
+	 	checkIdOfNewProduct(brandId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRODUCT_COVER_IMAGE_OF_NEW_PRODUCT ="new_product.product_cover_image";
+	public PimChecker checkProductCoverImageOfNewProduct(String productCoverImage)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_NEW_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ORIGIN_OF_NEW_PRODUCT ="new_product.origin";
+	public PimChecker checkOriginOfNewProduct(String origin)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_NEW_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  CATALOG_OF_NEW_PRODUCT ="new_product.catalog";
+	public PimChecker checkCatalogIdOfNewProduct(String catalogId)
+	{
+		
+	 	checkIdOfNewProduct(catalogId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_NEW_PRODUCT ="new_product.profile";
+	public PimChecker checkProfileIdOfNewProduct(String profileId)
+	{
+		
+	 	checkIdOfNewProduct(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  REMARK_OF_NEW_PRODUCT ="new_product.remark";
+	public PimChecker checkRemarkOfNewProduct(String remark)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_NEW_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_NEW_PRODUCT ="new_product.platform";
+	public PimChecker checkPlatformIdOfNewProduct(String platformId)
+	{
+		
+	 	checkIdOfNewProduct(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_NEW_PRODUCT ="new_product.version";
+	public PimChecker checkVersionOfNewProduct(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_NEW_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.id";
+	public PimChecker checkIdOfEditorPickProduct(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_EDITOR_PICK_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.name";
+	public PimChecker checkNameOfEditorPickProduct(String name)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_EDITOR_PICK_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PARENT_CATEGORY_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.parent_category";
+	public PimChecker checkParentCategoryIdOfEditorPickProduct(String parentCategoryId)
+	{
+		
+	 	checkIdOfEditorPickProduct(parentCategoryId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  BRAND_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.brand";
+	public PimChecker checkBrandIdOfEditorPickProduct(String brandId)
+	{
+		
+	 	checkIdOfEditorPickProduct(brandId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRODUCT_COVER_IMAGE_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.product_cover_image";
+	public PimChecker checkProductCoverImageOfEditorPickProduct(String productCoverImage)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_EDITOR_PICK_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ORIGIN_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.origin";
+	public PimChecker checkOriginOfEditorPickProduct(String origin)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_EDITOR_PICK_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  CATALOG_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.catalog";
+	public PimChecker checkCatalogIdOfEditorPickProduct(String catalogId)
+	{
+		
+	 	checkIdOfEditorPickProduct(catalogId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.profile";
+	public PimChecker checkProfileIdOfEditorPickProduct(String profileId)
+	{
+		
+	 	checkIdOfEditorPickProduct(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  REMARK_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.remark";
+	public PimChecker checkRemarkOfEditorPickProduct(String remark)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_EDITOR_PICK_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.platform";
+	public PimChecker checkPlatformIdOfEditorPickProduct(String platformId)
+	{
+		
+	 	checkIdOfEditorPickProduct(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.version";
+	public PimChecker checkVersionOfEditorPickProduct(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_EDITOR_PICK_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_TOP_RATED_PRODUCT ="top_rated_product.id";
+	public PimChecker checkIdOfTopRatedProduct(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_TOP_RATED_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_TOP_RATED_PRODUCT ="top_rated_product.name";
+	public PimChecker checkNameOfTopRatedProduct(String name)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_TOP_RATED_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PARENT_CATEGORY_OF_TOP_RATED_PRODUCT ="top_rated_product.parent_category";
+	public PimChecker checkParentCategoryIdOfTopRatedProduct(String parentCategoryId)
+	{
+		
+	 	checkIdOfTopRatedProduct(parentCategoryId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  BRAND_OF_TOP_RATED_PRODUCT ="top_rated_product.brand";
+	public PimChecker checkBrandIdOfTopRatedProduct(String brandId)
+	{
+		
+	 	checkIdOfTopRatedProduct(brandId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRODUCT_COVER_IMAGE_OF_TOP_RATED_PRODUCT ="top_rated_product.product_cover_image";
+	public PimChecker checkProductCoverImageOfTopRatedProduct(String productCoverImage)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_TOP_RATED_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ORIGIN_OF_TOP_RATED_PRODUCT ="top_rated_product.origin";
+	public PimChecker checkOriginOfTopRatedProduct(String origin)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_TOP_RATED_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  CATALOG_OF_TOP_RATED_PRODUCT ="top_rated_product.catalog";
+	public PimChecker checkCatalogIdOfTopRatedProduct(String catalogId)
+	{
+		
+	 	checkIdOfTopRatedProduct(catalogId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  REMARK_OF_TOP_RATED_PRODUCT ="top_rated_product.remark";
+	public PimChecker checkRemarkOfTopRatedProduct(String remark)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_TOP_RATED_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_TOP_RATED_PRODUCT ="top_rated_product.profile";
+	public PimChecker checkProfileIdOfTopRatedProduct(String profileId)
+	{
+		
+	 	checkIdOfTopRatedProduct(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_TOP_RATED_PRODUCT ="top_rated_product.platform";
+	public PimChecker checkPlatformIdOfTopRatedProduct(String platformId)
+	{
+		
+	 	checkIdOfTopRatedProduct(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_TOP_RATED_PRODUCT ="top_rated_product.version";
+	public PimChecker checkVersionOfTopRatedProduct(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_TOP_RATED_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_RECOMMAND_PRODUCT ="recommand_product.id";
+	public PimChecker checkIdOfRecommandProduct(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_RECOMMAND_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_RECOMMAND_PRODUCT ="recommand_product.name";
+	public PimChecker checkNameOfRecommandProduct(String name)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_RECOMMAND_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PARENT_CATEGORY_OF_RECOMMAND_PRODUCT ="recommand_product.parent_category";
+	public PimChecker checkParentCategoryIdOfRecommandProduct(String parentCategoryId)
+	{
+		
+	 	checkIdOfRecommandProduct(parentCategoryId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  BRAND_OF_RECOMMAND_PRODUCT ="recommand_product.brand";
+	public PimChecker checkBrandIdOfRecommandProduct(String brandId)
+	{
+		
+	 	checkIdOfRecommandProduct(brandId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRODUCT_COVER_IMAGE_OF_RECOMMAND_PRODUCT ="recommand_product.product_cover_image";
+	public PimChecker checkProductCoverImageOfRecommandProduct(String productCoverImage)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_RECOMMAND_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ORIGIN_OF_RECOMMAND_PRODUCT ="recommand_product.origin";
+	public PimChecker checkOriginOfRecommandProduct(String origin)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_RECOMMAND_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  CATALOG_OF_RECOMMAND_PRODUCT ="recommand_product.catalog";
+	public PimChecker checkCatalogIdOfRecommandProduct(String catalogId)
+	{
+		
+	 	checkIdOfRecommandProduct(catalogId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  REMARK_OF_RECOMMAND_PRODUCT ="recommand_product.remark";
+	public PimChecker checkRemarkOfRecommandProduct(String remark)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_RECOMMAND_PRODUCT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_RECOMMAND_PRODUCT ="recommand_product.profile";
+	public PimChecker checkProfileIdOfRecommandProduct(String profileId)
+	{
+		
+	 	checkIdOfRecommandProduct(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_RECOMMAND_PRODUCT ="recommand_product.platform";
+	public PimChecker checkPlatformIdOfRecommandProduct(String platformId)
+	{
+		
+	 	checkIdOfRecommandProduct(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_RECOMMAND_PRODUCT ="recommand_product.version";
+	public PimChecker checkVersionOfRecommandProduct(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_RECOMMAND_PRODUCT ); 		
 		
 		return this;
 	}	 			

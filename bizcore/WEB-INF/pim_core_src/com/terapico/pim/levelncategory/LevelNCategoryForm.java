@@ -166,6 +166,20 @@ public class LevelNCategoryForm extends BaseForm {
 	}
 
 
+	public LevelNCategoryForm productCoverImageFieldForProduct(String parameterName, String initValue){
+		FormField field =  productCoverImageFromProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm productCoverImageFieldForProduct(String initValue){
+		return productCoverImageFieldForProduct("productCoverImage",initValue);
+	}
+	public LevelNCategoryForm productCoverImageFieldForProduct(){
+		return productCoverImageFieldForProduct("productCoverImage","");
+	}
+
+
 	public LevelNCategoryForm originFieldForProduct(String parameterName, String initValue){
 		FormField field =  originFromProduct(parameterName, initValue);		
 		this.addFormField(field);
@@ -233,6 +247,622 @@ public class LevelNCategoryForm extends BaseForm {
 	}
 	public LevelNCategoryForm platformIdFieldForProduct(){
 		return platformIdFieldForProduct("platformId","");
+	}
+
+
+	public LevelNCategoryForm newProductIdFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  idFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm newProductIdFieldForNewProduct(String initValue){
+		return newProductIdFieldForNewProduct("newProductId",initValue);
+	}
+	public LevelNCategoryForm newProductIdFieldForNewProduct(){
+		return newProductIdFieldForNewProduct("newProductId","");
+	}
+
+
+	public LevelNCategoryForm nameFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  nameFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm nameFieldForNewProduct(String initValue){
+		return nameFieldForNewProduct("name",initValue);
+	}
+	public LevelNCategoryForm nameFieldForNewProduct(){
+		return nameFieldForNewProduct("name","");
+	}
+
+
+	public LevelNCategoryForm parentCategoryIdFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  parentCategoryIdFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm parentCategoryIdFieldForNewProduct(String initValue){
+		return parentCategoryIdFieldForNewProduct("parentCategoryId",initValue);
+	}
+	public LevelNCategoryForm parentCategoryIdFieldForNewProduct(){
+		return parentCategoryIdFieldForNewProduct("parentCategoryId","");
+	}
+
+
+	public LevelNCategoryForm brandIdFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  brandIdFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm brandIdFieldForNewProduct(String initValue){
+		return brandIdFieldForNewProduct("brandId",initValue);
+	}
+	public LevelNCategoryForm brandIdFieldForNewProduct(){
+		return brandIdFieldForNewProduct("brandId","");
+	}
+
+
+	public LevelNCategoryForm productCoverImageFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  productCoverImageFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm productCoverImageFieldForNewProduct(String initValue){
+		return productCoverImageFieldForNewProduct("productCoverImage",initValue);
+	}
+	public LevelNCategoryForm productCoverImageFieldForNewProduct(){
+		return productCoverImageFieldForNewProduct("productCoverImage","");
+	}
+
+
+	public LevelNCategoryForm originFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  originFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm originFieldForNewProduct(String initValue){
+		return originFieldForNewProduct("origin",initValue);
+	}
+	public LevelNCategoryForm originFieldForNewProduct(){
+		return originFieldForNewProduct("origin","");
+	}
+
+
+	public LevelNCategoryForm catalogIdFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  catalogIdFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm catalogIdFieldForNewProduct(String initValue){
+		return catalogIdFieldForNewProduct("catalogId",initValue);
+	}
+	public LevelNCategoryForm catalogIdFieldForNewProduct(){
+		return catalogIdFieldForNewProduct("catalogId","");
+	}
+
+
+	public LevelNCategoryForm profileIdFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  profileIdFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm profileIdFieldForNewProduct(String initValue){
+		return profileIdFieldForNewProduct("profileId",initValue);
+	}
+	public LevelNCategoryForm profileIdFieldForNewProduct(){
+		return profileIdFieldForNewProduct("profileId","");
+	}
+
+
+	public LevelNCategoryForm remarkFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  remarkFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm remarkFieldForNewProduct(String initValue){
+		return remarkFieldForNewProduct("remark",initValue);
+	}
+	public LevelNCategoryForm remarkFieldForNewProduct(){
+		return remarkFieldForNewProduct("remark","");
+	}
+
+
+	public LevelNCategoryForm lastUpdateTimeFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  lastUpdateTimeFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm lastUpdateTimeFieldForNewProduct(String initValue){
+		return lastUpdateTimeFieldForNewProduct("lastUpdateTime",initValue);
+	}
+	public LevelNCategoryForm lastUpdateTimeFieldForNewProduct(){
+		return lastUpdateTimeFieldForNewProduct("lastUpdateTime","");
+	}
+
+
+	public LevelNCategoryForm platformIdFieldForNewProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromNewProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm platformIdFieldForNewProduct(String initValue){
+		return platformIdFieldForNewProduct("platformId",initValue);
+	}
+	public LevelNCategoryForm platformIdFieldForNewProduct(){
+		return platformIdFieldForNewProduct("platformId","");
+	}
+
+
+	public LevelNCategoryForm editorPickProductIdFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  idFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm editorPickProductIdFieldForEditorPickProduct(String initValue){
+		return editorPickProductIdFieldForEditorPickProduct("editorPickProductId",initValue);
+	}
+	public LevelNCategoryForm editorPickProductIdFieldForEditorPickProduct(){
+		return editorPickProductIdFieldForEditorPickProduct("editorPickProductId","");
+	}
+
+
+	public LevelNCategoryForm nameFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  nameFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm nameFieldForEditorPickProduct(String initValue){
+		return nameFieldForEditorPickProduct("name",initValue);
+	}
+	public LevelNCategoryForm nameFieldForEditorPickProduct(){
+		return nameFieldForEditorPickProduct("name","");
+	}
+
+
+	public LevelNCategoryForm parentCategoryIdFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  parentCategoryIdFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm parentCategoryIdFieldForEditorPickProduct(String initValue){
+		return parentCategoryIdFieldForEditorPickProduct("parentCategoryId",initValue);
+	}
+	public LevelNCategoryForm parentCategoryIdFieldForEditorPickProduct(){
+		return parentCategoryIdFieldForEditorPickProduct("parentCategoryId","");
+	}
+
+
+	public LevelNCategoryForm brandIdFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  brandIdFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm brandIdFieldForEditorPickProduct(String initValue){
+		return brandIdFieldForEditorPickProduct("brandId",initValue);
+	}
+	public LevelNCategoryForm brandIdFieldForEditorPickProduct(){
+		return brandIdFieldForEditorPickProduct("brandId","");
+	}
+
+
+	public LevelNCategoryForm productCoverImageFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  productCoverImageFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm productCoverImageFieldForEditorPickProduct(String initValue){
+		return productCoverImageFieldForEditorPickProduct("productCoverImage",initValue);
+	}
+	public LevelNCategoryForm productCoverImageFieldForEditorPickProduct(){
+		return productCoverImageFieldForEditorPickProduct("productCoverImage","");
+	}
+
+
+	public LevelNCategoryForm originFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  originFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm originFieldForEditorPickProduct(String initValue){
+		return originFieldForEditorPickProduct("origin",initValue);
+	}
+	public LevelNCategoryForm originFieldForEditorPickProduct(){
+		return originFieldForEditorPickProduct("origin","");
+	}
+
+
+	public LevelNCategoryForm catalogIdFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  catalogIdFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm catalogIdFieldForEditorPickProduct(String initValue){
+		return catalogIdFieldForEditorPickProduct("catalogId",initValue);
+	}
+	public LevelNCategoryForm catalogIdFieldForEditorPickProduct(){
+		return catalogIdFieldForEditorPickProduct("catalogId","");
+	}
+
+
+	public LevelNCategoryForm profileIdFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  profileIdFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm profileIdFieldForEditorPickProduct(String initValue){
+		return profileIdFieldForEditorPickProduct("profileId",initValue);
+	}
+	public LevelNCategoryForm profileIdFieldForEditorPickProduct(){
+		return profileIdFieldForEditorPickProduct("profileId","");
+	}
+
+
+	public LevelNCategoryForm remarkFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  remarkFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm remarkFieldForEditorPickProduct(String initValue){
+		return remarkFieldForEditorPickProduct("remark",initValue);
+	}
+	public LevelNCategoryForm remarkFieldForEditorPickProduct(){
+		return remarkFieldForEditorPickProduct("remark","");
+	}
+
+
+	public LevelNCategoryForm lastUpdateTimeFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  lastUpdateTimeFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm lastUpdateTimeFieldForEditorPickProduct(String initValue){
+		return lastUpdateTimeFieldForEditorPickProduct("lastUpdateTime",initValue);
+	}
+	public LevelNCategoryForm lastUpdateTimeFieldForEditorPickProduct(){
+		return lastUpdateTimeFieldForEditorPickProduct("lastUpdateTime","");
+	}
+
+
+	public LevelNCategoryForm platformIdFieldForEditorPickProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromEditorPickProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm platformIdFieldForEditorPickProduct(String initValue){
+		return platformIdFieldForEditorPickProduct("platformId",initValue);
+	}
+	public LevelNCategoryForm platformIdFieldForEditorPickProduct(){
+		return platformIdFieldForEditorPickProduct("platformId","");
+	}
+
+
+	public LevelNCategoryForm topRatedProductIdFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  idFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm topRatedProductIdFieldForTopRatedProduct(String initValue){
+		return topRatedProductIdFieldForTopRatedProduct("topRatedProductId",initValue);
+	}
+	public LevelNCategoryForm topRatedProductIdFieldForTopRatedProduct(){
+		return topRatedProductIdFieldForTopRatedProduct("topRatedProductId","");
+	}
+
+
+	public LevelNCategoryForm nameFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  nameFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm nameFieldForTopRatedProduct(String initValue){
+		return nameFieldForTopRatedProduct("name",initValue);
+	}
+	public LevelNCategoryForm nameFieldForTopRatedProduct(){
+		return nameFieldForTopRatedProduct("name","");
+	}
+
+
+	public LevelNCategoryForm parentCategoryIdFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  parentCategoryIdFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm parentCategoryIdFieldForTopRatedProduct(String initValue){
+		return parentCategoryIdFieldForTopRatedProduct("parentCategoryId",initValue);
+	}
+	public LevelNCategoryForm parentCategoryIdFieldForTopRatedProduct(){
+		return parentCategoryIdFieldForTopRatedProduct("parentCategoryId","");
+	}
+
+
+	public LevelNCategoryForm brandIdFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  brandIdFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm brandIdFieldForTopRatedProduct(String initValue){
+		return brandIdFieldForTopRatedProduct("brandId",initValue);
+	}
+	public LevelNCategoryForm brandIdFieldForTopRatedProduct(){
+		return brandIdFieldForTopRatedProduct("brandId","");
+	}
+
+
+	public LevelNCategoryForm productCoverImageFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  productCoverImageFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm productCoverImageFieldForTopRatedProduct(String initValue){
+		return productCoverImageFieldForTopRatedProduct("productCoverImage",initValue);
+	}
+	public LevelNCategoryForm productCoverImageFieldForTopRatedProduct(){
+		return productCoverImageFieldForTopRatedProduct("productCoverImage","");
+	}
+
+
+	public LevelNCategoryForm originFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  originFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm originFieldForTopRatedProduct(String initValue){
+		return originFieldForTopRatedProduct("origin",initValue);
+	}
+	public LevelNCategoryForm originFieldForTopRatedProduct(){
+		return originFieldForTopRatedProduct("origin","");
+	}
+
+
+	public LevelNCategoryForm catalogIdFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  catalogIdFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm catalogIdFieldForTopRatedProduct(String initValue){
+		return catalogIdFieldForTopRatedProduct("catalogId",initValue);
+	}
+	public LevelNCategoryForm catalogIdFieldForTopRatedProduct(){
+		return catalogIdFieldForTopRatedProduct("catalogId","");
+	}
+
+
+	public LevelNCategoryForm remarkFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  remarkFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm remarkFieldForTopRatedProduct(String initValue){
+		return remarkFieldForTopRatedProduct("remark",initValue);
+	}
+	public LevelNCategoryForm remarkFieldForTopRatedProduct(){
+		return remarkFieldForTopRatedProduct("remark","");
+	}
+
+
+	public LevelNCategoryForm lastUpdateTimeFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  lastUpdateTimeFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm lastUpdateTimeFieldForTopRatedProduct(String initValue){
+		return lastUpdateTimeFieldForTopRatedProduct("lastUpdateTime",initValue);
+	}
+	public LevelNCategoryForm lastUpdateTimeFieldForTopRatedProduct(){
+		return lastUpdateTimeFieldForTopRatedProduct("lastUpdateTime","");
+	}
+
+
+	public LevelNCategoryForm profileIdFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  profileIdFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm profileIdFieldForTopRatedProduct(String initValue){
+		return profileIdFieldForTopRatedProduct("profileId",initValue);
+	}
+	public LevelNCategoryForm profileIdFieldForTopRatedProduct(){
+		return profileIdFieldForTopRatedProduct("profileId","");
+	}
+
+
+	public LevelNCategoryForm platformIdFieldForTopRatedProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromTopRatedProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm platformIdFieldForTopRatedProduct(String initValue){
+		return platformIdFieldForTopRatedProduct("platformId",initValue);
+	}
+	public LevelNCategoryForm platformIdFieldForTopRatedProduct(){
+		return platformIdFieldForTopRatedProduct("platformId","");
+	}
+
+
+	public LevelNCategoryForm recommandProductIdFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  idFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm recommandProductIdFieldForRecommandProduct(String initValue){
+		return recommandProductIdFieldForRecommandProduct("recommandProductId",initValue);
+	}
+	public LevelNCategoryForm recommandProductIdFieldForRecommandProduct(){
+		return recommandProductIdFieldForRecommandProduct("recommandProductId","");
+	}
+
+
+	public LevelNCategoryForm nameFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  nameFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm nameFieldForRecommandProduct(String initValue){
+		return nameFieldForRecommandProduct("name",initValue);
+	}
+	public LevelNCategoryForm nameFieldForRecommandProduct(){
+		return nameFieldForRecommandProduct("name","");
+	}
+
+
+	public LevelNCategoryForm parentCategoryIdFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  parentCategoryIdFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm parentCategoryIdFieldForRecommandProduct(String initValue){
+		return parentCategoryIdFieldForRecommandProduct("parentCategoryId",initValue);
+	}
+	public LevelNCategoryForm parentCategoryIdFieldForRecommandProduct(){
+		return parentCategoryIdFieldForRecommandProduct("parentCategoryId","");
+	}
+
+
+	public LevelNCategoryForm brandIdFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  brandIdFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm brandIdFieldForRecommandProduct(String initValue){
+		return brandIdFieldForRecommandProduct("brandId",initValue);
+	}
+	public LevelNCategoryForm brandIdFieldForRecommandProduct(){
+		return brandIdFieldForRecommandProduct("brandId","");
+	}
+
+
+	public LevelNCategoryForm productCoverImageFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  productCoverImageFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm productCoverImageFieldForRecommandProduct(String initValue){
+		return productCoverImageFieldForRecommandProduct("productCoverImage",initValue);
+	}
+	public LevelNCategoryForm productCoverImageFieldForRecommandProduct(){
+		return productCoverImageFieldForRecommandProduct("productCoverImage","");
+	}
+
+
+	public LevelNCategoryForm originFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  originFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm originFieldForRecommandProduct(String initValue){
+		return originFieldForRecommandProduct("origin",initValue);
+	}
+	public LevelNCategoryForm originFieldForRecommandProduct(){
+		return originFieldForRecommandProduct("origin","");
+	}
+
+
+	public LevelNCategoryForm catalogIdFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  catalogIdFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm catalogIdFieldForRecommandProduct(String initValue){
+		return catalogIdFieldForRecommandProduct("catalogId",initValue);
+	}
+	public LevelNCategoryForm catalogIdFieldForRecommandProduct(){
+		return catalogIdFieldForRecommandProduct("catalogId","");
+	}
+
+
+	public LevelNCategoryForm remarkFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  remarkFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm remarkFieldForRecommandProduct(String initValue){
+		return remarkFieldForRecommandProduct("remark",initValue);
+	}
+	public LevelNCategoryForm remarkFieldForRecommandProduct(){
+		return remarkFieldForRecommandProduct("remark","");
+	}
+
+
+	public LevelNCategoryForm lastUpdateTimeFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  lastUpdateTimeFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm lastUpdateTimeFieldForRecommandProduct(String initValue){
+		return lastUpdateTimeFieldForRecommandProduct("lastUpdateTime",initValue);
+	}
+	public LevelNCategoryForm lastUpdateTimeFieldForRecommandProduct(){
+		return lastUpdateTimeFieldForRecommandProduct("lastUpdateTime","");
+	}
+
+
+	public LevelNCategoryForm profileIdFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  profileIdFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm profileIdFieldForRecommandProduct(String initValue){
+		return profileIdFieldForRecommandProduct("profileId",initValue);
+	}
+	public LevelNCategoryForm profileIdFieldForRecommandProduct(){
+		return profileIdFieldForRecommandProduct("profileId","");
+	}
+
+
+	public LevelNCategoryForm platformIdFieldForRecommandProduct(String parameterName, String initValue){
+		FormField field =  platformIdFromRecommandProduct(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public LevelNCategoryForm platformIdFieldForRecommandProduct(String initValue){
+		return platformIdFieldForRecommandProduct("platformId",initValue);
+	}
+	public LevelNCategoryForm platformIdFieldForRecommandProduct(){
+		return platformIdFieldForRecommandProduct("platformId","");
 	}
 
 	

@@ -133,6 +133,30 @@ public class BaseRelation{
 		String [] skuRelatedObjectNames = {"product:Product"};
 		addRelationIndex("Sku",skuRelatedObjectNames);
 
+		String [] profileRelatedObjectNames = {"platform:Platform"};
+		addRelationIndex("Profile",profileRelatedObjectNames);
+
+		String [] brandFilterRelatedObjectNames = {"profile:Profile"};
+		addRelationIndex("BrandFilter",brandFilterRelatedObjectNames);
+
+		String [] priceFilterRelatedObjectNames = {"profile:Profile"};
+		addRelationIndex("PriceFilter",priceFilterRelatedObjectNames);
+
+		String [] categoryFilterRelatedObjectNames = {"profile:Profile"};
+		addRelationIndex("CategoryFilter",categoryFilterRelatedObjectNames);
+
+		String [] newProductRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog","profile:Profile","platform:Platform"};
+		addRelationIndex("NewProduct",newProductRelatedObjectNames);
+
+		String [] editorPickProductRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog","profile:Profile","platform:Platform"};
+		addRelationIndex("EditorPickProduct",editorPickProductRelatedObjectNames);
+
+		String [] topRatedProductRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog","profile:Profile","platform:Platform"};
+		addRelationIndex("TopRatedProduct",topRatedProductRelatedObjectNames);
+
+		String [] recommandProductRelatedObjectNames = {"parent_category:LevelNCategory","brand:Brand","catalog:Catalog","profile:Profile","platform:Platform"};
+		addRelationIndex("RecommandProduct",recommandProductRelatedObjectNames);
+
 		String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		addRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);
 
@@ -195,6 +219,30 @@ public class BaseRelation{
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"catalog");
 		addGenericRelation("Product"                               ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Sku"                                   ,TRUST_CHAIN_READ,"product");
+		addGenericRelation("Profile"                               ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("BrandFilter"                           ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("PriceFilter"                           ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("CategoryFilter"                        ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("NewProduct"                            ,TRUST_CHAIN_READ,"parentCategory");
+		addGenericRelation("NewProduct"                            ,TRUST_CHAIN_READ,"brand");
+		addGenericRelation("NewProduct"                            ,TRUST_CHAIN_READ,"catalog");
+		addGenericRelation("NewProduct"                            ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("NewProduct"                            ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("EditorPickProduct"                     ,TRUST_CHAIN_READ,"parentCategory");
+		addGenericRelation("EditorPickProduct"                     ,TRUST_CHAIN_READ,"brand");
+		addGenericRelation("EditorPickProduct"                     ,TRUST_CHAIN_READ,"catalog");
+		addGenericRelation("EditorPickProduct"                     ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("EditorPickProduct"                     ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("TopRatedProduct"                       ,TRUST_CHAIN_READ,"parentCategory");
+		addGenericRelation("TopRatedProduct"                       ,TRUST_CHAIN_READ,"brand");
+		addGenericRelation("TopRatedProduct"                       ,TRUST_CHAIN_READ,"catalog");
+		addGenericRelation("TopRatedProduct"                       ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("TopRatedProduct"                       ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("RecommandProduct"                      ,TRUST_CHAIN_READ,"parentCategory");
+		addGenericRelation("RecommandProduct"                      ,TRUST_CHAIN_READ,"brand");
+		addGenericRelation("RecommandProduct"                      ,TRUST_CHAIN_READ,"catalog");
+		addGenericRelation("RecommandProduct"                      ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("RecommandProduct"                      ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("UserApp"                               ,TRUST_CHAIN_READ,"secUser");

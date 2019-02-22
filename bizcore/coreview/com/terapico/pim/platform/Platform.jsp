@@ -105,6 +105,11 @@
 			<li><a data-toggle="tab" href="#catalogList" class="disabled"> ${userContext.localeMap['catalog']}</a></li>
 			<li><a data-toggle="tab" href="#brandList" class="disabled"> ${userContext.localeMap['brand']}</a></li>
 			<li><a data-toggle="tab" href="#productList" class="disabled"> ${userContext.localeMap['product']}</a></li>
+			<li><a data-toggle="tab" href="#profileList" class="disabled"> ${userContext.localeMap['profile']}</a></li>
+			<li><a data-toggle="tab" href="#newProductList" class="disabled"> ${userContext.localeMap['new_product']}</a></li>
+			<li><a data-toggle="tab" href="#editorPickProductList" class="disabled"> ${userContext.localeMap['editor_pick_product']}</a></li>
+			<li><a data-toggle="tab" href="#topRatedProductList" class="disabled"> ${userContext.localeMap['top_rated_product']}</a></li>
+			<li><a data-toggle="tab" href="#recommandProductList" class="disabled"> ${userContext.localeMap['recommand_product']}</a></li>
  
 	</ul>
 	</div>
@@ -177,6 +182,46 @@
 		<c:set var="productListName" value="productList" scope="request"/>
 		<div id="productList" class="tab-pane fade sublist" refer-name="platform">
 			<sky:include page="com/terapico/pim/product/Product$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["profileList"] or ignoreListAccessControl}'>
+		<c:set var="profileList" value="${result.profileList}" scope="request"/>
+		<c:set var="profileListName" value="profileList" scope="request"/>
+		<div id="profileList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/terapico/pim/profile/Profile$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["newProductList"] or ignoreListAccessControl}'>
+		<c:set var="newProductList" value="${result.newProductList}" scope="request"/>
+		<c:set var="newProductListName" value="newProductList" scope="request"/>
+		<div id="newProductList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/terapico/pim/newproduct/NewProduct$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["editorPickProductList"] or ignoreListAccessControl}'>
+		<c:set var="editorPickProductList" value="${result.editorPickProductList}" scope="request"/>
+		<c:set var="editorPickProductListName" value="editorPickProductList" scope="request"/>
+		<div id="editorPickProductList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/terapico/pim/editorpickproduct/EditorPickProduct$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["topRatedProductList"] or ignoreListAccessControl}'>
+		<c:set var="topRatedProductList" value="${result.topRatedProductList}" scope="request"/>
+		<c:set var="topRatedProductListName" value="topRatedProductList" scope="request"/>
+		<div id="topRatedProductList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/terapico/pim/topratedproduct/TopRatedProduct$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["recommandProductList"] or ignoreListAccessControl}'>
+		<c:set var="recommandProductList" value="${result.recommandProductList}" scope="request"/>
+		<c:set var="recommandProductListName" value="recommandProductList" scope="request"/>
+		<div id="recommandProductList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/terapico/pim/recommandproduct/RecommandProduct$List.jsp"
 					referName="platform"/>
 		</div>
 	</c:if>

@@ -177,6 +177,20 @@ public class SkuForm extends BaseForm {
 	}
 
 
+	public SkuForm productCoverImageFieldOfProduct(String parameterName, String initValue){
+		FormField field =  productCoverImageFromProduct(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public SkuForm productCoverImageFieldOfProduct(String initValue){
+		return productCoverImageFieldOfProduct("productCoverImage",initValue);
+	}
+	public SkuForm productCoverImageFieldOfProduct(){
+		return productCoverImageFieldOfProduct("productCoverImage","");
+	}
+
+
 	public SkuForm originFieldOfProduct(String parameterName, String initValue){
 		FormField field =  originFromProduct(parameterName, initValue);
 		this.addFormField(field);	

@@ -313,6 +313,14 @@ public class PimCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
+	public static final String  PRODUCT_COVER_IMAGE_OF_PRODUCT ="product.product_cover_image";
+	protected void checkProductCoverImageOfProduct(PimUserContext userContext, String productCoverImage, List<Message> messageList)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_PRODUCT, messageList); 		
+		
+	}	 			
+	
 	public static final String  ORIGIN_OF_PRODUCT ="product.origin";
 	protected void checkOriginOfProduct(PimUserContext userContext, String origin, List<Message> messageList)
 	{
@@ -406,6 +414,518 @@ public class PimCheckerManager extends BaseManagerImpl {
 	{
 		
 	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_SKU, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_PROFILE ="profile.id";
+	protected void checkIdOfProfile(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PROFILE, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_PROFILE ="profile.name";
+	protected void checkNameOfProfile(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_PROFILE, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_PROFILE ="profile.platform";
+	protected void checkPlatformIdOfProfile(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfProfile(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_PROFILE ="profile.version";
+	protected void checkVersionOfProfile(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PROFILE, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_BRAND_FILTER ="brand_filter.id";
+	protected void checkIdOfBrandFilter(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_BRAND_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_BRAND_FILTER ="brand_filter.name";
+	protected void checkNameOfBrandFilter(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_BRAND_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  INTERNAL_ID_OF_BRAND_FILTER ="brand_filter.internal_id";
+	protected void checkInternalIdOfBrandFilter(PimUserContext userContext, String internalId, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(internalId,2, 28,INTERNAL_ID_OF_BRAND_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_BRAND_FILTER ="brand_filter.profile";
+	protected void checkProfileIdOfBrandFilter(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfBrandFilter(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_BRAND_FILTER ="brand_filter.version";
+	protected void checkVersionOfBrandFilter(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_BRAND_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_PRICE_FILTER ="price_filter.id";
+	protected void checkIdOfPriceFilter(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PRICE_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_PRICE_FILTER ="price_filter.name";
+	protected void checkNameOfPriceFilter(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_PRICE_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRICE_START_OF_PRICE_FILTER ="price_filter.price_start";
+	protected void checkPriceStartOfPriceFilter(PimUserContext userContext, BigDecimal priceStart, List<Message> messageList)
+	{
+		
+	 	checkBigDecimalRange(priceStart,0, 1.99,PRICE_START_OF_PRICE_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRICE_END_OF_PRICE_FILTER ="price_filter.price_end";
+	protected void checkPriceEndOfPriceFilter(PimUserContext userContext, BigDecimal priceEnd, List<Message> messageList)
+	{
+		
+	 	checkBigDecimalRange(priceEnd,0, 1000000.99,PRICE_END_OF_PRICE_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_PRICE_FILTER ="price_filter.profile";
+	protected void checkProfileIdOfPriceFilter(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfPriceFilter(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_PRICE_FILTER ="price_filter.version";
+	protected void checkVersionOfPriceFilter(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PRICE_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_CATEGORY_FILTER ="category_filter.id";
+	protected void checkIdOfCategoryFilter(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_CATEGORY_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_CATEGORY_FILTER ="category_filter.name";
+	protected void checkNameOfCategoryFilter(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_CATEGORY_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  INTERNAL_ID_OF_CATEGORY_FILTER ="category_filter.internal_id";
+	protected void checkInternalIdOfCategoryFilter(PimUserContext userContext, String internalId, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(internalId,3, 32,INTERNAL_ID_OF_CATEGORY_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_CATEGORY_FILTER ="category_filter.profile";
+	protected void checkProfileIdOfCategoryFilter(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfCategoryFilter(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_CATEGORY_FILTER ="category_filter.version";
+	protected void checkVersionOfCategoryFilter(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_CATEGORY_FILTER, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_NEW_PRODUCT ="new_product.id";
+	protected void checkIdOfNewProduct(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_NEW_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_NEW_PRODUCT ="new_product.name";
+	protected void checkNameOfNewProduct(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_NEW_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PARENT_CATEGORY_OF_NEW_PRODUCT ="new_product.parent_category";
+	protected void checkParentCategoryIdOfNewProduct(PimUserContext userContext, String parentCategoryId, List<Message> messageList)
+	{
+		
+	 	checkIdOfNewProduct(userContext,parentCategoryId, messageList); 		
+		
+	}	 			
+	
+	public static final String  BRAND_OF_NEW_PRODUCT ="new_product.brand";
+	protected void checkBrandIdOfNewProduct(PimUserContext userContext, String brandId, List<Message> messageList)
+	{
+		
+	 	checkIdOfNewProduct(userContext,brandId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRODUCT_COVER_IMAGE_OF_NEW_PRODUCT ="new_product.product_cover_image";
+	protected void checkProductCoverImageOfNewProduct(PimUserContext userContext, String productCoverImage, List<Message> messageList)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_NEW_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ORIGIN_OF_NEW_PRODUCT ="new_product.origin";
+	protected void checkOriginOfNewProduct(PimUserContext userContext, String origin, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_NEW_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  CATALOG_OF_NEW_PRODUCT ="new_product.catalog";
+	protected void checkCatalogIdOfNewProduct(PimUserContext userContext, String catalogId, List<Message> messageList)
+	{
+		
+	 	checkIdOfNewProduct(userContext,catalogId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_NEW_PRODUCT ="new_product.profile";
+	protected void checkProfileIdOfNewProduct(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfNewProduct(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  REMARK_OF_NEW_PRODUCT ="new_product.remark";
+	protected void checkRemarkOfNewProduct(PimUserContext userContext, String remark, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_NEW_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_NEW_PRODUCT ="new_product.platform";
+	protected void checkPlatformIdOfNewProduct(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfNewProduct(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_NEW_PRODUCT ="new_product.version";
+	protected void checkVersionOfNewProduct(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_NEW_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.id";
+	protected void checkIdOfEditorPickProduct(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_EDITOR_PICK_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.name";
+	protected void checkNameOfEditorPickProduct(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_EDITOR_PICK_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PARENT_CATEGORY_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.parent_category";
+	protected void checkParentCategoryIdOfEditorPickProduct(PimUserContext userContext, String parentCategoryId, List<Message> messageList)
+	{
+		
+	 	checkIdOfEditorPickProduct(userContext,parentCategoryId, messageList); 		
+		
+	}	 			
+	
+	public static final String  BRAND_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.brand";
+	protected void checkBrandIdOfEditorPickProduct(PimUserContext userContext, String brandId, List<Message> messageList)
+	{
+		
+	 	checkIdOfEditorPickProduct(userContext,brandId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRODUCT_COVER_IMAGE_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.product_cover_image";
+	protected void checkProductCoverImageOfEditorPickProduct(PimUserContext userContext, String productCoverImage, List<Message> messageList)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_EDITOR_PICK_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ORIGIN_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.origin";
+	protected void checkOriginOfEditorPickProduct(PimUserContext userContext, String origin, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_EDITOR_PICK_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  CATALOG_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.catalog";
+	protected void checkCatalogIdOfEditorPickProduct(PimUserContext userContext, String catalogId, List<Message> messageList)
+	{
+		
+	 	checkIdOfEditorPickProduct(userContext,catalogId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.profile";
+	protected void checkProfileIdOfEditorPickProduct(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfEditorPickProduct(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  REMARK_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.remark";
+	protected void checkRemarkOfEditorPickProduct(PimUserContext userContext, String remark, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_EDITOR_PICK_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.platform";
+	protected void checkPlatformIdOfEditorPickProduct(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfEditorPickProduct(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_EDITOR_PICK_PRODUCT ="editor_pick_product.version";
+	protected void checkVersionOfEditorPickProduct(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_EDITOR_PICK_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_TOP_RATED_PRODUCT ="top_rated_product.id";
+	protected void checkIdOfTopRatedProduct(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_TOP_RATED_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_TOP_RATED_PRODUCT ="top_rated_product.name";
+	protected void checkNameOfTopRatedProduct(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_TOP_RATED_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PARENT_CATEGORY_OF_TOP_RATED_PRODUCT ="top_rated_product.parent_category";
+	protected void checkParentCategoryIdOfTopRatedProduct(PimUserContext userContext, String parentCategoryId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTopRatedProduct(userContext,parentCategoryId, messageList); 		
+		
+	}	 			
+	
+	public static final String  BRAND_OF_TOP_RATED_PRODUCT ="top_rated_product.brand";
+	protected void checkBrandIdOfTopRatedProduct(PimUserContext userContext, String brandId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTopRatedProduct(userContext,brandId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRODUCT_COVER_IMAGE_OF_TOP_RATED_PRODUCT ="top_rated_product.product_cover_image";
+	protected void checkProductCoverImageOfTopRatedProduct(PimUserContext userContext, String productCoverImage, List<Message> messageList)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_TOP_RATED_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ORIGIN_OF_TOP_RATED_PRODUCT ="top_rated_product.origin";
+	protected void checkOriginOfTopRatedProduct(PimUserContext userContext, String origin, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_TOP_RATED_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  CATALOG_OF_TOP_RATED_PRODUCT ="top_rated_product.catalog";
+	protected void checkCatalogIdOfTopRatedProduct(PimUserContext userContext, String catalogId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTopRatedProduct(userContext,catalogId, messageList); 		
+		
+	}	 			
+	
+	public static final String  REMARK_OF_TOP_RATED_PRODUCT ="top_rated_product.remark";
+	protected void checkRemarkOfTopRatedProduct(PimUserContext userContext, String remark, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_TOP_RATED_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_TOP_RATED_PRODUCT ="top_rated_product.profile";
+	protected void checkProfileIdOfTopRatedProduct(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTopRatedProduct(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_TOP_RATED_PRODUCT ="top_rated_product.platform";
+	protected void checkPlatformIdOfTopRatedProduct(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTopRatedProduct(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_TOP_RATED_PRODUCT ="top_rated_product.version";
+	protected void checkVersionOfTopRatedProduct(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_TOP_RATED_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_RECOMMAND_PRODUCT ="recommand_product.id";
+	protected void checkIdOfRecommandProduct(PimUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_RECOMMAND_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_RECOMMAND_PRODUCT ="recommand_product.name";
+	protected void checkNameOfRecommandProduct(PimUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,2, 20,NAME_OF_RECOMMAND_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PARENT_CATEGORY_OF_RECOMMAND_PRODUCT ="recommand_product.parent_category";
+	protected void checkParentCategoryIdOfRecommandProduct(PimUserContext userContext, String parentCategoryId, List<Message> messageList)
+	{
+		
+	 	checkIdOfRecommandProduct(userContext,parentCategoryId, messageList); 		
+		
+	}	 			
+	
+	public static final String  BRAND_OF_RECOMMAND_PRODUCT ="recommand_product.brand";
+	protected void checkBrandIdOfRecommandProduct(PimUserContext userContext, String brandId, List<Message> messageList)
+	{
+		
+	 	checkIdOfRecommandProduct(userContext,brandId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRODUCT_COVER_IMAGE_OF_RECOMMAND_PRODUCT ="recommand_product.product_cover_image";
+	protected void checkProductCoverImageOfRecommandProduct(PimUserContext userContext, String productCoverImage, List<Message> messageList)
+	{
+		
+	 	checkImage(productCoverImage,0, 512,PRODUCT_COVER_IMAGE_OF_RECOMMAND_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  ORIGIN_OF_RECOMMAND_PRODUCT ="recommand_product.origin";
+	protected void checkOriginOfRecommandProduct(PimUserContext userContext, String origin, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(origin,1, 24,ORIGIN_OF_RECOMMAND_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  CATALOG_OF_RECOMMAND_PRODUCT ="recommand_product.catalog";
+	protected void checkCatalogIdOfRecommandProduct(PimUserContext userContext, String catalogId, List<Message> messageList)
+	{
+		
+	 	checkIdOfRecommandProduct(userContext,catalogId, messageList); 		
+		
+	}	 			
+	
+	public static final String  REMARK_OF_RECOMMAND_PRODUCT ="recommand_product.remark";
+	protected void checkRemarkOfRecommandProduct(PimUserContext userContext, String remark, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(remark,22, 336,REMARK_OF_RECOMMAND_PRODUCT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_RECOMMAND_PRODUCT ="recommand_product.profile";
+	protected void checkProfileIdOfRecommandProduct(PimUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfRecommandProduct(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_RECOMMAND_PRODUCT ="recommand_product.platform";
+	protected void checkPlatformIdOfRecommandProduct(PimUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfRecommandProduct(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_RECOMMAND_PRODUCT ="recommand_product.version";
+	protected void checkVersionOfRecommandProduct(PimUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_RECOMMAND_PRODUCT, messageList); 		
 		
 	}	 			
 	

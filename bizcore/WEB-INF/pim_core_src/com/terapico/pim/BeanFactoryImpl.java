@@ -11,6 +11,14 @@ import com.terapico.pim.levelncategory.LevelNCategory;
 import com.terapico.pim.brand.Brand;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.sku.Sku;
+import com.terapico.pim.profile.Profile;
+import com.terapico.pim.brandfilter.BrandFilter;
+import com.terapico.pim.pricefilter.PriceFilter;
+import com.terapico.pim.categoryfilter.CategoryFilter;
+import com.terapico.pim.newproduct.NewProduct;
+import com.terapico.pim.editorpickproduct.EditorPickProduct;
+import com.terapico.pim.topratedproduct.TopRatedProduct;
+import com.terapico.pim.recommandproduct.RecommandProduct;
 import com.terapico.pim.userdomain.UserDomain;
 import com.terapico.pim.userwhitelist.UserWhiteList;
 import com.terapico.pim.secuser.SecUser;
@@ -70,6 +78,46 @@ public class BeanFactoryImpl{
 
 	public Sku createSku(Map<String,Object> options){
 		return new Sku();
+	}
+
+
+	public Profile createProfile(Map<String,Object> options){
+		return new Profile();
+	}
+
+
+	public BrandFilter createBrandFilter(Map<String,Object> options){
+		return new BrandFilter();
+	}
+
+
+	public PriceFilter createPriceFilter(Map<String,Object> options){
+		return new PriceFilter();
+	}
+
+
+	public CategoryFilter createCategoryFilter(Map<String,Object> options){
+		return new CategoryFilter();
+	}
+
+
+	public NewProduct createNewProduct(Map<String,Object> options){
+		return new NewProduct();
+	}
+
+
+	public EditorPickProduct createEditorPickProduct(Map<String,Object> options){
+		return new EditorPickProduct();
+	}
+
+
+	public TopRatedProduct createTopRatedProduct(Map<String,Object> options){
+		return new TopRatedProduct();
+	}
+
+
+	public RecommandProduct createRecommandProduct(Map<String,Object> options){
+		return new RecommandProduct();
 	}
 
 

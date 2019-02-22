@@ -11,10 +11,15 @@ import com.terapico.pim.SmartList;
 import com.terapico.pim.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.terapico.pim.editorpickproduct.EditorPickProduct;
+import com.terapico.pim.profile.Profile;
+import com.terapico.pim.newproduct.NewProduct;
 import com.terapico.pim.site.Site;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.catalog.Catalog;
 import com.terapico.pim.brand.Brand;
+import com.terapico.pim.topratedproduct.TopRatedProduct;
+import com.terapico.pim.recommandproduct.RecommandProduct;
 
 @JsonSerialize(using = PlatformSerializer.class)
 public class Platform extends BaseEntity implements  java.io.Serializable{
@@ -30,6 +35,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	public static final String CATALOG_LIST                             = "catalogList"       ;
 	public static final String BRAND_LIST                               = "brandList"         ;
 	public static final String PRODUCT_LIST                             = "productList"       ;
+	public static final String PROFILE_LIST                             = "profileList"       ;
+	public static final String NEW_PRODUCT_LIST                         = "newProductList"    ;
+	public static final String EDITOR_PICK_PRODUCT_LIST                 = "editorPickProductList";
+	public static final String TOP_RATED_PRODUCT_LIST                   = "topRatedProductList";
+	public static final String RECOMMAND_PRODUCT_LIST                   = "recommandProductList";
 
 	public static final String INTERNAL_TYPE="Platform";
 	public String getInternalType(){
@@ -61,6 +71,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	protected		SmartList<Catalog>  	mCatalogList        ;
 	protected		SmartList<Brand>    	mBrandList          ;
 	protected		SmartList<Product>  	mProductList        ;
+	protected		SmartList<Profile>  	mProfileList        ;
+	protected		SmartList<NewProduct>	mNewProductList     ;
+	protected		SmartList<EditorPickProduct>	mEditorPickProductList;
+	protected		SmartList<TopRatedProduct>	mTopRatedProductList;
+	protected		SmartList<RecommandProduct>	mRecommandProductList;
 	
 		
 	public 	Platform(){
@@ -81,7 +96,12 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		this.mSiteList = new SmartList<Site>();
 		this.mCatalogList = new SmartList<Catalog>();
 		this.mBrandList = new SmartList<Brand>();
-		this.mProductList = new SmartList<Product>();	
+		this.mProductList = new SmartList<Product>();
+		this.mProfileList = new SmartList<Profile>();
+		this.mNewProductList = new SmartList<NewProduct>();
+		this.mEditorPickProductList = new SmartList<EditorPickProduct>();
+		this.mTopRatedProductList = new SmartList<TopRatedProduct>();
+		this.mRecommandProductList = new SmartList<RecommandProduct>();	
 	}
 	
 	//Support for changing the property
@@ -610,6 +630,496 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	
 
 
+	public  SmartList<Profile> getProfileList(){
+		if(this.mProfileList == null){
+			this.mProfileList = new SmartList<Profile>();
+			this.mProfileList.setListInternalName (PROFILE_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mProfileList;	
+	}
+	public  void setProfileList(SmartList<Profile> profileList){
+		for( Profile profile:profileList){
+			profile.setPlatform(this);
+		}
+
+		this.mProfileList = profileList;
+		this.mProfileList.setListInternalName (PROFILE_LIST );
+		
+	}
+	
+	public  void addProfile(Profile profile){
+		profile.setPlatform(this);
+		getProfileList().add(profile);
+	}
+	public  void addProfileList(SmartList<Profile> profileList){
+		for( Profile profile:profileList){
+			profile.setPlatform(this);
+		}
+		getProfileList().addAll(profileList);
+	}
+	
+	public  Profile removeProfile(Profile profileIndex){
+		
+		int index = getProfileList().indexOf(profileIndex);
+        if(index < 0){
+        	String message = "Profile("+profileIndex.getId()+") with version='"+profileIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        Profile profile = getProfileList().get(index);        
+        // profile.clearPlatform(); //disconnect with Platform
+        profile.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getProfileList().planToRemove(profile);
+        if(!result){
+        	String message = "Profile("+profileIndex.getId()+") with version='"+profileIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return profile;
+        
+	
+	}
+	//断舍离
+	public  void breakWithProfile(Profile profile){
+		
+		if(profile == null){
+			return;
+		}
+		profile.setPlatform(null);
+		//getProfileList().remove();
+	
+	}
+	
+	public  boolean hasProfile(Profile profile){
+	
+		return getProfileList().contains(profile);
+  
+	}
+	
+	public void copyProfileFrom(Profile profile) {
+
+		Profile profileInList = findTheProfile(profile);
+		Profile newProfile = new Profile();
+		profileInList.copyTo(newProfile);
+		newProfile.setVersion(0);//will trigger copy
+		getProfileList().add(newProfile);
+		addItemToFlexiableObject(COPIED_CHILD, newProfile);
+	}
+	
+	public  Profile findTheProfile(Profile profile){
+		
+		int index =  getProfileList().indexOf(profile);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "Profile("+profile.getId()+") with version='"+profile.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getProfileList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpProfileList(){
+		getProfileList().clear();
+	}
+	
+	
+	
+
+
+	public  SmartList<NewProduct> getNewProductList(){
+		if(this.mNewProductList == null){
+			this.mNewProductList = new SmartList<NewProduct>();
+			this.mNewProductList.setListInternalName (NEW_PRODUCT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mNewProductList;	
+	}
+	public  void setNewProductList(SmartList<NewProduct> newProductList){
+		for( NewProduct newProduct:newProductList){
+			newProduct.setPlatform(this);
+		}
+
+		this.mNewProductList = newProductList;
+		this.mNewProductList.setListInternalName (NEW_PRODUCT_LIST );
+		
+	}
+	
+	public  void addNewProduct(NewProduct newProduct){
+		newProduct.setPlatform(this);
+		getNewProductList().add(newProduct);
+	}
+	public  void addNewProductList(SmartList<NewProduct> newProductList){
+		for( NewProduct newProduct:newProductList){
+			newProduct.setPlatform(this);
+		}
+		getNewProductList().addAll(newProductList);
+	}
+	
+	public  NewProduct removeNewProduct(NewProduct newProductIndex){
+		
+		int index = getNewProductList().indexOf(newProductIndex);
+        if(index < 0){
+        	String message = "NewProduct("+newProductIndex.getId()+") with version='"+newProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        NewProduct newProduct = getNewProductList().get(index);        
+        // newProduct.clearPlatform(); //disconnect with Platform
+        newProduct.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getNewProductList().planToRemove(newProduct);
+        if(!result){
+        	String message = "NewProduct("+newProductIndex.getId()+") with version='"+newProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return newProduct;
+        
+	
+	}
+	//断舍离
+	public  void breakWithNewProduct(NewProduct newProduct){
+		
+		if(newProduct == null){
+			return;
+		}
+		newProduct.setPlatform(null);
+		//getNewProductList().remove();
+	
+	}
+	
+	public  boolean hasNewProduct(NewProduct newProduct){
+	
+		return getNewProductList().contains(newProduct);
+  
+	}
+	
+	public void copyNewProductFrom(NewProduct newProduct) {
+
+		NewProduct newProductInList = findTheNewProduct(newProduct);
+		NewProduct newNewProduct = new NewProduct();
+		newProductInList.copyTo(newNewProduct);
+		newNewProduct.setVersion(0);//will trigger copy
+		getNewProductList().add(newNewProduct);
+		addItemToFlexiableObject(COPIED_CHILD, newNewProduct);
+	}
+	
+	public  NewProduct findTheNewProduct(NewProduct newProduct){
+		
+		int index =  getNewProductList().indexOf(newProduct);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "NewProduct("+newProduct.getId()+") with version='"+newProduct.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getNewProductList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpNewProductList(){
+		getNewProductList().clear();
+	}
+	
+	
+	
+
+
+	public  SmartList<EditorPickProduct> getEditorPickProductList(){
+		if(this.mEditorPickProductList == null){
+			this.mEditorPickProductList = new SmartList<EditorPickProduct>();
+			this.mEditorPickProductList.setListInternalName (EDITOR_PICK_PRODUCT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mEditorPickProductList;	
+	}
+	public  void setEditorPickProductList(SmartList<EditorPickProduct> editorPickProductList){
+		for( EditorPickProduct editorPickProduct:editorPickProductList){
+			editorPickProduct.setPlatform(this);
+		}
+
+		this.mEditorPickProductList = editorPickProductList;
+		this.mEditorPickProductList.setListInternalName (EDITOR_PICK_PRODUCT_LIST );
+		
+	}
+	
+	public  void addEditorPickProduct(EditorPickProduct editorPickProduct){
+		editorPickProduct.setPlatform(this);
+		getEditorPickProductList().add(editorPickProduct);
+	}
+	public  void addEditorPickProductList(SmartList<EditorPickProduct> editorPickProductList){
+		for( EditorPickProduct editorPickProduct:editorPickProductList){
+			editorPickProduct.setPlatform(this);
+		}
+		getEditorPickProductList().addAll(editorPickProductList);
+	}
+	
+	public  EditorPickProduct removeEditorPickProduct(EditorPickProduct editorPickProductIndex){
+		
+		int index = getEditorPickProductList().indexOf(editorPickProductIndex);
+        if(index < 0){
+        	String message = "EditorPickProduct("+editorPickProductIndex.getId()+") with version='"+editorPickProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        EditorPickProduct editorPickProduct = getEditorPickProductList().get(index);        
+        // editorPickProduct.clearPlatform(); //disconnect with Platform
+        editorPickProduct.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getEditorPickProductList().planToRemove(editorPickProduct);
+        if(!result){
+        	String message = "EditorPickProduct("+editorPickProductIndex.getId()+") with version='"+editorPickProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return editorPickProduct;
+        
+	
+	}
+	//断舍离
+	public  void breakWithEditorPickProduct(EditorPickProduct editorPickProduct){
+		
+		if(editorPickProduct == null){
+			return;
+		}
+		editorPickProduct.setPlatform(null);
+		//getEditorPickProductList().remove();
+	
+	}
+	
+	public  boolean hasEditorPickProduct(EditorPickProduct editorPickProduct){
+	
+		return getEditorPickProductList().contains(editorPickProduct);
+  
+	}
+	
+	public void copyEditorPickProductFrom(EditorPickProduct editorPickProduct) {
+
+		EditorPickProduct editorPickProductInList = findTheEditorPickProduct(editorPickProduct);
+		EditorPickProduct newEditorPickProduct = new EditorPickProduct();
+		editorPickProductInList.copyTo(newEditorPickProduct);
+		newEditorPickProduct.setVersion(0);//will trigger copy
+		getEditorPickProductList().add(newEditorPickProduct);
+		addItemToFlexiableObject(COPIED_CHILD, newEditorPickProduct);
+	}
+	
+	public  EditorPickProduct findTheEditorPickProduct(EditorPickProduct editorPickProduct){
+		
+		int index =  getEditorPickProductList().indexOf(editorPickProduct);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "EditorPickProduct("+editorPickProduct.getId()+") with version='"+editorPickProduct.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getEditorPickProductList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpEditorPickProductList(){
+		getEditorPickProductList().clear();
+	}
+	
+	
+	
+
+
+	public  SmartList<TopRatedProduct> getTopRatedProductList(){
+		if(this.mTopRatedProductList == null){
+			this.mTopRatedProductList = new SmartList<TopRatedProduct>();
+			this.mTopRatedProductList.setListInternalName (TOP_RATED_PRODUCT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mTopRatedProductList;	
+	}
+	public  void setTopRatedProductList(SmartList<TopRatedProduct> topRatedProductList){
+		for( TopRatedProduct topRatedProduct:topRatedProductList){
+			topRatedProduct.setPlatform(this);
+		}
+
+		this.mTopRatedProductList = topRatedProductList;
+		this.mTopRatedProductList.setListInternalName (TOP_RATED_PRODUCT_LIST );
+		
+	}
+	
+	public  void addTopRatedProduct(TopRatedProduct topRatedProduct){
+		topRatedProduct.setPlatform(this);
+		getTopRatedProductList().add(topRatedProduct);
+	}
+	public  void addTopRatedProductList(SmartList<TopRatedProduct> topRatedProductList){
+		for( TopRatedProduct topRatedProduct:topRatedProductList){
+			topRatedProduct.setPlatform(this);
+		}
+		getTopRatedProductList().addAll(topRatedProductList);
+	}
+	
+	public  TopRatedProduct removeTopRatedProduct(TopRatedProduct topRatedProductIndex){
+		
+		int index = getTopRatedProductList().indexOf(topRatedProductIndex);
+        if(index < 0){
+        	String message = "TopRatedProduct("+topRatedProductIndex.getId()+") with version='"+topRatedProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        TopRatedProduct topRatedProduct = getTopRatedProductList().get(index);        
+        // topRatedProduct.clearPlatform(); //disconnect with Platform
+        topRatedProduct.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getTopRatedProductList().planToRemove(topRatedProduct);
+        if(!result){
+        	String message = "TopRatedProduct("+topRatedProductIndex.getId()+") with version='"+topRatedProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return topRatedProduct;
+        
+	
+	}
+	//断舍离
+	public  void breakWithTopRatedProduct(TopRatedProduct topRatedProduct){
+		
+		if(topRatedProduct == null){
+			return;
+		}
+		topRatedProduct.setPlatform(null);
+		//getTopRatedProductList().remove();
+	
+	}
+	
+	public  boolean hasTopRatedProduct(TopRatedProduct topRatedProduct){
+	
+		return getTopRatedProductList().contains(topRatedProduct);
+  
+	}
+	
+	public void copyTopRatedProductFrom(TopRatedProduct topRatedProduct) {
+
+		TopRatedProduct topRatedProductInList = findTheTopRatedProduct(topRatedProduct);
+		TopRatedProduct newTopRatedProduct = new TopRatedProduct();
+		topRatedProductInList.copyTo(newTopRatedProduct);
+		newTopRatedProduct.setVersion(0);//will trigger copy
+		getTopRatedProductList().add(newTopRatedProduct);
+		addItemToFlexiableObject(COPIED_CHILD, newTopRatedProduct);
+	}
+	
+	public  TopRatedProduct findTheTopRatedProduct(TopRatedProduct topRatedProduct){
+		
+		int index =  getTopRatedProductList().indexOf(topRatedProduct);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "TopRatedProduct("+topRatedProduct.getId()+") with version='"+topRatedProduct.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getTopRatedProductList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpTopRatedProductList(){
+		getTopRatedProductList().clear();
+	}
+	
+	
+	
+
+
+	public  SmartList<RecommandProduct> getRecommandProductList(){
+		if(this.mRecommandProductList == null){
+			this.mRecommandProductList = new SmartList<RecommandProduct>();
+			this.mRecommandProductList.setListInternalName (RECOMMAND_PRODUCT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mRecommandProductList;	
+	}
+	public  void setRecommandProductList(SmartList<RecommandProduct> recommandProductList){
+		for( RecommandProduct recommandProduct:recommandProductList){
+			recommandProduct.setPlatform(this);
+		}
+
+		this.mRecommandProductList = recommandProductList;
+		this.mRecommandProductList.setListInternalName (RECOMMAND_PRODUCT_LIST );
+		
+	}
+	
+	public  void addRecommandProduct(RecommandProduct recommandProduct){
+		recommandProduct.setPlatform(this);
+		getRecommandProductList().add(recommandProduct);
+	}
+	public  void addRecommandProductList(SmartList<RecommandProduct> recommandProductList){
+		for( RecommandProduct recommandProduct:recommandProductList){
+			recommandProduct.setPlatform(this);
+		}
+		getRecommandProductList().addAll(recommandProductList);
+	}
+	
+	public  RecommandProduct removeRecommandProduct(RecommandProduct recommandProductIndex){
+		
+		int index = getRecommandProductList().indexOf(recommandProductIndex);
+        if(index < 0){
+        	String message = "RecommandProduct("+recommandProductIndex.getId()+") with version='"+recommandProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        RecommandProduct recommandProduct = getRecommandProductList().get(index);        
+        // recommandProduct.clearPlatform(); //disconnect with Platform
+        recommandProduct.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getRecommandProductList().planToRemove(recommandProduct);
+        if(!result){
+        	String message = "RecommandProduct("+recommandProductIndex.getId()+") with version='"+recommandProductIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return recommandProduct;
+        
+	
+	}
+	//断舍离
+	public  void breakWithRecommandProduct(RecommandProduct recommandProduct){
+		
+		if(recommandProduct == null){
+			return;
+		}
+		recommandProduct.setPlatform(null);
+		//getRecommandProductList().remove();
+	
+	}
+	
+	public  boolean hasRecommandProduct(RecommandProduct recommandProduct){
+	
+		return getRecommandProductList().contains(recommandProduct);
+  
+	}
+	
+	public void copyRecommandProductFrom(RecommandProduct recommandProduct) {
+
+		RecommandProduct recommandProductInList = findTheRecommandProduct(recommandProduct);
+		RecommandProduct newRecommandProduct = new RecommandProduct();
+		recommandProductInList.copyTo(newRecommandProduct);
+		newRecommandProduct.setVersion(0);//will trigger copy
+		getRecommandProductList().add(newRecommandProduct);
+		addItemToFlexiableObject(COPIED_CHILD, newRecommandProduct);
+	}
+	
+	public  RecommandProduct findTheRecommandProduct(RecommandProduct recommandProduct){
+		
+		int index =  getRecommandProductList().indexOf(recommandProduct);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "RecommandProduct("+recommandProduct.getId()+") with version='"+recommandProduct.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getRecommandProductList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpRecommandProductList(){
+		getRecommandProductList().clear();
+	}
+	
+	
+	
+
+
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
 
@@ -623,6 +1133,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		collectFromList(this, entityList, getCatalogList(), internalType);
 		collectFromList(this, entityList, getBrandList(), internalType);
 		collectFromList(this, entityList, getProductList(), internalType);
+		collectFromList(this, entityList, getProfileList(), internalType);
+		collectFromList(this, entityList, getNewProductList(), internalType);
+		collectFromList(this, entityList, getEditorPickProductList(), internalType);
+		collectFromList(this, entityList, getTopRatedProductList(), internalType);
+		collectFromList(this, entityList, getRecommandProductList(), internalType);
 
 		return entityList;
 	}
@@ -634,6 +1149,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		listOfList.add( getCatalogList());
 		listOfList.add( getBrandList());
 		listOfList.add( getProductList());
+		listOfList.add( getProfileList());
+		listOfList.add( getNewProductList());
+		listOfList.add( getEditorPickProductList());
+		listOfList.add( getTopRatedProductList());
+		listOfList.add( getRecommandProductList());
 			
 
 		return listOfList;
@@ -668,6 +1188,31 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "productCount", getProductList().getTotalCount());
 			appendKeyValuePair(result, "productCurrentPageNumber", getProductList().getCurrentPageNumber());
 		}
+		appendKeyValuePair(result, PROFILE_LIST, getProfileList());
+		if(!getProfileList().isEmpty()){
+			appendKeyValuePair(result, "profileCount", getProfileList().getTotalCount());
+			appendKeyValuePair(result, "profileCurrentPageNumber", getProfileList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, NEW_PRODUCT_LIST, getNewProductList());
+		if(!getNewProductList().isEmpty()){
+			appendKeyValuePair(result, "newProductCount", getNewProductList().getTotalCount());
+			appendKeyValuePair(result, "newProductCurrentPageNumber", getNewProductList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, EDITOR_PICK_PRODUCT_LIST, getEditorPickProductList());
+		if(!getEditorPickProductList().isEmpty()){
+			appendKeyValuePair(result, "editorPickProductCount", getEditorPickProductList().getTotalCount());
+			appendKeyValuePair(result, "editorPickProductCurrentPageNumber", getEditorPickProductList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, TOP_RATED_PRODUCT_LIST, getTopRatedProductList());
+		if(!getTopRatedProductList().isEmpty()){
+			appendKeyValuePair(result, "topRatedProductCount", getTopRatedProductList().getTotalCount());
+			appendKeyValuePair(result, "topRatedProductCurrentPageNumber", getTopRatedProductList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, RECOMMAND_PRODUCT_LIST, getRecommandProductList());
+		if(!getRecommandProductList().isEmpty()){
+			appendKeyValuePair(result, "recommandProductCount", getRecommandProductList().getTotalCount());
+			appendKeyValuePair(result, "recommandProductCurrentPageNumber", getRecommandProductList().getCurrentPageNumber());
+		}
 
 		
 		return result;
@@ -691,6 +1236,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			dest.setCatalogList(getCatalogList());
 			dest.setBrandList(getBrandList());
 			dest.setProductList(getProductList());
+			dest.setProfileList(getProfileList());
+			dest.setNewProductList(getNewProductList());
+			dest.setEditorPickProductList(getEditorPickProductList());
+			dest.setTopRatedProductList(getTopRatedProductList());
+			dest.setRecommandProductList(getRecommandProductList());
 
 		}
 		super.copyTo(baseDest);

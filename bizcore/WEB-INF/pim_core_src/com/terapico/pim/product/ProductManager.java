@@ -12,7 +12,7 @@ public interface ProductManager{
 
 		
 
-	public Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark, String platformId) throws Exception;	
+	public Product createProduct(PimUserContext userContext, String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark, String platformId) throws Exception;	
 	public Product updateProduct(PimUserContext userContext,String productId, int productVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Product loadProduct(PimUserContext userContext, String productId, String [] tokensExpr) throws Exception;
 	public Product internalSaveProduct(PimUserContext userContext, Product product) throws Exception;

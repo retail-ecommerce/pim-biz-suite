@@ -66,7 +66,11 @@ public class CatalogTokens extends CommonTokens{
 			.withSite()
 			.withPlatform()
 			.withLevelOneCategoryList()
-			.withProductList();
+			.withProductList()
+			.withNewProductList()
+			.withEditorPickProductList()
+			.withTopRatedProductList()
+			.withRecommandProductList();
 	
 	}
 	public static CatalogTokens withoutListsTokens(){
@@ -231,11 +235,263 @@ public class CatalogTokens extends CommonTokens{
 	
 	
 		
+	protected static final String NEW_PRODUCT_LIST = "newProductList";
+	public String getNewProductList(){
+		return NEW_PRODUCT_LIST;
+	}
+	public CatalogTokens withNewProductList(){		
+		addSimpleOptions(NEW_PRODUCT_LIST);
+		return this;
+	}
+	public CatalogTokens analyzeNewProductList(){		
+		addSimpleOptions(NEW_PRODUCT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeNewProductListEnabled(){		
+		
+		return checkOptions(this.options(), NEW_PRODUCT_LIST+".anaylze");
+	}
+	public CatalogTokens extractMoreFromNewProductList(String idsSeperatedWithComma){		
+		addSimpleOptions(NEW_PRODUCT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int newProductListSortCounter = 0;
+	public CatalogTokens sortNewProductListWith(String field, String descOrAsc){		
+		addSortMoreOptions(NEW_PRODUCT_LIST,newProductListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int newProductListSearchCounter = 0;
+	public CatalogTokens searchNewProductListWith(String field, String verb, String value){		
+		addSearchMoreOptions(NEW_PRODUCT_LIST,newProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public CatalogTokens searchAllTextOfNewProductList(String verb, String value){	
+		String field = "id|name|origin|remark";
+		addSearchMoreOptions(NEW_PRODUCT_LIST,newProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public CatalogTokens rowsPerPageOfNewProductList(int rowsPerPage){		
+		addSimpleOptions(NEW_PRODUCT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public CatalogTokens currentPageNumberOfNewProductList(int currentPageNumber){		
+		addSimpleOptions(NEW_PRODUCT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public CatalogTokens retainColumnsOfNewProductList(String[] columns){		
+		addSimpleOptions(NEW_PRODUCT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public CatalogTokens excludeColumnsOfNewProductList(String[] columns){		
+		addSimpleOptions(NEW_PRODUCT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
+	protected static final String EDITOR_PICK_PRODUCT_LIST = "editorPickProductList";
+	public String getEditorPickProductList(){
+		return EDITOR_PICK_PRODUCT_LIST;
+	}
+	public CatalogTokens withEditorPickProductList(){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST);
+		return this;
+	}
+	public CatalogTokens analyzeEditorPickProductList(){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeEditorPickProductListEnabled(){		
+		
+		return checkOptions(this.options(), EDITOR_PICK_PRODUCT_LIST+".anaylze");
+	}
+	public CatalogTokens extractMoreFromEditorPickProductList(String idsSeperatedWithComma){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int editorPickProductListSortCounter = 0;
+	public CatalogTokens sortEditorPickProductListWith(String field, String descOrAsc){		
+		addSortMoreOptions(EDITOR_PICK_PRODUCT_LIST,editorPickProductListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int editorPickProductListSearchCounter = 0;
+	public CatalogTokens searchEditorPickProductListWith(String field, String verb, String value){		
+		addSearchMoreOptions(EDITOR_PICK_PRODUCT_LIST,editorPickProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public CatalogTokens searchAllTextOfEditorPickProductList(String verb, String value){	
+		String field = "id|name|origin|remark";
+		addSearchMoreOptions(EDITOR_PICK_PRODUCT_LIST,editorPickProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public CatalogTokens rowsPerPageOfEditorPickProductList(int rowsPerPage){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public CatalogTokens currentPageNumberOfEditorPickProductList(int currentPageNumber){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public CatalogTokens retainColumnsOfEditorPickProductList(String[] columns){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public CatalogTokens excludeColumnsOfEditorPickProductList(String[] columns){		
+		addSimpleOptions(EDITOR_PICK_PRODUCT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
+	protected static final String TOP_RATED_PRODUCT_LIST = "topRatedProductList";
+	public String getTopRatedProductList(){
+		return TOP_RATED_PRODUCT_LIST;
+	}
+	public CatalogTokens withTopRatedProductList(){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST);
+		return this;
+	}
+	public CatalogTokens analyzeTopRatedProductList(){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeTopRatedProductListEnabled(){		
+		
+		return checkOptions(this.options(), TOP_RATED_PRODUCT_LIST+".anaylze");
+	}
+	public CatalogTokens extractMoreFromTopRatedProductList(String idsSeperatedWithComma){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int topRatedProductListSortCounter = 0;
+	public CatalogTokens sortTopRatedProductListWith(String field, String descOrAsc){		
+		addSortMoreOptions(TOP_RATED_PRODUCT_LIST,topRatedProductListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int topRatedProductListSearchCounter = 0;
+	public CatalogTokens searchTopRatedProductListWith(String field, String verb, String value){		
+		addSearchMoreOptions(TOP_RATED_PRODUCT_LIST,topRatedProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public CatalogTokens searchAllTextOfTopRatedProductList(String verb, String value){	
+		String field = "id|name|origin|remark";
+		addSearchMoreOptions(TOP_RATED_PRODUCT_LIST,topRatedProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public CatalogTokens rowsPerPageOfTopRatedProductList(int rowsPerPage){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public CatalogTokens currentPageNumberOfTopRatedProductList(int currentPageNumber){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public CatalogTokens retainColumnsOfTopRatedProductList(String[] columns){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public CatalogTokens excludeColumnsOfTopRatedProductList(String[] columns){		
+		addSimpleOptions(TOP_RATED_PRODUCT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
+	protected static final String RECOMMAND_PRODUCT_LIST = "recommandProductList";
+	public String getRecommandProductList(){
+		return RECOMMAND_PRODUCT_LIST;
+	}
+	public CatalogTokens withRecommandProductList(){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST);
+		return this;
+	}
+	public CatalogTokens analyzeRecommandProductList(){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeRecommandProductListEnabled(){		
+		
+		return checkOptions(this.options(), RECOMMAND_PRODUCT_LIST+".anaylze");
+	}
+	public CatalogTokens extractMoreFromRecommandProductList(String idsSeperatedWithComma){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int recommandProductListSortCounter = 0;
+	public CatalogTokens sortRecommandProductListWith(String field, String descOrAsc){		
+		addSortMoreOptions(RECOMMAND_PRODUCT_LIST,recommandProductListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int recommandProductListSearchCounter = 0;
+	public CatalogTokens searchRecommandProductListWith(String field, String verb, String value){		
+		addSearchMoreOptions(RECOMMAND_PRODUCT_LIST,recommandProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public CatalogTokens searchAllTextOfRecommandProductList(String verb, String value){	
+		String field = "id|name|origin|remark";
+		addSearchMoreOptions(RECOMMAND_PRODUCT_LIST,recommandProductListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public CatalogTokens rowsPerPageOfRecommandProductList(int rowsPerPage){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public CatalogTokens currentPageNumberOfRecommandProductList(int currentPageNumber){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public CatalogTokens retainColumnsOfRecommandProductList(String[] columns){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public CatalogTokens excludeColumnsOfRecommandProductList(String[] columns){		
+		addSimpleOptions(RECOMMAND_PRODUCT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  CatalogTokens searchEntireObjectText(String verb, String value){
 		
 		searchAllTextOfLevelOneCategoryList(verb, value);	
 		searchAllTextOfProductList(verb, value);	
+		searchAllTextOfNewProductList(verb, value);	
+		searchAllTextOfEditorPickProductList(verb, value);	
+		searchAllTextOfTopRatedProductList(verb, value);	
+		searchAllTextOfRecommandProductList(verb, value);	
 		return this;
 	}
 }

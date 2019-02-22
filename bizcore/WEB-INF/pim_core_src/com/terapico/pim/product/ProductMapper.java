@@ -19,6 +19,7 @@ public class ProductMapper extends BaseRowMapper<Product>{
  		setName(product, rs, rowNumber); 		
  		setParentCategory(product, rs, rowNumber); 		
  		setBrand(product, rs, rowNumber); 		
+ 		setProductCoverImage(product, rs, rowNumber); 		
  		setOrigin(product, rs, rowNumber); 		
  		setCatalog(product, rs, rowNumber); 		
  		setRemark(product, rs, rowNumber); 		
@@ -93,6 +94,18 @@ public class ProductMapper extends BaseRowMapper<Product>{
  		product.setBrand(createEmptyBrand(brandId));
  	}
  	
+	protected void setProductCoverImage(Product product, ResultSet rs, int rowNumber) throws SQLException{
+	
+		//there will be issue when the type is double/int/long
+		String productCoverImage = rs.getString(ProductTable.COLUMN_PRODUCT_COVER_IMAGE);
+		if(productCoverImage == null){
+			//do nothing when nothing found in database
+			return;
+		}
+		
+		product.setProductCoverImage(productCoverImage);
+	}
+		
 	protected void setOrigin(Product product, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long

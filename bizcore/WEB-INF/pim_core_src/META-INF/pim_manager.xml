@@ -15,7 +15,7 @@
 	<bean id="siteManager" class="com.terapico.pim.site.SiteManagerImpl" parent="siteManagerBase" ></bean>
 	
 	<bean id="catalogManagerBase" class="com.terapico.pim.catalog.CatalogManagerImpl"/>
-	<bean id="catalogManager" class="com.terapico.pim.catalog.CatalogManagerImpl" parent="catalogManagerBase" ></bean>
+	<bean id="catalogManager" class="com.terapico.pim.catalog.CatalogCustomManagerImpl" parent="catalogManagerBase" ></bean>
 	
 	<bean id="levelOneCategoryManagerBase" class="com.terapico.pim.levelonecategory.LevelOneCategoryManagerImpl"/>
 	<bean id="levelOneCategoryManager" class="com.terapico.pim.levelonecategory.LevelOneCategoryManagerImpl" parent="levelOneCategoryManagerBase" ></bean>
@@ -24,10 +24,10 @@
 	<bean id="levelTwoCategoryManager" class="com.terapico.pim.leveltwocategory.LevelTwoCategoryManagerImpl" parent="levelTwoCategoryManagerBase" ></bean>
 	
 	<bean id="levelNCategoryManagerBase" class="com.terapico.pim.levelncategory.LevelNCategoryManagerImpl"/>
-	<bean id="levelNCategoryManager" class="com.terapico.pim.levelncategory.LevelNCategoryManagerImpl" parent="levelNCategoryManagerBase" ></bean>
+	<bean id="levelNCategoryManager" class="com.terapico.pim.levelncategory.LevelNCategoryCustomManagerImpl" parent="levelNCategoryManagerBase" ></bean>
 	
 	<bean id="brandManagerBase" class="com.terapico.pim.brand.BrandManagerImpl"/>
-	<bean id="brandManager" class="com.terapico.pim.brand.BrandManagerImpl" parent="brandManagerBase" ></bean>
+	<bean id="brandManager" class="com.terapico.pim.brand.BrandCustomManagerImpl" parent="brandManagerBase" ></bean>
 	
 	<bean id="productManagerBase" class="com.terapico.pim.product.ProductManagerImpl"/>
 	<bean id="productManager" class="com.terapico.pim.product.ProductManagerImpl" parent="productManagerBase" ></bean>
@@ -35,20 +35,44 @@
 	<bean id="skuManagerBase" class="com.terapico.pim.sku.SkuManagerImpl"/>
 	<bean id="skuManager" class="com.terapico.pim.sku.SkuManagerImpl" parent="skuManagerBase" ></bean>
 	
+	<bean id="profileManagerBase" class="com.terapico.pim.profile.ProfileManagerImpl"/>
+	<bean id="profileManager" class="com.terapico.pim.profile.ProfileCustomManagerImpl" parent="profileManagerBase" ></bean>
+	
+	<bean id="brandFilterManagerBase" class="com.terapico.pim.brandfilter.BrandFilterManagerImpl"/>
+	<bean id="brandFilterManager" class="com.terapico.pim.brandfilter.BrandFilterManagerImpl" parent="brandFilterManagerBase" ></bean>
+	
+	<bean id="priceFilterManagerBase" class="com.terapico.pim.pricefilter.PriceFilterManagerImpl"/>
+	<bean id="priceFilterManager" class="com.terapico.pim.pricefilter.PriceFilterManagerImpl" parent="priceFilterManagerBase" ></bean>
+	
+	<bean id="categoryFilterManagerBase" class="com.terapico.pim.categoryfilter.CategoryFilterManagerImpl"/>
+	<bean id="categoryFilterManager" class="com.terapico.pim.categoryfilter.CategoryFilterManagerImpl" parent="categoryFilterManagerBase" ></bean>
+	
+	<bean id="newProductManagerBase" class="com.terapico.pim.newproduct.NewProductManagerImpl"/>
+	<bean id="newProductManager" class="com.terapico.pim.newproduct.NewProductManagerImpl" parent="newProductManagerBase" ></bean>
+	
+	<bean id="editorPickProductManagerBase" class="com.terapico.pim.editorpickproduct.EditorPickProductManagerImpl"/>
+	<bean id="editorPickProductManager" class="com.terapico.pim.editorpickproduct.EditorPickProductManagerImpl" parent="editorPickProductManagerBase" ></bean>
+	
+	<bean id="topRatedProductManagerBase" class="com.terapico.pim.topratedproduct.TopRatedProductManagerImpl"/>
+	<bean id="topRatedProductManager" class="com.terapico.pim.topratedproduct.TopRatedProductManagerImpl" parent="topRatedProductManagerBase" ></bean>
+	
+	<bean id="recommandProductManagerBase" class="com.terapico.pim.recommandproduct.RecommandProductManagerImpl"/>
+	<bean id="recommandProductManager" class="com.terapico.pim.recommandproduct.RecommandProductManagerImpl" parent="recommandProductManagerBase" ></bean>
+	
 	<bean id="userDomainManagerBase" class="com.terapico.pim.userdomain.UserDomainManagerImpl"/>
-	<bean id="userDomainManager" class="com.terapico.pim.userdomain.UserDomainManagerImpl" parent="userDomainManagerBase" ></bean>
+	<bean id="userDomainManager" class="com.terapico.pim.userdomain.UserDomainCustomManagerImpl" parent="userDomainManagerBase" ></bean>
 	
 	<bean id="userWhiteListManagerBase" class="com.terapico.pim.userwhitelist.UserWhiteListManagerImpl"/>
 	<bean id="userWhiteListManager" class="com.terapico.pim.userwhitelist.UserWhiteListManagerImpl" parent="userWhiteListManagerBase" ></bean>
 	
 	<bean id="secUserManagerBase" class="com.terapico.pim.secuser.SecUserManagerImpl"/>
-	<bean id="secUserManager" class="com.terapico.pim.secuser.SecUserManagerImpl" parent="secUserManagerBase" ></bean>
+	<bean id="secUserManager" class="com.terapico.pim.secuser.SecUserCustomManagerImpl" parent="secUserManagerBase" ></bean>
 	
 	<bean id="secUserBlockingManagerBase" class="com.terapico.pim.secuserblocking.SecUserBlockingManagerImpl"/>
-	<bean id="secUserBlockingManager" class="com.terapico.pim.secuserblocking.SecUserBlockingManagerImpl" parent="secUserBlockingManagerBase" ></bean>
+	<bean id="secUserBlockingManager" class="com.terapico.pim.secuserblocking.SecUserBlockingCustomManagerImpl" parent="secUserBlockingManagerBase" ></bean>
 	
 	<bean id="userAppManagerBase" class="com.terapico.pim.userapp.UserAppManagerImpl"/>
-	<bean id="userAppManager" class="com.terapico.pim.userapp.UserAppManagerImpl" parent="userAppManagerBase" ></bean>
+	<bean id="userAppManager" class="com.terapico.pim.userapp.UserAppCustomManagerImpl" parent="userAppManagerBase" ></bean>
 	
 	<bean id="listAccessManagerBase" class="com.terapico.pim.listaccess.ListAccessManagerImpl"/>
 	<bean id="listAccessManager" class="com.terapico.pim.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
@@ -85,6 +109,14 @@
 		<property name="brandManager" ref="brandManager"/>
 		<property name="productManager" ref="productManager"/>
 		<property name="skuManager" ref="skuManager"/>
+		<property name="profileManager" ref="profileManager"/>
+		<property name="brandFilterManager" ref="brandFilterManager"/>
+		<property name="priceFilterManager" ref="priceFilterManager"/>
+		<property name="categoryFilterManager" ref="categoryFilterManager"/>
+		<property name="newProductManager" ref="newProductManager"/>
+		<property name="editorPickProductManager" ref="editorPickProductManager"/>
+		<property name="topRatedProductManager" ref="topRatedProductManager"/>
+		<property name="recommandProductManager" ref="recommandProductManager"/>
 		<property name="userDomainManager" ref="userDomainManager"/>
 		<property name="userWhiteListManager" ref="userWhiteListManager"/>
 		<property name="secUserManager" ref="secUserManager"/>

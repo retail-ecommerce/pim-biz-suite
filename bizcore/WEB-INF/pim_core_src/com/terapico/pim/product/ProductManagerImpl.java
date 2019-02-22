@@ -176,7 +176,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
  	
 
 
-	public Product createProduct(PimUserContext userContext,String name, String parentCategoryId, String brandId, String origin, String catalogId, String remark, String platformId) throws Exception
+	public Product createProduct(PimUserContext userContext,String name, String parentCategoryId, String brandId, String productCoverImage, String origin, String catalogId, String remark, String platformId) throws Exception
 	{
 		
 		
@@ -184,6 +184,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		
 
 		userContext.getChecker().checkNameOfProduct(name);
+		userContext.getChecker().checkProductCoverImageOfProduct(productCoverImage);
 		userContext.getChecker().checkOriginOfProduct(origin);
 		userContext.getChecker().checkRemarkOfProduct(remark);
 	
@@ -203,6 +204,7 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 		product.setBrand(brand);
 		
 		
+		product.setProductCoverImage(productCoverImage);
 		product.setOrigin(origin);
 			
 		Catalog catalog = loadCatalog(userContext, catalogId,emptyOptions());
@@ -247,6 +249,9 @@ public class ProductManagerImpl extends CustomPimCheckerManager implements Produ
 				
 
 		
+		if(Product.PRODUCT_COVER_IMAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkProductCoverImageOfProduct(parseString(newValueExpr));
+		}
 		if(Product.ORIGIN_PROPERTY.equals(property)){
 			userContext.getChecker().checkOriginOfProduct(parseString(newValueExpr));
 		}		

@@ -8,9 +8,13 @@ import com.terapico.pim.SmartList;
 import com.terapico.pim.MultipleAccessKey;
 import com.terapico.pim.PimUserContext;
 import com.terapico.pim.product.ProductDAO;
+import com.terapico.pim.recommandproduct.RecommandProductDAO;
+import com.terapico.pim.topratedproduct.TopRatedProductDAO;
 import com.terapico.pim.site.SiteDAO;
+import com.terapico.pim.newproduct.NewProductDAO;
 import com.terapico.pim.levelonecategory.LevelOneCategoryDAO;
 import com.terapico.pim.platform.PlatformDAO;
+import com.terapico.pim.editorpickproduct.EditorPickProductDAO;
 
 
 public interface CatalogDAO{
@@ -45,10 +49,26 @@ public interface CatalogDAO{
 		
 	public ProductDAO getProductDAO();
 		
+	public NewProductDAO getNewProductDAO();
+		
+	public EditorPickProductDAO getEditorPickProductDAO();
+		
+	public TopRatedProductDAO getTopRatedProductDAO();
+		
+	public RecommandProductDAO getRecommandProductDAO();
+		
 	
  	public SmartList<Catalog> requestCandidateCatalogForLevelOneCategory(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<Catalog> requestCandidateCatalogForProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Catalog> requestCandidateCatalogForNewProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Catalog> requestCandidateCatalogForEditorPickProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Catalog> requestCandidateCatalogForTopRatedProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Catalog> requestCandidateCatalogForRecommandProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
 	
 	public Catalog planToRemoveLevelOneCategoryList(Catalog catalog, String levelOneCategoryIds[], Map<String,Object> options)throws Exception;
@@ -68,6 +88,82 @@ public interface CatalogDAO{
 	//disconnect Catalog with platform in Product
 	public Catalog planToRemoveProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception;
 	public int countProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception;
+	
+	public Catalog planToRemoveNewProductList(Catalog catalog, String newProductIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Catalog with parent_category in NewProduct
+	public Catalog planToRemoveNewProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception;
+	public int countNewProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with brand in NewProduct
+	public Catalog planToRemoveNewProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception;
+	public int countNewProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with profile in NewProduct
+	public Catalog planToRemoveNewProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception;
+	public int countNewProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with platform in NewProduct
+	public Catalog planToRemoveNewProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception;
+	public int countNewProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception;
+	
+	public Catalog planToRemoveEditorPickProductList(Catalog catalog, String editorPickProductIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Catalog with parent_category in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception;
+	public int countEditorPickProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with brand in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception;
+	public int countEditorPickProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with profile in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception;
+	public int countEditorPickProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with platform in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception;
+	public int countEditorPickProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception;
+	
+	public Catalog planToRemoveTopRatedProductList(Catalog catalog, String topRatedProductIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Catalog with parent_category in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception;
+	public int countTopRatedProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with brand in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception;
+	public int countTopRatedProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with profile in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception;
+	public int countTopRatedProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with platform in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception;
+	public int countTopRatedProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception;
+	
+	public Catalog planToRemoveRecommandProductList(Catalog catalog, String recommandProductIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Catalog with parent_category in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception;
+	public int countRecommandProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with brand in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception;
+	public int countRecommandProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with profile in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception;
+	public int countRecommandProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Catalog with platform in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception;
+	public int countRecommandProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception;
 	
 	
 	public SmartList<Catalog> queryList(String sql, Object ... parmeters);

@@ -837,7 +837,7 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		return prepareProductCreateParameters(product);
  	}
  	protected Object[] prepareProductUpdateParameters(Product product){
- 		Object[] parameters = new Object[11];
+ 		Object[] parameters = new Object[12];
  
  		parameters[0] = product.getName(); 	
  		if(product.getParentCategory() != null){
@@ -848,25 +848,26 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  			parameters[2] = product.getBrand().getId();
  		}
  
- 		parameters[3] = product.getOrigin(); 	
+ 		parameters[3] = product.getProductCoverImage();
+ 		parameters[4] = product.getOrigin(); 	
  		if(product.getCatalog() != null){
- 			parameters[4] = product.getCatalog().getId();
+ 			parameters[5] = product.getCatalog().getId();
  		}
  
- 		parameters[5] = product.getRemark();
- 		parameters[6] = product.getLastUpdateTime(); 	
+ 		parameters[6] = product.getRemark();
+ 		parameters[7] = product.getLastUpdateTime(); 	
  		if(product.getPlatform() != null){
- 			parameters[7] = product.getPlatform().getId();
+ 			parameters[8] = product.getPlatform().getId();
  		}
  		
- 		parameters[8] = product.nextVersion();
- 		parameters[9] = product.getId();
- 		parameters[10] = product.getVersion();
+ 		parameters[9] = product.nextVersion();
+ 		parameters[10] = product.getId();
+ 		parameters[11] = product.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareProductCreateParameters(Product product){
-		Object[] parameters = new Object[9];
+		Object[] parameters = new Object[10];
 		String newProductId=getNextId();
 		product.setId(newProductId);
 		parameters[0] =  product.getId();
@@ -882,16 +883,17 @@ public class ProductJDBCTemplateDAO extends PimNamingServiceDAO implements Produ
  		
  		}
  		
- 		parameters[4] = product.getOrigin(); 	
+ 		parameters[4] = product.getProductCoverImage();
+ 		parameters[5] = product.getOrigin(); 	
  		if(product.getCatalog() != null){
- 			parameters[5] = product.getCatalog().getId();
+ 			parameters[6] = product.getCatalog().getId();
  		
  		}
  		
- 		parameters[6] = product.getRemark();
- 		parameters[7] = product.getLastUpdateTime(); 	
+ 		parameters[7] = product.getRemark();
+ 		parameters[8] = product.getLastUpdateTime(); 	
  		if(product.getPlatform() != null){
- 			parameters[8] = product.getPlatform().getId();
+ 			parameters[9] = product.getPlatform().getId();
  		
  		}
  				

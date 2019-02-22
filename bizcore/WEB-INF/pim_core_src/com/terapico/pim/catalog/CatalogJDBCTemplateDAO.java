@@ -18,15 +18,23 @@ import com.terapico.pim.MultipleAccessKey;
 import com.terapico.pim.PimUserContext;
 
 
+import com.terapico.pim.editorpickproduct.EditorPickProduct;
+import com.terapico.pim.newproduct.NewProduct;
 import com.terapico.pim.site.Site;
 import com.terapico.pim.product.Product;
 import com.terapico.pim.levelonecategory.LevelOneCategory;
+import com.terapico.pim.topratedproduct.TopRatedProduct;
+import com.terapico.pim.recommandproduct.RecommandProduct;
 import com.terapico.pim.platform.Platform;
 
 import com.terapico.pim.product.ProductDAO;
+import com.terapico.pim.recommandproduct.RecommandProductDAO;
+import com.terapico.pim.topratedproduct.TopRatedProductDAO;
 import com.terapico.pim.site.SiteDAO;
+import com.terapico.pim.newproduct.NewProductDAO;
 import com.terapico.pim.levelonecategory.LevelOneCategoryDAO;
 import com.terapico.pim.platform.PlatformDAO;
+import com.terapico.pim.editorpickproduct.EditorPickProductDAO;
 
 
 
@@ -93,6 +101,82 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	
 			
 		
+	
+  	private  NewProductDAO  newProductDAO;
+ 	public void setNewProductDAO(NewProductDAO pNewProductDAO){
+ 	
+ 		if(pNewProductDAO == null){
+ 			throw new IllegalStateException("Do not try to set newProductDAO to null.");
+ 		}
+	 	this.newProductDAO = pNewProductDAO;
+ 	}
+ 	public NewProductDAO getNewProductDAO(){
+ 		if(this.newProductDAO == null){
+ 			throw new IllegalStateException("The newProductDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.newProductDAO;
+ 	}	
+ 	
+			
+		
+	
+  	private  EditorPickProductDAO  editorPickProductDAO;
+ 	public void setEditorPickProductDAO(EditorPickProductDAO pEditorPickProductDAO){
+ 	
+ 		if(pEditorPickProductDAO == null){
+ 			throw new IllegalStateException("Do not try to set editorPickProductDAO to null.");
+ 		}
+	 	this.editorPickProductDAO = pEditorPickProductDAO;
+ 	}
+ 	public EditorPickProductDAO getEditorPickProductDAO(){
+ 		if(this.editorPickProductDAO == null){
+ 			throw new IllegalStateException("The editorPickProductDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.editorPickProductDAO;
+ 	}	
+ 	
+			
+		
+	
+  	private  TopRatedProductDAO  topRatedProductDAO;
+ 	public void setTopRatedProductDAO(TopRatedProductDAO pTopRatedProductDAO){
+ 	
+ 		if(pTopRatedProductDAO == null){
+ 			throw new IllegalStateException("Do not try to set topRatedProductDAO to null.");
+ 		}
+	 	this.topRatedProductDAO = pTopRatedProductDAO;
+ 	}
+ 	public TopRatedProductDAO getTopRatedProductDAO(){
+ 		if(this.topRatedProductDAO == null){
+ 			throw new IllegalStateException("The topRatedProductDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.topRatedProductDAO;
+ 	}	
+ 	
+			
+		
+	
+  	private  RecommandProductDAO  recommandProductDAO;
+ 	public void setRecommandProductDAO(RecommandProductDAO pRecommandProductDAO){
+ 	
+ 		if(pRecommandProductDAO == null){
+ 			throw new IllegalStateException("Do not try to set recommandProductDAO to null.");
+ 		}
+	 	this.recommandProductDAO = pRecommandProductDAO;
+ 	}
+ 	public RecommandProductDAO getRecommandProductDAO(){
+ 		if(this.recommandProductDAO == null){
+ 			throw new IllegalStateException("The recommandProductDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.recommandProductDAO;
+ 	}	
+ 	
+			
+		
 
 	
 	/*
@@ -147,6 +231,34 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		
  		if(isSaveProductListEnabled(options)){
  			for(Product item: newCatalog.getProductList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveNewProductListEnabled(options)){
+ 			for(NewProduct item: newCatalog.getNewProductList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveEditorPickProductListEnabled(options)){
+ 			for(EditorPickProduct item: newCatalog.getEditorPickProductList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveTopRatedProductListEnabled(options)){
+ 			for(TopRatedProduct item: newCatalog.getTopRatedProductList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveRecommandProductListEnabled(options)){
+ 			for(RecommandProduct item: newCatalog.getRecommandProductList()){
  				item.setVersion(0);
  			}
  		}
@@ -300,6 +412,66 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  	}
  	
 		
+	
+	protected boolean isExtractNewProductListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,CatalogTokens.NEW_PRODUCT_LIST);
+ 	}
+ 	protected boolean isAnalyzeNewProductListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,CatalogTokens.NEW_PRODUCT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveNewProductListEnabled(Map<String,Object> options){
+		return checkOptions(options, CatalogTokens.NEW_PRODUCT_LIST);
+		
+ 	}
+ 	
+		
+	
+	protected boolean isExtractEditorPickProductListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,CatalogTokens.EDITOR_PICK_PRODUCT_LIST);
+ 	}
+ 	protected boolean isAnalyzeEditorPickProductListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,CatalogTokens.EDITOR_PICK_PRODUCT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveEditorPickProductListEnabled(Map<String,Object> options){
+		return checkOptions(options, CatalogTokens.EDITOR_PICK_PRODUCT_LIST);
+		
+ 	}
+ 	
+		
+	
+	protected boolean isExtractTopRatedProductListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,CatalogTokens.TOP_RATED_PRODUCT_LIST);
+ 	}
+ 	protected boolean isAnalyzeTopRatedProductListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,CatalogTokens.TOP_RATED_PRODUCT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveTopRatedProductListEnabled(Map<String,Object> options){
+		return checkOptions(options, CatalogTokens.TOP_RATED_PRODUCT_LIST);
+		
+ 	}
+ 	
+		
+	
+	protected boolean isExtractRecommandProductListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,CatalogTokens.RECOMMAND_PRODUCT_LIST);
+ 	}
+ 	protected boolean isAnalyzeRecommandProductListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,CatalogTokens.RECOMMAND_PRODUCT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveRecommandProductListEnabled(Map<String,Object> options){
+		return checkOptions(options, CatalogTokens.RECOMMAND_PRODUCT_LIST);
+		
+ 	}
+ 	
+		
 
 	
 
@@ -348,6 +520,38 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
  		}	
  		if(isAnalyzeProductListEnabled(loadOptions)){
 	 		analyzeProductList(catalog, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractNewProductListEnabled(loadOptions)){
+	 		extractNewProductList(catalog, loadOptions);
+ 		}	
+ 		if(isAnalyzeNewProductListEnabled(loadOptions)){
+	 		analyzeNewProductList(catalog, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractEditorPickProductListEnabled(loadOptions)){
+	 		extractEditorPickProductList(catalog, loadOptions);
+ 		}	
+ 		if(isAnalyzeEditorPickProductListEnabled(loadOptions)){
+	 		analyzeEditorPickProductList(catalog, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractTopRatedProductListEnabled(loadOptions)){
+	 		extractTopRatedProductList(catalog, loadOptions);
+ 		}	
+ 		if(isAnalyzeTopRatedProductListEnabled(loadOptions)){
+	 		analyzeTopRatedProductList(catalog, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractRecommandProductListEnabled(loadOptions)){
+	 		extractRecommandProductList(catalog, loadOptions);
+ 		}	
+ 		if(isAnalyzeRecommandProductListEnabled(loadOptions)){
+	 		analyzeRecommandProductList(catalog, loadOptions);
  		}
  		
 		
@@ -489,6 +693,206 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		SmartList<Product> productList = catalog.getProductList();
 		if(productList != null){
 			getProductDAO().analyzeProductByCatalog(productList, catalog.getId(), options);
+			
+		}
+		
+		return catalog;
+	
+	}	
+	
+		
+	protected void enhanceNewProductList(SmartList<NewProduct> newProductList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Catalog extractNewProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<NewProduct> newProductList = getNewProductDAO().findNewProductByCatalog(catalog.getId(),options);
+		if(newProductList != null){
+			enhanceNewProductList(newProductList,options);
+			catalog.setNewProductList(newProductList);
+		}
+		
+		return catalog;
+	
+	}	
+	
+	protected Catalog analyzeNewProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();
+		if(newProductList != null){
+			getNewProductDAO().analyzeNewProductByCatalog(newProductList, catalog.getId(), options);
+			
+		}
+		
+		return catalog;
+	
+	}	
+	
+		
+	protected void enhanceEditorPickProductList(SmartList<EditorPickProduct> editorPickProductList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Catalog extractEditorPickProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = getEditorPickProductDAO().findEditorPickProductByCatalog(catalog.getId(),options);
+		if(editorPickProductList != null){
+			enhanceEditorPickProductList(editorPickProductList,options);
+			catalog.setEditorPickProductList(editorPickProductList);
+		}
+		
+		return catalog;
+	
+	}	
+	
+	protected Catalog analyzeEditorPickProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();
+		if(editorPickProductList != null){
+			getEditorPickProductDAO().analyzeEditorPickProductByCatalog(editorPickProductList, catalog.getId(), options);
+			
+		}
+		
+		return catalog;
+	
+	}	
+	
+		
+	protected void enhanceTopRatedProductList(SmartList<TopRatedProduct> topRatedProductList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Catalog extractTopRatedProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = getTopRatedProductDAO().findTopRatedProductByCatalog(catalog.getId(),options);
+		if(topRatedProductList != null){
+			enhanceTopRatedProductList(topRatedProductList,options);
+			catalog.setTopRatedProductList(topRatedProductList);
+		}
+		
+		return catalog;
+	
+	}	
+	
+	protected Catalog analyzeTopRatedProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();
+		if(topRatedProductList != null){
+			getTopRatedProductDAO().analyzeTopRatedProductByCatalog(topRatedProductList, catalog.getId(), options);
+			
+		}
+		
+		return catalog;
+	
+	}	
+	
+		
+	protected void enhanceRecommandProductList(SmartList<RecommandProduct> recommandProductList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Catalog extractRecommandProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<RecommandProduct> recommandProductList = getRecommandProductDAO().findRecommandProductByCatalog(catalog.getId(),options);
+		if(recommandProductList != null){
+			enhanceRecommandProductList(recommandProductList,options);
+			catalog.setRecommandProductList(recommandProductList);
+		}
+		
+		return catalog;
+	
+	}	
+	
+	protected Catalog analyzeRecommandProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		if(catalog == null){
+			return null;
+		}
+		if(catalog.getId() == null){
+			return catalog;
+		}
+
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();
+		if(recommandProductList != null){
+			getRecommandProductDAO().analyzeRecommandProductByCatalog(recommandProductList, catalog.getId(), options);
 			
 		}
 		
@@ -793,6 +1197,34 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 	 		
  		}		
 		
+		if(isSaveNewProductListEnabled(options)){
+	 		saveNewProductList(catalog, options);
+	 		//removeNewProductList(catalog, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
+		if(isSaveEditorPickProductListEnabled(options)){
+	 		saveEditorPickProductList(catalog, options);
+	 		//removeEditorPickProductList(catalog, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
+		if(isSaveTopRatedProductListEnabled(options)){
+	 		saveTopRatedProductList(catalog, options);
+	 		//removeTopRatedProductList(catalog, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
+		if(isSaveRecommandProductListEnabled(options)){
+	 		saveRecommandProductList(catalog, options);
+	 		//removeRecommandProductList(catalog, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		return catalog;
 		
 	}
@@ -1025,6 +1457,822 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		return count;
 	}
 	
+	public Catalog planToRemoveNewProductList(Catalog catalog, String newProductIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(NewProduct.ID_PROPERTY, newProductIds);
+		
+		SmartList<NewProduct> externalNewProductList = getNewProductDAO().
+				findNewProductWithKey(key, options);
+		if(externalNewProductList == null){
+			return catalog;
+		}
+		if(externalNewProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(NewProduct newProduct: externalNewProductList){
+
+			newProduct.clearFromAll();
+		}
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();		
+		newProductList.addAllToRemoveList(externalNewProductList);
+		return catalog;	
+	
+	}
+
+
+	//disconnect Catalog with parent_category in NewProduct
+	public Catalog planToRemoveNewProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(NewProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		SmartList<NewProduct> externalNewProductList = getNewProductDAO().
+				findNewProductWithKey(key, options);
+		if(externalNewProductList == null){
+			return catalog;
+		}
+		if(externalNewProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(NewProduct newProduct: externalNewProductList){
+			newProduct.clearParentCategory();
+			newProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();		
+		newProductList.addAllToRemoveList(externalNewProductList);
+		return catalog;
+	}
+	
+	public int countNewProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalogId);
+		key.put(NewProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		int count = getNewProductDAO().countNewProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with brand in NewProduct
+	public Catalog planToRemoveNewProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(NewProduct.BRAND_PROPERTY, brandId);
+		
+		SmartList<NewProduct> externalNewProductList = getNewProductDAO().
+				findNewProductWithKey(key, options);
+		if(externalNewProductList == null){
+			return catalog;
+		}
+		if(externalNewProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(NewProduct newProduct: externalNewProductList){
+			newProduct.clearBrand();
+			newProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();		
+		newProductList.addAllToRemoveList(externalNewProductList);
+		return catalog;
+	}
+	
+	public int countNewProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalogId);
+		key.put(NewProduct.BRAND_PROPERTY, brandId);
+		
+		int count = getNewProductDAO().countNewProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with profile in NewProduct
+	public Catalog planToRemoveNewProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(NewProduct.PROFILE_PROPERTY, profileId);
+		
+		SmartList<NewProduct> externalNewProductList = getNewProductDAO().
+				findNewProductWithKey(key, options);
+		if(externalNewProductList == null){
+			return catalog;
+		}
+		if(externalNewProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(NewProduct newProduct: externalNewProductList){
+			newProduct.clearProfile();
+			newProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();		
+		newProductList.addAllToRemoveList(externalNewProductList);
+		return catalog;
+	}
+	
+	public int countNewProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalogId);
+		key.put(NewProduct.PROFILE_PROPERTY, profileId);
+		
+		int count = getNewProductDAO().countNewProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with platform in NewProduct
+	public Catalog planToRemoveNewProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(NewProduct.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<NewProduct> externalNewProductList = getNewProductDAO().
+				findNewProductWithKey(key, options);
+		if(externalNewProductList == null){
+			return catalog;
+		}
+		if(externalNewProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(NewProduct newProduct: externalNewProductList){
+			newProduct.clearPlatform();
+			newProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();		
+		newProductList.addAllToRemoveList(externalNewProductList);
+		return catalog;
+	}
+	
+	public int countNewProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(NewProduct.CATALOG_PROPERTY, catalogId);
+		key.put(NewProduct.PLATFORM_PROPERTY, platformId);
+		
+		int count = getNewProductDAO().countNewProductWithKey(key, options);
+		return count;
+	}
+	
+	public Catalog planToRemoveEditorPickProductList(Catalog catalog, String editorPickProductIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(EditorPickProduct.ID_PROPERTY, editorPickProductIds);
+		
+		SmartList<EditorPickProduct> externalEditorPickProductList = getEditorPickProductDAO().
+				findEditorPickProductWithKey(key, options);
+		if(externalEditorPickProductList == null){
+			return catalog;
+		}
+		if(externalEditorPickProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(EditorPickProduct editorPickProduct: externalEditorPickProductList){
+
+			editorPickProduct.clearFromAll();
+		}
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();		
+		editorPickProductList.addAllToRemoveList(externalEditorPickProductList);
+		return catalog;	
+	
+	}
+
+
+	//disconnect Catalog with parent_category in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(EditorPickProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		SmartList<EditorPickProduct> externalEditorPickProductList = getEditorPickProductDAO().
+				findEditorPickProductWithKey(key, options);
+		if(externalEditorPickProductList == null){
+			return catalog;
+		}
+		if(externalEditorPickProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(EditorPickProduct editorPickProduct: externalEditorPickProductList){
+			editorPickProduct.clearParentCategory();
+			editorPickProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();		
+		editorPickProductList.addAllToRemoveList(externalEditorPickProductList);
+		return catalog;
+	}
+	
+	public int countEditorPickProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalogId);
+		key.put(EditorPickProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		int count = getEditorPickProductDAO().countEditorPickProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with brand in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(EditorPickProduct.BRAND_PROPERTY, brandId);
+		
+		SmartList<EditorPickProduct> externalEditorPickProductList = getEditorPickProductDAO().
+				findEditorPickProductWithKey(key, options);
+		if(externalEditorPickProductList == null){
+			return catalog;
+		}
+		if(externalEditorPickProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(EditorPickProduct editorPickProduct: externalEditorPickProductList){
+			editorPickProduct.clearBrand();
+			editorPickProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();		
+		editorPickProductList.addAllToRemoveList(externalEditorPickProductList);
+		return catalog;
+	}
+	
+	public int countEditorPickProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalogId);
+		key.put(EditorPickProduct.BRAND_PROPERTY, brandId);
+		
+		int count = getEditorPickProductDAO().countEditorPickProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with profile in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(EditorPickProduct.PROFILE_PROPERTY, profileId);
+		
+		SmartList<EditorPickProduct> externalEditorPickProductList = getEditorPickProductDAO().
+				findEditorPickProductWithKey(key, options);
+		if(externalEditorPickProductList == null){
+			return catalog;
+		}
+		if(externalEditorPickProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(EditorPickProduct editorPickProduct: externalEditorPickProductList){
+			editorPickProduct.clearProfile();
+			editorPickProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();		
+		editorPickProductList.addAllToRemoveList(externalEditorPickProductList);
+		return catalog;
+	}
+	
+	public int countEditorPickProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalogId);
+		key.put(EditorPickProduct.PROFILE_PROPERTY, profileId);
+		
+		int count = getEditorPickProductDAO().countEditorPickProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with platform in EditorPickProduct
+	public Catalog planToRemoveEditorPickProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(EditorPickProduct.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<EditorPickProduct> externalEditorPickProductList = getEditorPickProductDAO().
+				findEditorPickProductWithKey(key, options);
+		if(externalEditorPickProductList == null){
+			return catalog;
+		}
+		if(externalEditorPickProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(EditorPickProduct editorPickProduct: externalEditorPickProductList){
+			editorPickProduct.clearPlatform();
+			editorPickProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();		
+		editorPickProductList.addAllToRemoveList(externalEditorPickProductList);
+		return catalog;
+	}
+	
+	public int countEditorPickProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(EditorPickProduct.CATALOG_PROPERTY, catalogId);
+		key.put(EditorPickProduct.PLATFORM_PROPERTY, platformId);
+		
+		int count = getEditorPickProductDAO().countEditorPickProductWithKey(key, options);
+		return count;
+	}
+	
+	public Catalog planToRemoveTopRatedProductList(Catalog catalog, String topRatedProductIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(TopRatedProduct.ID_PROPERTY, topRatedProductIds);
+		
+		SmartList<TopRatedProduct> externalTopRatedProductList = getTopRatedProductDAO().
+				findTopRatedProductWithKey(key, options);
+		if(externalTopRatedProductList == null){
+			return catalog;
+		}
+		if(externalTopRatedProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(TopRatedProduct topRatedProduct: externalTopRatedProductList){
+
+			topRatedProduct.clearFromAll();
+		}
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();		
+		topRatedProductList.addAllToRemoveList(externalTopRatedProductList);
+		return catalog;	
+	
+	}
+
+
+	//disconnect Catalog with parent_category in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(TopRatedProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		SmartList<TopRatedProduct> externalTopRatedProductList = getTopRatedProductDAO().
+				findTopRatedProductWithKey(key, options);
+		if(externalTopRatedProductList == null){
+			return catalog;
+		}
+		if(externalTopRatedProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(TopRatedProduct topRatedProduct: externalTopRatedProductList){
+			topRatedProduct.clearParentCategory();
+			topRatedProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();		
+		topRatedProductList.addAllToRemoveList(externalTopRatedProductList);
+		return catalog;
+	}
+	
+	public int countTopRatedProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalogId);
+		key.put(TopRatedProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		int count = getTopRatedProductDAO().countTopRatedProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with brand in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(TopRatedProduct.BRAND_PROPERTY, brandId);
+		
+		SmartList<TopRatedProduct> externalTopRatedProductList = getTopRatedProductDAO().
+				findTopRatedProductWithKey(key, options);
+		if(externalTopRatedProductList == null){
+			return catalog;
+		}
+		if(externalTopRatedProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(TopRatedProduct topRatedProduct: externalTopRatedProductList){
+			topRatedProduct.clearBrand();
+			topRatedProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();		
+		topRatedProductList.addAllToRemoveList(externalTopRatedProductList);
+		return catalog;
+	}
+	
+	public int countTopRatedProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalogId);
+		key.put(TopRatedProduct.BRAND_PROPERTY, brandId);
+		
+		int count = getTopRatedProductDAO().countTopRatedProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with profile in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(TopRatedProduct.PROFILE_PROPERTY, profileId);
+		
+		SmartList<TopRatedProduct> externalTopRatedProductList = getTopRatedProductDAO().
+				findTopRatedProductWithKey(key, options);
+		if(externalTopRatedProductList == null){
+			return catalog;
+		}
+		if(externalTopRatedProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(TopRatedProduct topRatedProduct: externalTopRatedProductList){
+			topRatedProduct.clearProfile();
+			topRatedProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();		
+		topRatedProductList.addAllToRemoveList(externalTopRatedProductList);
+		return catalog;
+	}
+	
+	public int countTopRatedProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalogId);
+		key.put(TopRatedProduct.PROFILE_PROPERTY, profileId);
+		
+		int count = getTopRatedProductDAO().countTopRatedProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with platform in TopRatedProduct
+	public Catalog planToRemoveTopRatedProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(TopRatedProduct.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<TopRatedProduct> externalTopRatedProductList = getTopRatedProductDAO().
+				findTopRatedProductWithKey(key, options);
+		if(externalTopRatedProductList == null){
+			return catalog;
+		}
+		if(externalTopRatedProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(TopRatedProduct topRatedProduct: externalTopRatedProductList){
+			topRatedProduct.clearPlatform();
+			topRatedProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();		
+		topRatedProductList.addAllToRemoveList(externalTopRatedProductList);
+		return catalog;
+	}
+	
+	public int countTopRatedProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(TopRatedProduct.CATALOG_PROPERTY, catalogId);
+		key.put(TopRatedProduct.PLATFORM_PROPERTY, platformId);
+		
+		int count = getTopRatedProductDAO().countTopRatedProductWithKey(key, options);
+		return count;
+	}
+	
+	public Catalog planToRemoveRecommandProductList(Catalog catalog, String recommandProductIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(RecommandProduct.ID_PROPERTY, recommandProductIds);
+		
+		SmartList<RecommandProduct> externalRecommandProductList = getRecommandProductDAO().
+				findRecommandProductWithKey(key, options);
+		if(externalRecommandProductList == null){
+			return catalog;
+		}
+		if(externalRecommandProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(RecommandProduct recommandProduct: externalRecommandProductList){
+
+			recommandProduct.clearFromAll();
+		}
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();		
+		recommandProductList.addAllToRemoveList(externalRecommandProductList);
+		return catalog;	
+	
+	}
+
+
+	//disconnect Catalog with parent_category in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithParentCategory(Catalog catalog, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(RecommandProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		SmartList<RecommandProduct> externalRecommandProductList = getRecommandProductDAO().
+				findRecommandProductWithKey(key, options);
+		if(externalRecommandProductList == null){
+			return catalog;
+		}
+		if(externalRecommandProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(RecommandProduct recommandProduct: externalRecommandProductList){
+			recommandProduct.clearParentCategory();
+			recommandProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();		
+		recommandProductList.addAllToRemoveList(externalRecommandProductList);
+		return catalog;
+	}
+	
+	public int countRecommandProductListWithParentCategory(String catalogId, String parentCategoryId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalogId);
+		key.put(RecommandProduct.PARENT_CATEGORY_PROPERTY, parentCategoryId);
+		
+		int count = getRecommandProductDAO().countRecommandProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with brand in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithBrand(Catalog catalog, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(RecommandProduct.BRAND_PROPERTY, brandId);
+		
+		SmartList<RecommandProduct> externalRecommandProductList = getRecommandProductDAO().
+				findRecommandProductWithKey(key, options);
+		if(externalRecommandProductList == null){
+			return catalog;
+		}
+		if(externalRecommandProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(RecommandProduct recommandProduct: externalRecommandProductList){
+			recommandProduct.clearBrand();
+			recommandProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();		
+		recommandProductList.addAllToRemoveList(externalRecommandProductList);
+		return catalog;
+	}
+	
+	public int countRecommandProductListWithBrand(String catalogId, String brandId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalogId);
+		key.put(RecommandProduct.BRAND_PROPERTY, brandId);
+		
+		int count = getRecommandProductDAO().countRecommandProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with profile in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithProfile(Catalog catalog, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(RecommandProduct.PROFILE_PROPERTY, profileId);
+		
+		SmartList<RecommandProduct> externalRecommandProductList = getRecommandProductDAO().
+				findRecommandProductWithKey(key, options);
+		if(externalRecommandProductList == null){
+			return catalog;
+		}
+		if(externalRecommandProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(RecommandProduct recommandProduct: externalRecommandProductList){
+			recommandProduct.clearProfile();
+			recommandProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();		
+		recommandProductList.addAllToRemoveList(externalRecommandProductList);
+		return catalog;
+	}
+	
+	public int countRecommandProductListWithProfile(String catalogId, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalogId);
+		key.put(RecommandProduct.PROFILE_PROPERTY, profileId);
+		
+		int count = getRecommandProductDAO().countRecommandProductWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Catalog with platform in RecommandProduct
+	public Catalog planToRemoveRecommandProductListWithPlatform(Catalog catalog, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalog.getId());
+		key.put(RecommandProduct.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<RecommandProduct> externalRecommandProductList = getRecommandProductDAO().
+				findRecommandProductWithKey(key, options);
+		if(externalRecommandProductList == null){
+			return catalog;
+		}
+		if(externalRecommandProductList.isEmpty()){
+			return catalog;
+		}
+		
+		for(RecommandProduct recommandProduct: externalRecommandProductList){
+			recommandProduct.clearPlatform();
+			recommandProduct.clearCatalog();
+			
+		}
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();		
+		recommandProductList.addAllToRemoveList(externalRecommandProductList);
+		return catalog;
+	}
+	
+	public int countRecommandProductListWithPlatform(String catalogId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(RecommandProduct.CATALOG_PROPERTY, catalogId);
+		key.put(RecommandProduct.PLATFORM_PROPERTY, platformId);
+		
+		int count = getRecommandProductDAO().countRecommandProductWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Catalog saveLevelOneCategoryList(Catalog catalog, Map<String,Object> options){
@@ -1159,11 +2407,279 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 	
 	
 		
+	protected Catalog saveNewProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();
+		if(newProductList == null){
+			//null list means nothing
+			return catalog;
+		}
+		SmartList<NewProduct> mergedUpdateNewProductList = new SmartList<NewProduct>();
+		
+		
+		mergedUpdateNewProductList.addAll(newProductList); 
+		if(newProductList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateNewProductList.addAll(newProductList.getToRemoveList());
+			newProductList.removeAll(newProductList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getNewProductDAO().saveNewProductList(mergedUpdateNewProductList,options);
+		
+		if(newProductList.getToRemoveList() != null){
+			newProductList.removeAll(newProductList.getToRemoveList());
+		}
+		
+		
+		return catalog;
+	
+	}
+	
+	protected Catalog removeNewProductList(Catalog catalog, Map<String,Object> options){
+	
+	
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();
+		if(newProductList == null){
+			return catalog;
+		}	
+	
+		SmartList<NewProduct> toRemoveNewProductList = newProductList.getToRemoveList();
+		
+		if(toRemoveNewProductList == null){
+			return catalog;
+		}
+		if(toRemoveNewProductList.isEmpty()){
+			return catalog;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getNewProductDAO().removeNewProductList(toRemoveNewProductList,options);
+		
+		return catalog;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
+	protected Catalog saveEditorPickProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();
+		if(editorPickProductList == null){
+			//null list means nothing
+			return catalog;
+		}
+		SmartList<EditorPickProduct> mergedUpdateEditorPickProductList = new SmartList<EditorPickProduct>();
+		
+		
+		mergedUpdateEditorPickProductList.addAll(editorPickProductList); 
+		if(editorPickProductList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateEditorPickProductList.addAll(editorPickProductList.getToRemoveList());
+			editorPickProductList.removeAll(editorPickProductList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getEditorPickProductDAO().saveEditorPickProductList(mergedUpdateEditorPickProductList,options);
+		
+		if(editorPickProductList.getToRemoveList() != null){
+			editorPickProductList.removeAll(editorPickProductList.getToRemoveList());
+		}
+		
+		
+		return catalog;
+	
+	}
+	
+	protected Catalog removeEditorPickProductList(Catalog catalog, Map<String,Object> options){
+	
+	
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();
+		if(editorPickProductList == null){
+			return catalog;
+		}	
+	
+		SmartList<EditorPickProduct> toRemoveEditorPickProductList = editorPickProductList.getToRemoveList();
+		
+		if(toRemoveEditorPickProductList == null){
+			return catalog;
+		}
+		if(toRemoveEditorPickProductList.isEmpty()){
+			return catalog;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getEditorPickProductDAO().removeEditorPickProductList(toRemoveEditorPickProductList,options);
+		
+		return catalog;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
+	protected Catalog saveTopRatedProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();
+		if(topRatedProductList == null){
+			//null list means nothing
+			return catalog;
+		}
+		SmartList<TopRatedProduct> mergedUpdateTopRatedProductList = new SmartList<TopRatedProduct>();
+		
+		
+		mergedUpdateTopRatedProductList.addAll(topRatedProductList); 
+		if(topRatedProductList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateTopRatedProductList.addAll(topRatedProductList.getToRemoveList());
+			topRatedProductList.removeAll(topRatedProductList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getTopRatedProductDAO().saveTopRatedProductList(mergedUpdateTopRatedProductList,options);
+		
+		if(topRatedProductList.getToRemoveList() != null){
+			topRatedProductList.removeAll(topRatedProductList.getToRemoveList());
+		}
+		
+		
+		return catalog;
+	
+	}
+	
+	protected Catalog removeTopRatedProductList(Catalog catalog, Map<String,Object> options){
+	
+	
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();
+		if(topRatedProductList == null){
+			return catalog;
+		}	
+	
+		SmartList<TopRatedProduct> toRemoveTopRatedProductList = topRatedProductList.getToRemoveList();
+		
+		if(toRemoveTopRatedProductList == null){
+			return catalog;
+		}
+		if(toRemoveTopRatedProductList.isEmpty()){
+			return catalog;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getTopRatedProductDAO().removeTopRatedProductList(toRemoveTopRatedProductList,options);
+		
+		return catalog;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
+	protected Catalog saveRecommandProductList(Catalog catalog, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();
+		if(recommandProductList == null){
+			//null list means nothing
+			return catalog;
+		}
+		SmartList<RecommandProduct> mergedUpdateRecommandProductList = new SmartList<RecommandProduct>();
+		
+		
+		mergedUpdateRecommandProductList.addAll(recommandProductList); 
+		if(recommandProductList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateRecommandProductList.addAll(recommandProductList.getToRemoveList());
+			recommandProductList.removeAll(recommandProductList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getRecommandProductDAO().saveRecommandProductList(mergedUpdateRecommandProductList,options);
+		
+		if(recommandProductList.getToRemoveList() != null){
+			recommandProductList.removeAll(recommandProductList.getToRemoveList());
+		}
+		
+		
+		return catalog;
+	
+	}
+	
+	protected Catalog removeRecommandProductList(Catalog catalog, Map<String,Object> options){
+	
+	
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();
+		if(recommandProductList == null){
+			return catalog;
+		}	
+	
+		SmartList<RecommandProduct> toRemoveRecommandProductList = recommandProductList.getToRemoveList();
+		
+		if(toRemoveRecommandProductList == null){
+			return catalog;
+		}
+		if(toRemoveRecommandProductList.isEmpty()){
+			return catalog;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getRecommandProductDAO().removeRecommandProductList(toRemoveRecommandProductList,options);
+		
+		return catalog;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
 
 	public Catalog present(Catalog catalog,Map<String, Object> options){
 	
 		presentLevelOneCategoryList(catalog,options);
 		presentProductList(catalog,options);
+		presentNewProductList(catalog,options);
+		presentEditorPickProductList(catalog,options);
+		presentTopRatedProductList(catalog,options);
+		presentRecommandProductList(catalog,options);
 
 		return catalog;
 	
@@ -1209,6 +2725,86 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
 		return catalog;
 	}			
 		
+	//Using java8 feature to reduce the code significantly
+ 	protected Catalog presentNewProductList(
+			Catalog catalog,
+			Map<String, Object> options) {
+
+		SmartList<NewProduct> newProductList = catalog.getNewProductList();		
+				SmartList<NewProduct> newList= presentSubList(catalog.getId(),
+				newProductList,
+				options,
+				getNewProductDAO()::countNewProductByCatalog,
+				getNewProductDAO()::findNewProductByCatalog
+				);
+
+		
+		catalog.setNewProductList(newList);
+		
+
+		return catalog;
+	}			
+		
+	//Using java8 feature to reduce the code significantly
+ 	protected Catalog presentEditorPickProductList(
+			Catalog catalog,
+			Map<String, Object> options) {
+
+		SmartList<EditorPickProduct> editorPickProductList = catalog.getEditorPickProductList();		
+				SmartList<EditorPickProduct> newList= presentSubList(catalog.getId(),
+				editorPickProductList,
+				options,
+				getEditorPickProductDAO()::countEditorPickProductByCatalog,
+				getEditorPickProductDAO()::findEditorPickProductByCatalog
+				);
+
+		
+		catalog.setEditorPickProductList(newList);
+		
+
+		return catalog;
+	}			
+		
+	//Using java8 feature to reduce the code significantly
+ 	protected Catalog presentTopRatedProductList(
+			Catalog catalog,
+			Map<String, Object> options) {
+
+		SmartList<TopRatedProduct> topRatedProductList = catalog.getTopRatedProductList();		
+				SmartList<TopRatedProduct> newList= presentSubList(catalog.getId(),
+				topRatedProductList,
+				options,
+				getTopRatedProductDAO()::countTopRatedProductByCatalog,
+				getTopRatedProductDAO()::findTopRatedProductByCatalog
+				);
+
+		
+		catalog.setTopRatedProductList(newList);
+		
+
+		return catalog;
+	}			
+		
+	//Using java8 feature to reduce the code significantly
+ 	protected Catalog presentRecommandProductList(
+			Catalog catalog,
+			Map<String, Object> options) {
+
+		SmartList<RecommandProduct> recommandProductList = catalog.getRecommandProductList();		
+				SmartList<RecommandProduct> newList= presentSubList(catalog.getId(),
+				recommandProductList,
+				options,
+				getRecommandProductDAO()::countRecommandProductByCatalog,
+				getRecommandProductDAO()::findRecommandProductByCatalog
+				);
+
+		
+		catalog.setRecommandProductList(newList);
+		
+
+		return catalog;
+	}			
+		
 
 	
     public SmartList<Catalog> requestCandidateCatalogForLevelOneCategory(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
@@ -1218,6 +2814,30 @@ public class CatalogJDBCTemplateDAO extends PimNamingServiceDAO implements Catal
     }
 		
     public SmartList<Catalog> requestCandidateCatalogForProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
+    }
+		
+    public SmartList<Catalog> requestCandidateCatalogForNewProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
+    }
+		
+    public SmartList<Catalog> requestCandidateCatalogForEditorPickProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
+    }
+		
+    public SmartList<Catalog> requestCandidateCatalogForTopRatedProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
+    }
+		
+    public SmartList<Catalog> requestCandidateCatalogForRecommandProduct(PimUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
 		return findAllCandidateByFilter(CatalogTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCatalogMapper());
