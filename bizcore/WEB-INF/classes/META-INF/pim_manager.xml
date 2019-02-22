@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="checker" class="com.terapico.pim.PimChecker" scope="prototype"></bean>
+
+	<bean id="platformManagerBase" class="com.terapico.pim.platform.PlatformManagerImpl"/>
+	<bean id="platformManager" class="com.terapico.pim.platform.PlatformCustomManagerImpl" parent="platformManagerBase" ></bean>
+	
+	<bean id="siteManagerBase" class="com.terapico.pim.site.SiteManagerImpl"/>
+	<bean id="siteManager" class="com.terapico.pim.site.SiteManagerImpl" parent="siteManagerBase" ></bean>
+	
+	<bean id="catalogManagerBase" class="com.terapico.pim.catalog.CatalogManagerImpl"/>
+	<bean id="catalogManager" class="com.terapico.pim.catalog.CatalogManagerImpl" parent="catalogManagerBase" ></bean>
+	
+	<bean id="levelOneCategoryManagerBase" class="com.terapico.pim.levelonecategory.LevelOneCategoryManagerImpl"/>
+	<bean id="levelOneCategoryManager" class="com.terapico.pim.levelonecategory.LevelOneCategoryManagerImpl" parent="levelOneCategoryManagerBase" ></bean>
+	
+	<bean id="levelTwoCategoryManagerBase" class="com.terapico.pim.leveltwocategory.LevelTwoCategoryManagerImpl"/>
+	<bean id="levelTwoCategoryManager" class="com.terapico.pim.leveltwocategory.LevelTwoCategoryManagerImpl" parent="levelTwoCategoryManagerBase" ></bean>
+	
+	<bean id="levelNCategoryManagerBase" class="com.terapico.pim.levelncategory.LevelNCategoryManagerImpl"/>
+	<bean id="levelNCategoryManager" class="com.terapico.pim.levelncategory.LevelNCategoryManagerImpl" parent="levelNCategoryManagerBase" ></bean>
+	
+	<bean id="brandManagerBase" class="com.terapico.pim.brand.BrandManagerImpl"/>
+	<bean id="brandManager" class="com.terapico.pim.brand.BrandManagerImpl" parent="brandManagerBase" ></bean>
+	
+	<bean id="productManagerBase" class="com.terapico.pim.product.ProductManagerImpl"/>
+	<bean id="productManager" class="com.terapico.pim.product.ProductManagerImpl" parent="productManagerBase" ></bean>
+	
+	<bean id="skuManagerBase" class="com.terapico.pim.sku.SkuManagerImpl"/>
+	<bean id="skuManager" class="com.terapico.pim.sku.SkuManagerImpl" parent="skuManagerBase" ></bean>
+	
+	<bean id="userDomainManagerBase" class="com.terapico.pim.userdomain.UserDomainManagerImpl"/>
+	<bean id="userDomainManager" class="com.terapico.pim.userdomain.UserDomainManagerImpl" parent="userDomainManagerBase" ></bean>
+	
+	<bean id="userWhiteListManagerBase" class="com.terapico.pim.userwhitelist.UserWhiteListManagerImpl"/>
+	<bean id="userWhiteListManager" class="com.terapico.pim.userwhitelist.UserWhiteListManagerImpl" parent="userWhiteListManagerBase" ></bean>
+	
+	<bean id="secUserManagerBase" class="com.terapico.pim.secuser.SecUserManagerImpl"/>
+	<bean id="secUserManager" class="com.terapico.pim.secuser.SecUserManagerImpl" parent="secUserManagerBase" ></bean>
+	
+	<bean id="secUserBlockingManagerBase" class="com.terapico.pim.secuserblocking.SecUserBlockingManagerImpl"/>
+	<bean id="secUserBlockingManager" class="com.terapico.pim.secuserblocking.SecUserBlockingManagerImpl" parent="secUserBlockingManagerBase" ></bean>
+	
+	<bean id="userAppManagerBase" class="com.terapico.pim.userapp.UserAppManagerImpl"/>
+	<bean id="userAppManager" class="com.terapico.pim.userapp.UserAppManagerImpl" parent="userAppManagerBase" ></bean>
+	
+	<bean id="listAccessManagerBase" class="com.terapico.pim.listaccess.ListAccessManagerImpl"/>
+	<bean id="listAccessManager" class="com.terapico.pim.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
+	
+	<bean id="objectAccessManagerBase" class="com.terapico.pim.objectaccess.ObjectAccessManagerImpl"/>
+	<bean id="objectAccessManager" class="com.terapico.pim.objectaccess.ObjectAccessManagerImpl" parent="objectAccessManagerBase" ></bean>
+	
+	<bean id="loginHistoryManagerBase" class="com.terapico.pim.loginhistory.LoginHistoryManagerImpl"/>
+	<bean id="loginHistoryManager" class="com.terapico.pim.loginhistory.LoginHistoryManagerImpl" parent="loginHistoryManagerBase" ></bean>
+	
+	<bean id="genericFormManagerBase" class="com.terapico.pim.genericform.GenericFormManagerImpl"/>
+	<bean id="genericFormManager" class="com.terapico.pim.genericform.GenericFormCustomManagerImpl" parent="genericFormManagerBase" ></bean>
+	
+	<bean id="formMessageManagerBase" class="com.terapico.pim.formmessage.FormMessageManagerImpl"/>
+	<bean id="formMessageManager" class="com.terapico.pim.formmessage.FormMessageManagerImpl" parent="formMessageManagerBase" ></bean>
+	
+	<bean id="formFieldMessageManagerBase" class="com.terapico.pim.formfieldmessage.FormFieldMessageManagerImpl"/>
+	<bean id="formFieldMessageManager" class="com.terapico.pim.formfieldmessage.FormFieldMessageManagerImpl" parent="formFieldMessageManagerBase" ></bean>
+	
+	<bean id="formFieldManagerBase" class="com.terapico.pim.formfield.FormFieldManagerImpl"/>
+	<bean id="formFieldManager" class="com.terapico.pim.formfield.FormFieldManagerImpl" parent="formFieldManagerBase" ></bean>
+	
+	<bean id="formActionManagerBase" class="com.terapico.pim.formaction.FormActionManagerImpl"/>
+	<bean id="formActionManager" class="com.terapico.pim.formaction.FormActionManagerImpl" parent="formActionManagerBase" ></bean>
+	
+
+	<bean id="managerGroupBase" class="com.terapico.pim.ManagerGroup">
+		<property name="platformManager" ref="platformManager"/>
+		<property name="siteManager" ref="siteManager"/>
+		<property name="catalogManager" ref="catalogManager"/>
+		<property name="levelOneCategoryManager" ref="levelOneCategoryManager"/>
+		<property name="levelTwoCategoryManager" ref="levelTwoCategoryManager"/>
+		<property name="levelNCategoryManager" ref="levelNCategoryManager"/>
+		<property name="brandManager" ref="brandManager"/>
+		<property name="productManager" ref="productManager"/>
+		<property name="skuManager" ref="skuManager"/>
+		<property name="userDomainManager" ref="userDomainManager"/>
+		<property name="userWhiteListManager" ref="userWhiteListManager"/>
+		<property name="secUserManager" ref="secUserManager"/>
+		<property name="secUserBlockingManager" ref="secUserBlockingManager"/>
+		<property name="userAppManager" ref="userAppManager"/>
+		<property name="listAccessManager" ref="listAccessManager"/>
+		<property name="objectAccessManager" ref="objectAccessManager"/>
+		<property name="loginHistoryManager" ref="loginHistoryManager"/>
+		<property name="genericFormManager" ref="genericFormManager"/>
+		<property name="formMessageManager" ref="formMessageManager"/>
+		<property name="formFieldMessageManager" ref="formFieldMessageManager"/>
+		<property name="formFieldManager" ref="formFieldManager"/>
+		<property name="formActionManager" ref="formActionManager"/>
+	</bean>
+	<bean id="managerGroup" parent="managerGroupBase"></bean>
+	
+
+
+</beans>
+
+
+
+
+
+
+
+

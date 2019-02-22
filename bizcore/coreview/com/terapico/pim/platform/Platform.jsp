@@ -104,6 +104,7 @@
 			<li><a data-toggle="tab" href="#siteList" class="disabled"> ${userContext.localeMap['site']}</a></li>
 			<li><a data-toggle="tab" href="#catalogList" class="disabled"> ${userContext.localeMap['catalog']}</a></li>
 			<li><a data-toggle="tab" href="#brandList" class="disabled"> ${userContext.localeMap['brand']}</a></li>
+			<li><a data-toggle="tab" href="#productList" class="disabled"> ${userContext.localeMap['product']}</a></li>
  
 	</ul>
 	</div>
@@ -168,6 +169,14 @@
 		<c:set var="brandListName" value="brandList" scope="request"/>
 		<div id="brandList" class="tab-pane fade sublist" refer-name="platform">
 			<sky:include page="com/terapico/pim/brand/Brand$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["productList"] or ignoreListAccessControl}'>
+		<c:set var="productList" value="${result.productList}" scope="request"/>
+		<c:set var="productListName" value="productList" scope="request"/>
+		<div id="productList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/terapico/pim/product/Product$List.jsp"
 					referName="platform"/>
 		</div>
 	</c:if>

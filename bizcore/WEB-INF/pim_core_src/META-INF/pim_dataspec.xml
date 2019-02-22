@@ -81,6 +81,7 @@
 			<field name="catalog" type="reference" checkType="exist(catalog)" description="Catalog" />
 			<field name="remark" type="string" checkType="StringLengthRange" min="22" max="336" description="Remark" />
 			<field name="last_update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Last Update Time" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>

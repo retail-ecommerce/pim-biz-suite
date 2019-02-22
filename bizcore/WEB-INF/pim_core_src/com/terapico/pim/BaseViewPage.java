@@ -233,9 +233,11 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		if (object instanceof FilterTabsViewComponent) {
 			return new FilterTabsSerializer();
 		}
+		/*
 		if (object instanceof BasePimFormProcessor) {
 			return new FormProcessorSerializer();
 		}
+		*/
 		if (object instanceof ButtonViewComponent) {
 			return new ButtonViewComponentSerializer();
 		}
@@ -272,11 +274,13 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	protected class FormProcessorSerializer implements CustomSerializer {
 		@Override
 		public Object serialize(SerializeScope serializeScope, Object value, String path) {
-			BaseMoyiFormProcessor form = (BaseMoyiFormProcessor) value;
+			/*
+			BasePimFormProcessor form = (BasePimFormProcessor) value;
 			if (form == null) {
 				return null;
 			}
-			return form.mapToUiForm(userContext);
+			return form.mapToUiForm(userContext);*/
+			return null;
 		}
 	}
 	

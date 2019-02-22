@@ -137,6 +137,9 @@
 <c:set var="catalog" value="${ result.catalog}" scope="request" />
 <sky:include page="com/terapico/pim/catalog/Catalog$Info.jsp" />
 
+<c:set var="platform" value="${ result.platform}" scope="request" />
+<sky:include page="com/terapico/pim/platform/Platform$Info.jsp" />
+
 </div>
 
 

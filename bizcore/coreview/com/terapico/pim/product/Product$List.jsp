@@ -119,6 +119,9 @@
 <c:if test="${param.referName ne 'lastUpdateTime'}">
 	<th>${userContext.localeMap['product.last_update_time']}</th>
 </c:if>
+<c:if test="${param.referName ne 'platform'}">
+	<th>${userContext.localeMap['product.platform']}</th>
+</c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
 		<tbody>
@@ -186,7 +189,26 @@
 </c:if>
 <c:if test="${param.referName ne 'remark'}">	<td contenteditable='true' class='edit-value'  propertyToChange='remark' storedCellValue='${item.remark}' prefix='${ownerBeanName}Manager/updateProduct/${result.id}/${item.id}/'>${item.remark}</td>
 </c:if><c:if test="${param.referName ne 'lastUpdateTime'}">	<td contenteditable='true' class='edit-value'  propertyToChange='lastUpdateTime' storedCellValue='${item.lastUpdateTime}' prefix='${ownerBeanName}Manager/updateProduct/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.lastUpdateTime}" /></td>
+</c:if><c:if test="${param.referName ne 'platform'}">
+	<td class="select_candidate_td"
+			data-candidate-method="./productManager/requestCandidatePlatform/${ownerBeanName}/${item.id}/"
+			data-switch-method="./productManager/transferToAnotherPlatform/${item.id}/"
+			data-link-template="./platformManager/view/${'$'}{ID}/">
+		<span class="display_span">
+			<c:if test="${not empty  item.platform}">
+			<a href='./platformManager/view/${item.platform.id}/'>${item.platform.displayName}</a>
+			</c:if>
+			<c:if test="${empty  item.platform}">
+			<a href='#'></a>
+			</c:if>
+			<button class="btn btn-link candidate-action">...</button>
+		</span>
+		<div class="candidate_span" style="display:none;">
+			<input type="text" data-provide="typeahead" class="input-sm form-control candidate-filter-input" autocomplete="off" />
+		</div>
+	</td>
 </c:if>
+
 				<td>
 
 				<a href='#${ownerBeanName}Manager/removeProduct/${result.id}/${item.id}/' class='delete-action btn btn-danger btn-xs'><i class="fa fa-trash-o fa-lg"></i> ${userContext.localeMap['@delete']}</a>

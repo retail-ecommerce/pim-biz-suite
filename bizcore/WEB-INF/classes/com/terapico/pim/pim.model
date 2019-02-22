@@ -1,0 +1,59 @@
+<?xml version='1.0' ?>
+<root org="tera_pico" chinese_name="Product Information Services" english_name="Product Information Services">
+
+	<platform
+		name="Chain eComerce Platform"
+		introduction="new generation of eCommerce platform based on opensource and modern tech"
+		current_version="V1.0"
+		
+	
+	/>
+	
+	<site
+		name="The first customer site"
+		introduction="The primary site for show the concept"
+		platform="$(platform)"
+		last_update_time="updateTime()"
+		
+	/>
+	<catalog name="Cloth"  seller_id="SC000001" site="$(site)" platform="$(platform)"/>	
+	
+	<level_one_category catalog="$(catalog)" name="Level One Cat"/>	
+	<level_two_category parent_category="$(level_one_category)" name="Level Two Cat"/>	
+	
+	<level_n_category parent_category="$(level_two_category)" name="Level N Cat"/>	
+	<brand brand_name="Telsa Auto" 
+		logo="logo.jpg" 
+		remark="The brand a great that has Roadester, Model S and Model X, Model 3 is in development"
+		platform="$(platform)"
+	/>
+	<product name="Jeans" parent_category="$(level_n_category)" brand="$(brand)" 
+		origin="China|US|Japan|French"
+		catalog="$(catalog)"
+		remark="The brand a great that has Roadester, Model S and Model X, Model 3 is in development"
+		last_update_time="updateTime()"
+		platform="$(platform)"
+	/>
+
+	<sku name="Jeans - Large" 
+		size="Large|Small|Medium" 
+		product="$(product)" 
+		active="true" 
+		base_price="$103.21"
+		last_update_time="updateTime()"/>	
+	
+	  <!-- Multiple site support-->
+	
+	
+	
+</root>
+ 
+
+
+
+
+
+
+
+
+
