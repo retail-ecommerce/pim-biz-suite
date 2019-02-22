@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/levelTwoCategory/${id}/list/\LevelNCategoryList/Level N Category列表`, state: newState }
+      const location = { pathname: `/levelTwoCategory/${id}/list/\LevelNCategoryList/Level N Category+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateLevelNCategory({ payload }, { call, put }) {

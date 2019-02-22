@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/secUser/${id}/list/\UserAppList/User App列表`, state: newState }
+      const location = { pathname: `/secUser/${id}/list/\UserAppList/User App+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateUserApp({ payload }, { call, put }) {
@@ -206,7 +206,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/secUser/${id}/list/\LoginHistoryList/Login History列表`, state: newState }
+      const location = { pathname: `/secUser/${id}/list/\LoginHistoryList/Login History+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateLoginHistory({ payload }, { call, put }) {

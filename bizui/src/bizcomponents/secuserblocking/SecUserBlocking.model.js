@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/secUserBlocking/${id}/list/\SecUserList/Sec User列表`, state: newState }
+      const location = { pathname: `/secUserBlocking/${id}/list/\SecUserList/Sec User+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateSecUser({ payload }, { call, put }) {

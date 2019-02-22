@@ -19,7 +19,7 @@ const testValues = {};
 const testValues = {
   name: 'Jeans - Large',
   size: 'Large',
-  basePrice: '93.49',
+  basePrice: '92.49',
   productId: 'P000001',
 }
 */

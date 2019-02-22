@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/catalog/${id}/list/\LevelOneCategoryList/Level One Category列表`, state: newState }
+      const location = { pathname: `/catalog/${id}/list/\LevelOneCategoryList/Level One Category+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateLevelOneCategory({ payload }, { call, put }) {
@@ -206,7 +206,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/catalog/${id}/list/\ProductList/Product列表`, state: newState }
+      const location = { pathname: `/catalog/${id}/list/\ProductList/Product+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateProduct({ payload }, { call, put }) {

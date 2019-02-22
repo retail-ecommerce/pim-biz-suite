@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/platform/${id}/list/\SiteList/Site列表`, state: newState }
+      const location = { pathname: `/platform/${id}/list/\SiteList/Site+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateSite({ payload }, { call, put }) {
@@ -206,7 +206,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/platform/${id}/list/\CatalogList/Catalog列表`, state: newState }
+      const location = { pathname: `/platform/${id}/list/\CatalogList/Catalog+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateCatalog({ payload }, { call, put }) {
@@ -275,7 +275,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/platform/${id}/list/\BrandList/Brand列表`, state: newState }
+      const location = { pathname: `/platform/${id}/list/\BrandList/Brand+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateBrand({ payload }, { call, put }) {
@@ -344,7 +344,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/platform/${id}/list/\ProductList/Product列表`, state: newState }
+      const location = { pathname: `/platform/${id}/list/\ProductList/Product+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateProduct({ payload }, { call, put }) {

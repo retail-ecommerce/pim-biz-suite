@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/brand/${id}/list/\ProductList/Product列表`, state: newState }
+      const location = { pathname: `/brand/${id}/list/\ProductList/Product+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateProduct({ payload }, { call, put }) {
