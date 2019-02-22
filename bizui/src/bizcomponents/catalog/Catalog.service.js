@@ -77,14 +77,14 @@ const removeLevelOneCategoryList = (targetObjectId, parameters) => {
 
 
 const addProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}catalogManager/addProduct/catalogId/name/parentCategoryId/brandId/origin/remark/platformId/tokensExpr/`
+  const url = `${PREFIX}catalogManager/addProduct/catalogId/name/parentCategoryId/brandId/productCoverImage/origin/remark/platformId/tokensExpr/`
   const catalogId = targetObjectId
   const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}catalogManager/updateProductProperties/catalogId/id/name/origin/remark/tokensExpr/`
+  const url = `${PREFIX}catalogManager/updateProductProperties/catalogId/id/name/productCoverImage/origin/remark/tokensExpr/`
   const catalogId = targetObjectId
   const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
@@ -97,14 +97,114 @@ const removeProductList = (targetObjectId, parameters) => {
 }
 
 
+
+const addNewProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/addNewProduct/catalogId/name/parentCategoryId/brandId/productCoverImage/origin/profileId/remark/platformId/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateNewProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/updateNewProductProperties/catalogId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeNewProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/removeNewProductList/catalogId/newProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, catalogId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addEditorPickProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/addEditorPickProduct/catalogId/name/parentCategoryId/brandId/productCoverImage/origin/profileId/remark/platformId/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateEditorPickProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/updateEditorPickProductProperties/catalogId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeEditorPickProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/removeEditorPickProductList/catalogId/editorPickProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, catalogId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addTopRatedProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/addTopRatedProduct/catalogId/name/parentCategoryId/brandId/productCoverImage/origin/remark/profileId/platformId/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateTopRatedProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/updateTopRatedProductProperties/catalogId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeTopRatedProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/removeTopRatedProductList/catalogId/topRatedProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, catalogId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addRecommandProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/addRecommandProduct/catalogId/name/parentCategoryId/brandId/productCoverImage/origin/remark/profileId/platformId/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateRecommandProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/updateRecommandProductProperties/catalogId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const catalogId = targetObjectId
+  const requestParameters = { ...parameters, catalogId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeRecommandProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}catalogManager/removeRecommandProductList/catalogId/recommandProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, catalogId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const CatalogService = { view,
   load,
   addLevelOneCategory,
   addProduct,
+  addNewProduct,
+  addEditorPickProduct,
+  addTopRatedProduct,
+  addRecommandProduct,
   updateLevelOneCategory,
   updateProduct,
+  updateNewProduct,
+  updateEditorPickProduct,
+  updateTopRatedProduct,
+  updateRecommandProduct,
   removeLevelOneCategoryList,
   removeProductList,
+  removeNewProductList,
+  removeEditorPickProductList,
+  removeTopRatedProductList,
+  removeRecommandProductList,
   requestCandidateSite,
   requestCandidatePlatform,
   transferToAnotherSite,

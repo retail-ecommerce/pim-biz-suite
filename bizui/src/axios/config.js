@@ -1,7 +1,7 @@
 
 export const SYSTEM_SHORT_NAME = "pim" //Use for requssting different apps
 export const SYSTEM_LOCAL_NAME = "Product Information Services" 
-export const BUILD_TIIME="Tue Jan 29 02:06:17 CST 2019"
+export const BUILD_TIIME="Fri Feb 22 14:59:25 CST 2019"
 export const MEDIA_UPLOAD_URL="https://www.doublechaintech.com/mss/upload.html"
 export const MEDIA_PREFIX="https://www.doublechaintech.com/mss/"
 

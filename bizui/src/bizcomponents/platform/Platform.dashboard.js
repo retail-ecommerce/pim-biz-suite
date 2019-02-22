@@ -113,7 +113,7 @@ class PlatformDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, siteListMetaInfo, catalogListMetaInfo, brandListMetaInfo, productListMetaInfo, siteCount, catalogCount, brandCount, productCount } = this.props.platform
+    const { id,displayName, siteListMetaInfo, catalogListMetaInfo, brandListMetaInfo, productListMetaInfo, profileListMetaInfo, newProductListMetaInfo, editorPickProductListMetaInfo, topRatedProductListMetaInfo, recommandProductListMetaInfo, siteCount, catalogCount, brandCount, productCount, profileCount, newProductCount, editorPickProductCount, topRatedProductCount, recommandProductCount } = this.props.platform
     if(!this.props.platform.class){
       return null
     }
@@ -126,6 +126,11 @@ class PlatformDashboard extends Component {
 {name: 'catalogList', displayName:'Catalog',type:'catalog',count:catalogCount,addFunction: true, role: 'catalog', metaInfo: catalogListMetaInfo},
 {name: 'brandList', displayName:'Brand',type:'brand',count:brandCount,addFunction: true, role: 'brand', metaInfo: brandListMetaInfo},
 {name: 'productList', displayName:'Product',type:'product',count:productCount,addFunction: true, role: 'product', metaInfo: productListMetaInfo},
+{name: 'profileList', displayName:'Profile',type:'profile',count:profileCount,addFunction: true, role: 'profile', metaInfo: profileListMetaInfo},
+{name: 'newProductList', displayName:'New Product',type:'newProduct',count:newProductCount,addFunction: true, role: 'newProduct', metaInfo: newProductListMetaInfo},
+{name: 'editorPickProductList', displayName:'Editor Pick Product',type:'editorPickProduct',count:editorPickProductCount,addFunction: true, role: 'editorPickProduct', metaInfo: editorPickProductListMetaInfo},
+{name: 'topRatedProductList', displayName:'Top Rated Product',type:'topRatedProduct',count:topRatedProductCount,addFunction: true, role: 'topRatedProduct', metaInfo: topRatedProductListMetaInfo},
+{name: 'recommandProductList', displayName:'Recommand Product',type:'recommandProduct',count:recommandProductCount,addFunction: true, role: 'recommandProduct', metaInfo: recommandProductListMetaInfo},
     
       	],
   	};

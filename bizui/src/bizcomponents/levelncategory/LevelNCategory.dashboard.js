@@ -117,7 +117,7 @@ class LevelNCategoryDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, productListMetaInfo, productCount } = this.props.levelNCategory
+    const { id,displayName, productListMetaInfo, newProductListMetaInfo, editorPickProductListMetaInfo, topRatedProductListMetaInfo, recommandProductListMetaInfo, productCount, newProductCount, editorPickProductCount, topRatedProductCount, recommandProductCount } = this.props.levelNCategory
     if(!this.props.levelNCategory.class){
       return null
     }
@@ -127,6 +127,10 @@ class LevelNCategoryDashboard extends Component {
     	cardsSource: this.props.levelNCategory,returnURL,displayName,
   		subItems: [
 {name: 'productList', displayName:'Product',type:'product',count:productCount,addFunction: true, role: 'product', metaInfo: productListMetaInfo},
+{name: 'newProductList', displayName:'New Product',type:'newProduct',count:newProductCount,addFunction: true, role: 'newProduct', metaInfo: newProductListMetaInfo},
+{name: 'editorPickProductList', displayName:'Editor Pick Product',type:'editorPickProduct',count:editorPickProductCount,addFunction: true, role: 'editorPickProduct', metaInfo: editorPickProductListMetaInfo},
+{name: 'topRatedProductList', displayName:'Top Rated Product',type:'topRatedProduct',count:topRatedProductCount,addFunction: true, role: 'topRatedProduct', metaInfo: topRatedProductListMetaInfo},
+{name: 'recommandProductList', displayName:'Recommand Product',type:'recommandProduct',count:recommandProductCount,addFunction: true, role: 'recommandProduct', metaInfo: recommandProductListMetaInfo},
     
       	],
   	};

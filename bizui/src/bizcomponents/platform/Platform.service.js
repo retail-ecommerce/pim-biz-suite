@@ -89,14 +89,14 @@ const removeBrandList = (targetObjectId, parameters) => {
 
 
 const addProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}platformManager/addProduct/platformId/name/parentCategoryId/brandId/origin/catalogId/remark/tokensExpr/`
+  const url = `${PREFIX}platformManager/addProduct/platformId/name/parentCategoryId/brandId/productCoverImage/origin/catalogId/remark/tokensExpr/`
   const platformId = targetObjectId
   const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateProduct = (targetObjectId, parameters) => {
-  const url = `${PREFIX}platformManager/updateProductProperties/platformId/id/name/origin/remark/tokensExpr/`
+  const url = `${PREFIX}platformManager/updateProductProperties/platformId/id/name/productCoverImage/origin/remark/tokensExpr/`
   const platformId = targetObjectId
   const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
@@ -109,19 +109,144 @@ const removeProductList = (targetObjectId, parameters) => {
 }
 
 
+
+const addProfile = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addProfile/platformId/name/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateProfile = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateProfileProperties/platformId/id/name/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeProfileList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeProfileList/platformId/profileIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addNewProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addNewProduct/platformId/name/parentCategoryId/brandId/productCoverImage/origin/catalogId/profileId/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateNewProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateNewProductProperties/platformId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeNewProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeNewProductList/platformId/newProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addEditorPickProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addEditorPickProduct/platformId/name/parentCategoryId/brandId/productCoverImage/origin/catalogId/profileId/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateEditorPickProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateEditorPickProductProperties/platformId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeEditorPickProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeEditorPickProductList/platformId/editorPickProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addTopRatedProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addTopRatedProduct/platformId/name/parentCategoryId/brandId/productCoverImage/origin/catalogId/remark/profileId/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateTopRatedProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateTopRatedProductProperties/platformId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeTopRatedProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeTopRatedProductList/platformId/topRatedProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addRecommandProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addRecommandProduct/platformId/name/parentCategoryId/brandId/productCoverImage/origin/catalogId/remark/profileId/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateRecommandProduct = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateRecommandProductProperties/platformId/id/name/productCoverImage/origin/remark/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeRecommandProductList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeRecommandProductList/platformId/recommandProductIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const PlatformService = { view,
   load,
   addSite,
   addCatalog,
   addBrand,
   addProduct,
+  addProfile,
+  addNewProduct,
+  addEditorPickProduct,
+  addTopRatedProduct,
+  addRecommandProduct,
   updateSite,
   updateCatalog,
   updateBrand,
   updateProduct,
+  updateProfile,
+  updateNewProduct,
+  updateEditorPickProduct,
+  updateTopRatedProduct,
+  updateRecommandProduct,
   removeSiteList,
   removeCatalogList,
   removeBrandList,
-  removeProductList }
+  removeProductList,
+  removeProfileList,
+  removeNewProductList,
+  removeEditorPickProductList,
+  removeTopRatedProductList,
+  removeRecommandProductList }
 export default PlatformService
 

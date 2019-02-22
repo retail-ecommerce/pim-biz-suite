@@ -306,7 +306,7 @@ class CatalogPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, levelOneCategoryCount, productCount } = this.props.catalog
+    const { id,displayName, levelOneCategoryCount, productCount, newProductCount, editorPickProductCount, topRatedProductCount, recommandProductCount } = this.props.catalog
     const cardsData = {cardsName:"Catalog",cardsFor: "catalog",cardsSource: this.props.catalog,
   		subItems: [
     

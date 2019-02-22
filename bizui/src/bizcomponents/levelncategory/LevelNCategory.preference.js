@@ -305,7 +305,7 @@ class LevelNCategoryPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, productCount } = this.props.levelNCategory
+    const { id,displayName, productCount, newProductCount, editorPickProductCount, topRatedProductCount, recommandProductCount } = this.props.levelNCategory
     const cardsData = {cardsName:"Level N Category",cardsFor: "levelNCategory",cardsSource: this.props.levelNCategory,
   		subItems: [
     

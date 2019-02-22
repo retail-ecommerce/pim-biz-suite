@@ -39,7 +39,8 @@ const { Option } = Select
 
 
 const imageList =(product)=>{return [
-	 ]}
+	   {"title":'Product Cover Image',"imageLocation":product.productCoverImage},
+]}
 
 const internalImageListOf = (product) =>defaultImageListOf(product,imageList)
 

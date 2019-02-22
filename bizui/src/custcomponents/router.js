@@ -22,6 +22,14 @@ function RouterConfig({ history }) {
 	const {BrandBizApp} = GlobalComponents
 	const {ProductBizApp} = GlobalComponents
 	const {SkuBizApp} = GlobalComponents
+	const {ProfileBizApp} = GlobalComponents
+	const {BrandFilterBizApp} = GlobalComponents
+	const {PriceFilterBizApp} = GlobalComponents
+	const {CategoryFilterBizApp} = GlobalComponents
+	const {NewProductBizApp} = GlobalComponents
+	const {EditorPickProductBizApp} = GlobalComponents
+	const {TopRatedProductBizApp} = GlobalComponents
+	const {RecommandProductBizApp} = GlobalComponents
 	const {UserDomainBizApp} = GlobalComponents
 	const {UserWhiteListBizApp} = GlobalComponents
 	const {SecUserBizApp} = GlobalComponents
@@ -48,6 +56,14 @@ function RouterConfig({ history }) {
           <Route path="/brand/" component={BrandBizApp} />
           <Route path="/product/" component={ProductBizApp} />
           <Route path="/sku/" component={SkuBizApp} />
+          <Route path="/profile/" component={ProfileBizApp} />
+          <Route path="/brandFilter/" component={BrandFilterBizApp} />
+          <Route path="/priceFilter/" component={PriceFilterBizApp} />
+          <Route path="/categoryFilter/" component={CategoryFilterBizApp} />
+          <Route path="/newProduct/" component={NewProductBizApp} />
+          <Route path="/editorPickProduct/" component={EditorPickProductBizApp} />
+          <Route path="/topRatedProduct/" component={TopRatedProductBizApp} />
+          <Route path="/recommandProduct/" component={RecommandProductBizApp} />
           <Route path="/userDomain/" component={UserDomainBizApp} />
           <Route path="/userWhiteList/" component={UserWhiteListBizApp} />
           <Route path="/secUser/" component={SecUserBizApp} />

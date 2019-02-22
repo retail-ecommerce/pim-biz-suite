@@ -206,6 +206,202 @@ class LevelNCategoryBizApp extends React.PureComponent {
     }))(ProductUpdateForm)
   }
 
+  getNewProductSearch = () => {
+    const {NewProductSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "New Product",
+      role: "newProduct",
+      data: state._levelNCategory.newProductList,
+      metaInfo: state._levelNCategory.newProductListMetaInfo,
+      count: state._levelNCategory.newProductCount,
+      currentPage: state._levelNCategory.newProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.newProductSearchFormParameters,
+      searchParameters: {...state._levelNCategory.searchParameters},
+      expandForm: state._levelNCategory.expandForm,
+      loading: state._levelNCategory.loading,
+      partialList: state._levelNCategory.partialList,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, 
+      referenceName: 'parentCategory', 
+      listName: 'newProductList', ref:state._levelNCategory, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(NewProductSearch)
+  }
+  getNewProductCreateForm = () => {
+   	const {NewProductCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "newProduct",
+      data: state._levelNCategory.newProductList,
+      metaInfo: state._levelNCategory.newProductListMetaInfo,
+      count: state._levelNCategory.newProductCount,
+      currentPage: state._levelNCategory.newProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.newProductSearchFormParameters,
+      loading: state._levelNCategory.loading,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, referenceName: 'parentCategory', listName: 'newProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(NewProductCreateForm)
+  }
+  
+  getNewProductUpdateForm = () => {
+    const userContext = null
+  	const {NewProductUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._levelNCategory.selectedRows,
+      role: "newProduct",
+      currentUpdateIndex: state._levelNCategory.currentUpdateIndex,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, listName: 'newProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(NewProductUpdateForm)
+  }
+
+  getEditorPickProductSearch = () => {
+    const {EditorPickProductSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Editor Pick Product",
+      role: "editorPickProduct",
+      data: state._levelNCategory.editorPickProductList,
+      metaInfo: state._levelNCategory.editorPickProductListMetaInfo,
+      count: state._levelNCategory.editorPickProductCount,
+      currentPage: state._levelNCategory.editorPickProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.editorPickProductSearchFormParameters,
+      searchParameters: {...state._levelNCategory.searchParameters},
+      expandForm: state._levelNCategory.expandForm,
+      loading: state._levelNCategory.loading,
+      partialList: state._levelNCategory.partialList,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, 
+      referenceName: 'parentCategory', 
+      listName: 'editorPickProductList', ref:state._levelNCategory, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(EditorPickProductSearch)
+  }
+  getEditorPickProductCreateForm = () => {
+   	const {EditorPickProductCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "editorPickProduct",
+      data: state._levelNCategory.editorPickProductList,
+      metaInfo: state._levelNCategory.editorPickProductListMetaInfo,
+      count: state._levelNCategory.editorPickProductCount,
+      currentPage: state._levelNCategory.editorPickProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.editorPickProductSearchFormParameters,
+      loading: state._levelNCategory.loading,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, referenceName: 'parentCategory', listName: 'editorPickProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(EditorPickProductCreateForm)
+  }
+  
+  getEditorPickProductUpdateForm = () => {
+    const userContext = null
+  	const {EditorPickProductUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._levelNCategory.selectedRows,
+      role: "editorPickProduct",
+      currentUpdateIndex: state._levelNCategory.currentUpdateIndex,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, listName: 'editorPickProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(EditorPickProductUpdateForm)
+  }
+
+  getTopRatedProductSearch = () => {
+    const {TopRatedProductSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Top Rated Product",
+      role: "topRatedProduct",
+      data: state._levelNCategory.topRatedProductList,
+      metaInfo: state._levelNCategory.topRatedProductListMetaInfo,
+      count: state._levelNCategory.topRatedProductCount,
+      currentPage: state._levelNCategory.topRatedProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.topRatedProductSearchFormParameters,
+      searchParameters: {...state._levelNCategory.searchParameters},
+      expandForm: state._levelNCategory.expandForm,
+      loading: state._levelNCategory.loading,
+      partialList: state._levelNCategory.partialList,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, 
+      referenceName: 'parentCategory', 
+      listName: 'topRatedProductList', ref:state._levelNCategory, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(TopRatedProductSearch)
+  }
+  getTopRatedProductCreateForm = () => {
+   	const {TopRatedProductCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "topRatedProduct",
+      data: state._levelNCategory.topRatedProductList,
+      metaInfo: state._levelNCategory.topRatedProductListMetaInfo,
+      count: state._levelNCategory.topRatedProductCount,
+      currentPage: state._levelNCategory.topRatedProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.topRatedProductSearchFormParameters,
+      loading: state._levelNCategory.loading,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, referenceName: 'parentCategory', listName: 'topRatedProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(TopRatedProductCreateForm)
+  }
+  
+  getTopRatedProductUpdateForm = () => {
+    const userContext = null
+  	const {TopRatedProductUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._levelNCategory.selectedRows,
+      role: "topRatedProduct",
+      currentUpdateIndex: state._levelNCategory.currentUpdateIndex,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, listName: 'topRatedProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(TopRatedProductUpdateForm)
+  }
+
+  getRecommandProductSearch = () => {
+    const {RecommandProductSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Recommand Product",
+      role: "recommandProduct",
+      data: state._levelNCategory.recommandProductList,
+      metaInfo: state._levelNCategory.recommandProductListMetaInfo,
+      count: state._levelNCategory.recommandProductCount,
+      currentPage: state._levelNCategory.recommandProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.recommandProductSearchFormParameters,
+      searchParameters: {...state._levelNCategory.searchParameters},
+      expandForm: state._levelNCategory.expandForm,
+      loading: state._levelNCategory.loading,
+      partialList: state._levelNCategory.partialList,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, 
+      referenceName: 'parentCategory', 
+      listName: 'recommandProductList', ref:state._levelNCategory, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(RecommandProductSearch)
+  }
+  getRecommandProductCreateForm = () => {
+   	const {RecommandProductCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "recommandProduct",
+      data: state._levelNCategory.recommandProductList,
+      metaInfo: state._levelNCategory.recommandProductListMetaInfo,
+      count: state._levelNCategory.recommandProductCount,
+      currentPage: state._levelNCategory.recommandProductCurrentPageNumber,
+      searchFormParameters: state._levelNCategory.recommandProductSearchFormParameters,
+      loading: state._levelNCategory.loading,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, referenceName: 'parentCategory', listName: 'recommandProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(RecommandProductCreateForm)
+  }
+  
+  getRecommandProductUpdateForm = () => {
+    const userContext = null
+  	const {RecommandProductUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._levelNCategory.selectedRows,
+      role: "recommandProduct",
+      currentUpdateIndex: state._levelNCategory.currentUpdateIndex,
+      owner: { type: '_levelNCategory', id: state._levelNCategory.id, listName: 'recommandProductList', ref:state._levelNCategory, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(RecommandProductUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -222,6 +418,22 @@ class LevelNCategoryBizApp extends React.PureComponent {
   	{path:"/levelNCategory/:id/list/productList", component: this.getProductSearch()},
   	{path:"/levelNCategory/:id/list/productCreateForm", component: this.getProductCreateForm()},
   	{path:"/levelNCategory/:id/list/productUpdateForm", component: this.getProductUpdateForm()},
+   	
+  	{path:"/levelNCategory/:id/list/newProductList", component: this.getNewProductSearch()},
+  	{path:"/levelNCategory/:id/list/newProductCreateForm", component: this.getNewProductCreateForm()},
+  	{path:"/levelNCategory/:id/list/newProductUpdateForm", component: this.getNewProductUpdateForm()},
+   	
+  	{path:"/levelNCategory/:id/list/editorPickProductList", component: this.getEditorPickProductSearch()},
+  	{path:"/levelNCategory/:id/list/editorPickProductCreateForm", component: this.getEditorPickProductCreateForm()},
+  	{path:"/levelNCategory/:id/list/editorPickProductUpdateForm", component: this.getEditorPickProductUpdateForm()},
+   	
+  	{path:"/levelNCategory/:id/list/topRatedProductList", component: this.getTopRatedProductSearch()},
+  	{path:"/levelNCategory/:id/list/topRatedProductCreateForm", component: this.getTopRatedProductCreateForm()},
+  	{path:"/levelNCategory/:id/list/topRatedProductUpdateForm", component: this.getTopRatedProductUpdateForm()},
+   	
+  	{path:"/levelNCategory/:id/list/recommandProductList", component: this.getRecommandProductSearch()},
+  	{path:"/levelNCategory/:id/list/recommandProductCreateForm", component: this.getRecommandProductCreateForm()},
+  	{path:"/levelNCategory/:id/list/recommandProductUpdateForm", component: this.getRecommandProductUpdateForm()},
      	
   	
   	]

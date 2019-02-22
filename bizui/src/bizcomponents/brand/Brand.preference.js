@@ -303,7 +303,7 @@ class BrandPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, productCount } = this.props.brand
+    const { id,displayName, productCount, newProductCount, editorPickProductCount, topRatedProductCount, recommandProductCount } = this.props.brand
     const cardsData = {cardsName:"Brand",cardsFor: "brand",cardsSource: this.props.brand,
   		subItems: [
     

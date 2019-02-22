@@ -77,6 +77,10 @@ class CatalogAssociateForm extends Component {
     
  const {LevelOneCategoryModalTable} = GlobalComponents;
  const {ProductModalTable} = GlobalComponents;
+ const {NewProductModalTable} = GlobalComponents;
+ const {EditorPickProductModalTable} = GlobalComponents;
+ const {TopRatedProductModalTable} = GlobalComponents;
+ const {RecommandProductModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -217,6 +221,10 @@ class CatalogAssociateForm extends Component {
         
 	<LevelOneCategoryModalTable data={data.levelOneCategoryList} owner={owner} />
 	<ProductModalTable data={data.productList} owner={owner} />
+	<NewProductModalTable data={data.newProductList} owner={owner} />
+	<EditorPickProductModalTable data={data.editorPickProductList} owner={owner} />
+	<TopRatedProductModalTable data={data.topRatedProductList} owner={owner} />
+	<RecommandProductModalTable data={data.recommandProductList} owner={owner} />
         
         
         

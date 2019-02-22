@@ -78,6 +78,11 @@ class PlatformAssociateForm extends Component {
  const {CatalogModalTable} = GlobalComponents;
  const {BrandModalTable} = GlobalComponents;
  const {ProductModalTable} = GlobalComponents;
+ const {ProfileModalTable} = GlobalComponents;
+ const {NewProductModalTable} = GlobalComponents;
+ const {EditorPickProductModalTable} = GlobalComponents;
+ const {TopRatedProductModalTable} = GlobalComponents;
+ const {RecommandProductModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -193,6 +198,11 @@ class PlatformAssociateForm extends Component {
 	<CatalogModalTable data={data.catalogList} owner={owner} />
 	<BrandModalTable data={data.brandList} owner={owner} />
 	<ProductModalTable data={data.productList} owner={owner} />
+	<ProfileModalTable data={data.profileList} owner={owner} />
+	<NewProductModalTable data={data.newProductList} owner={owner} />
+	<EditorPickProductModalTable data={data.editorPickProductList} owner={owner} />
+	<TopRatedProductModalTable data={data.topRatedProductList} owner={owner} />
+	<RecommandProductModalTable data={data.recommandProductList} owner={owner} />
         
         
         

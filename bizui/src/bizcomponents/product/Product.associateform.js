@@ -30,6 +30,7 @@ const testValues = {
 
 
 const imageKeys = [
+  'productCoverImage',
 ]
 
 
@@ -184,6 +185,21 @@ class ProductAssociateForm extends Component {
         
 
 
+
+       
+            <Row gutter={16}>
+
+              <Col lg={6} md={12} sm={24}>
+                <ImageComponent
+                  buttonTitle="Product Cover Image"
+                  handlePreview={this.handlePreview}
+                  handleChange={event => this.handleChange(event, 'productCoverImage')}
+                  fileList={convertedImagesValues.productCoverImage}
+                />
+              </Col>
+
+            </Row>
+         
 
 
 

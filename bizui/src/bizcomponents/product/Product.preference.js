@@ -39,7 +39,8 @@ const topColResponsiveProps = {
 const internalImageListOf = (product) =>{
   const userContext = null
   const imageList = [
-	 ]
+	   {"title":'Product Cover Image',"imageLocation":product.productCoverImage},
+]
   const filteredList = imageList.filter((item)=>item.imageLocation!=null)
   if(filteredList.length===0){
     return null
